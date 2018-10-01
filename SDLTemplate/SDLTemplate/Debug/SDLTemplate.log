@@ -1,0 +1,4 @@
+﻿  Main.cpp
+c:\users\hoaxshark\desktop\sdltemplate\sdltemplate\main.cpp(37): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\hoaxshark\desktop\sdltemplate\sdltemplate\main.cpp(87): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+  SDLTemplate.vcxproj -> C:\Users\HoaxShark\Desktop\SDLTemplate\Debug\SDLTemplate.exe
