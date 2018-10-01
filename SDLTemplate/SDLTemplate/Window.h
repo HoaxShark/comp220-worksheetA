@@ -7,5 +7,11 @@ class Window
 public:
 	Window();
 	~Window();
+
+	bool isFullscreen;
+
+	bool getIsFullscreen();
+	void setIsFullscreen();
+
 };
 

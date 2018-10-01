@@ -3,12 +3,14 @@
 
 #include "stdafx.h"
 #include "SDL.h"
+#include "Shader.h"
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 
 #include "globals.h"
 #include <vector>
 #include <time.h>
+#include "Window.h"
 
 
 int initaliseSDL();
@@ -60,9 +62,9 @@ int main(int argc, char *argv[])
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 	static const GLfloat g_vertex_buffer_data[] = {
-		-0.9f, -0.9f, 0.0f,
-		0.9f, -0.9f, 0.0f,
-		0.0f,  0.9f, 0.0f,
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f,  0.5f, 0.0f,
 	};
 
 	// This will identify our vertex buffer
@@ -73,6 +75,8 @@ int main(int argc, char *argv[])
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	// Give our vertices to OpenGL.
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	// Hold shader programme, rename to what the ID does
+	GLuint programID = LoadShaders("vert.glsl", "frag.glsl");
 
 	//Current sdl event
 	SDL_Event event;
@@ -108,6 +112,9 @@ int main(int argc, char *argv[])
 							break;
 
 						case SDLK_F11:
+							//TODO FIX ME
+							//bool isFullscreen = Window.getIsFullscreen();
+							//if (Window::getIsFullscreen() == true)
 							SDL_SetWindowFullscreen(mainWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 					}
 
@@ -118,6 +125,9 @@ int main(int argc, char *argv[])
 		//Update game and render with openGL
 		glClearColor(0.0, 0.0, 0.0, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		//Bind program
+		glUseProgram(programID);
 
 		// 1st attribute buffer : vertices
 		glEnableVertexAttribArray(0);
@@ -137,6 +147,8 @@ int main(int argc, char *argv[])
 		SDL_GL_SwapWindow(mainWindow);
 	}
 
+	//Delete Program
+	glDeleteProgram(programID);
 	//Delete Buffer
 	glDeleteBuffers(1, &vertexbuffer);
 	//Delete Vertex Array
