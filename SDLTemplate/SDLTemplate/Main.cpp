@@ -1,22 +1,14 @@
 // Main.cpp : Defines the entry point for the console application.
 
-
-#include "stdafx.h"
-#include "SDL.h"
-#include "Shader.h"
-#include <GL\glew.h>
-#include <SDL_opengl.h>
-
-#include "globals.h"
-#include <vector>
-#include <time.h>
-#include "Window.h"
-
+#include "Main.h"
 
 int initaliseSDL();
 int initaliseGlew();
 bool SetOpenGLAttributes();
 int initialiseContext();
+bool isFullscreen = false;
+vec3 position = vec3(0.0f);
+vec3 shapeScale = vec3(1.0f);
 
 //Game loop runs while true
 bool gameRunning = true;
@@ -78,6 +70,18 @@ int main(int argc, char *argv[])
 	// Hold shader programme, rename to what the ID does
 	GLuint programID = LoadShaders("vert.glsl", "frag.glsl");
 
+	// create view matrix
+	mat4 ViewMatrix = translate(mat4(), vec3(-3.0f, 0.0f, 0.0f));
+
+	/*glm::mat4 CameraMatrix = glm::lookAt(
+		cameraPosition, // the position of your camera, in world space
+		cameraTarget,   // where you want to look at, in world space
+		upVector        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
+	);*/
+
+	// set modelMatrix location
+	GLuint modelMatrixLocation = glGetUniformLocation(programID, "modelMatrix");
+
 	//Current sdl event
 	SDL_Event event;
 
@@ -111,11 +115,42 @@ int main(int argc, char *argv[])
 							gameRunning = false;
 							break;
 
+						case SDLK_UP:
+							position = position + vec3(0.0f, 0.01f, 0.0f);
+							break;
+
+						case SDLK_LEFT:
+							position = position + vec3(-0.01f, 0.0f, 0.0f);
+							break;
+
+						case SDLK_RIGHT:
+							position = position + vec3(0.01f, 0.0f, 0.0f);
+							break;
+
+						case SDLK_DOWN:
+							position = position + vec3(0.0f, -0.01f, 0.0f);
+							break;
+
+						case SDLK_7:
+							shapeScale = shapeScale + vec3(-0.01f, -0.01f, 0.0f);
+							break;
+
+						case SDLK_8:
+							shapeScale = shapeScale + vec3(0.01f, 0.01f, 0.0f);
+							break;
+
 						case SDLK_F11:
-							//TODO FIX ME
+							
 							//bool isFullscreen = Window.getIsFullscreen();
-							//if (Window::getIsFullscreen() == true)
-							SDL_SetWindowFullscreen(mainWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+							if (isFullscreen) {
+								isFullscreen = false;
+								SDL_SetWindowFullscreen(mainWindow, 0);
+							}
+							else {
+								isFullscreen = true;
+								SDL_SetWindowFullscreen(mainWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+							}
+							break;
 					}
 
 				break;
@@ -128,6 +163,12 @@ int main(int argc, char *argv[])
 
 		//Bind program
 		glUseProgram(programID);
+
+		mat4 modelMatrix = translate(position);
+		modelMatrix = glm::scale(modelMatrix, shapeScale);
+
+		// sends across modelMatrix
+		glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		// 1st attribute buffer : vertices
 		glEnableVertexAttribArray(0);
