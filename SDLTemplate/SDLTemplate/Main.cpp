@@ -2,13 +2,15 @@
 
 #include "Main.h"
 
-int initaliseSDL();
 int initaliseGlew();
 bool SetOpenGLAttributes();
 int initialiseContext();
-bool isFullscreen = false;
-vec3 position = vec3(0.0f);
-vec3 shapeScale = vec3(1.0f);
+
+// Create Initialisation class
+Initialise init;
+
+// Create window class for managing fullscreen
+Window window;
 
 //Game loop runs while true
 bool gameRunning = true;
@@ -38,49 +40,13 @@ int main(int argc, char *argv[])
 
 
 	//Initalise the SDL components
-	if (initaliseSDL() < 0)
-	{
-		std::cout << "SDL initalisation failed." << std::endl;
-		return -1;
-	}
+	mainWindow = init.initaliseSDLWindow();
+	renderer = init.initaliseSDLRenderer();
 
 	//Initalise OpenGL 
 	SetOpenGLAttributes();
 	initialiseContext();
 	initaliseGlew();
-
-	//Create Vertex Array
-	GLuint VertexArrayID;
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
-	static const GLfloat g_vertex_buffer_data[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f,  0.5f, 0.0f,
-	};
-
-	// This will identify our vertex buffer
-	GLuint vertexbuffer;
-	// Generate 1 buffer, put the resulting identifier in vertexbuffer
-	glGenBuffers(1, &vertexbuffer);
-	// The following commands will talk about our 'vertexbuffer' buffer
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	// Give our vertices to OpenGL.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-	// Hold shader programme, rename to what the ID does
-	GLuint programID = LoadShaders("vert.glsl", "frag.glsl");
-
-	// create view matrix
-	mat4 ViewMatrix = translate(mat4(), vec3(-3.0f, 0.0f, 0.0f));
-
-	/*glm::mat4 CameraMatrix = glm::lookAt(
-		cameraPosition, // the position of your camera, in world space
-		cameraTarget,   // where you want to look at, in world space
-		upVector        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
-	);*/
-
-	// set modelMatrix location
-	GLuint modelMatrixLocation = glGetUniformLocation(programID, "modelMatrix");
 
 	//Current sdl event
 	SDL_Event event;
@@ -111,43 +77,20 @@ int main(int argc, char *argv[])
 					//Check individual keys by code (can be moved out into main switch statement if fewer keys need to be checked.)
 					switch (event.key.keysym.sym)
 					{
+						// Exit the game
 						case SDLK_ESCAPE:
 							gameRunning = false;
 							break;
 
-						case SDLK_UP:
-							position = position + vec3(0.0f, 0.01f, 0.0f);
-							break;
-
-						case SDLK_LEFT:
-							position = position + vec3(-0.01f, 0.0f, 0.0f);
-							break;
-
-						case SDLK_RIGHT:
-							position = position + vec3(0.01f, 0.0f, 0.0f);
-							break;
-
-						case SDLK_DOWN:
-							position = position + vec3(0.0f, -0.01f, 0.0f);
-							break;
-
-						case SDLK_7:
-							shapeScale = shapeScale + vec3(-0.01f, -0.01f, 0.0f);
-							break;
-
-						case SDLK_8:
-							shapeScale = shapeScale + vec3(0.01f, 0.01f, 0.0f);
-							break;
-
 						case SDLK_F11:
 							
-							//bool isFullscreen = Window.getIsFullscreen();
-							if (isFullscreen) {
-								isFullscreen = false;
+							// switch between fullscreen and window
+							if (window.getIsFullscreen()) {
+								window.setIsFullscreen();
 								SDL_SetWindowFullscreen(mainWindow, 0);
 							}
 							else {
-								isFullscreen = true;
+								window.setIsFullscreen();
 								SDL_SetWindowFullscreen(mainWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 							}
 							break;
@@ -158,42 +101,11 @@ int main(int argc, char *argv[])
 		}
 
 		//Update game and render with openGL
-		glClearColor(0.0, 0.0, 0.0, 1.0);
+		glClearColor(0.0, 0.5, 0.0, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		//Bind program
-		glUseProgram(programID);
-
-		mat4 modelMatrix = translate(position);
-		modelMatrix = glm::scale(modelMatrix, shapeScale);
-
-		// sends across modelMatrix
-		glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-
-		// 1st attribute buffer : vertices
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(
-			0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-		);
-		// Draw the triangle !
-		glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
-		glDisableVertexAttribArray(0);
 
 		SDL_GL_SwapWindow(mainWindow);
 	}
-
-	//Delete Program
-	glDeleteProgram(programID);
-	//Delete Buffer
-	glDeleteBuffers(1, &vertexbuffer);
-	//Delete Vertex Array
-	glDeleteVertexArrays(1, &VertexArrayID);
 	//Delete context
 	SDL_GL_DeleteContext(gl_Context);
 	//Close window
@@ -248,39 +160,5 @@ int initialiseContext()
 	}
 	return 0;
 }
-/*------------------------------------------------
-SDL Initialisation functions.
-Can be largely left alone.
-Currently use screen dimensions set in globals.h.
-------------------------------------------------*/
 
-int initaliseSDL()
-{
-	//initialise SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		std::cout << "Cannot initalise SDL " << SDL_GetError() << std::endl;
-		return -1;
-	}
-
-	//Initalise the main window
-	mainWindow = SDL_CreateWindow(global::WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, global::SCREEN_WIDTH, global::SCREEN_HEIGHT, SDL_WINDOW_SHOWN|SDL_WINDOW_OPENGL);
-	if (mainWindow == nullptr)
-	{
-		std::cout << "Cannot create window " << SDL_GetError() << std::endl;
-		SDL_Quit();
-		return -1;
-	}
-
-	//Initalise renderer
-	renderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
-	if (renderer == NULL)
-	{
-		std::cout << "Cannot initalise SDL" << SDL_GetError << std::endl;
-		SDL_Quit();
-		return -1;
-	}
-
-	return 0;
-}
 
