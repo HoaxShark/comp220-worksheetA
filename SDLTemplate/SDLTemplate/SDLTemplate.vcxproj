@@ -31,10 +31,6 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="frag.glsl" />
-    <None Include="vert.glsl" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{4002CED7-89CB-4311-8E12-C39810858895}</ProjectGuid>
