@@ -1,7 +1,6 @@
-﻿  Main.cpp
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\main.cpp(29): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\main.cpp(55): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  Initialise.cpp
+﻿  Game.cpp
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(18): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(90): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+  Main.cpp
   Generating Code...
-cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
-  SDLTemplate.vcxproj -> C:\Users\HoaxShark\Desktop\Uni Year 2\Comp 220\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
+  SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
