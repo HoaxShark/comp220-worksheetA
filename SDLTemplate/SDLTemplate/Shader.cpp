@@ -7,7 +7,6 @@ GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_pat
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 	// Read the Vertex Shader code from the text file
-	// TODO function for this
 	std::string VertexShaderCode;
 	std::ifstream VertexShaderStream(vertex_file_path, std::ios::in);
 	if (VertexShaderStream.is_open()) {
@@ -44,7 +43,6 @@ GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_pat
 	glCompileShader(VertexShaderID);
 
 	// Check Vertex Shader
-	//TODO turn into a function avoid code duplication
 	// Check result
 	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
 	// Gets result length

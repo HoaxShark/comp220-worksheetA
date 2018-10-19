@@ -25,6 +25,11 @@ class Game
 {
 public:
 
+	Game();
+	~Game();
+	void gameLoop();
+
+private:
 	SDL_Renderer* renderer = NULL;
 	SDL_Window* mainWindow = nullptr;
 	SDL_GLContext gl_Context = nullptr;
@@ -35,7 +40,6 @@ public:
 
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);
-	float rotateAngle = 0.0f;
 	// set up perspective camera
 	mat4 proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 100.0f);
 	mat4 view;
@@ -50,18 +54,14 @@ public:
 	GLuint viewLocation;
 	GLuint projLocation;
 
+	float rotateAngle = 0.0f;
 	float lastTime;
 	float tickTime;
 	float deltaTime;
-
 	int fullWidth;
 	int fullHeight;
 
 	void initialiseGame();
-	void gameLoop();
 	void gameQuit();
-
-	Game();
-	~Game();
 };
 
