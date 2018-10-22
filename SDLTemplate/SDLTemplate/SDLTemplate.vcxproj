@@ -39,7 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="frag.glsl" />
+    <None Include="fragTextured.glsl" />
     <None Include="vert.glsl" />
+    <None Include="vertTextured.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -93,21 +95,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\..\libraries\SDL2_image-2.0.3\include;$(ProjectDir)\..\libraries\SDL2-2.0.8\include;$(ProjectDir)\..\libraries\glm;$(ProjectDir)\..\libraries\glew-2.1.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\..\libraries\SDL2_image-2.0.3\lib\x86;$(ProjectDir)\..\libraries\SDL2-2.0.8\lib\x86;$(ProjectDir)\..\libraries\glew-2.1.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\..\libraries\SDL2_image-2.0.3\include;$(ProjectDir)\..\libraries\SDL2-2.0.8\include;$(ProjectDir)\..\libraries\glm;$(ProjectDir)\..\libraries\glew-2.1.0\include;$(ProjectDir)\..\libraries\assimp-4.1.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\..\libraries\SDL2_image-2.0.3\lib\x86;$(ProjectDir)\..\libraries\SDL2-2.0.8\lib\x86;$(ProjectDir)\..\libraries\glew-2.1.0\lib\Release\Win32;$(ProjectDir)\..\libraries\assimp-4.1.0\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>libraries\SDLTemplate\libraries\glm;libraries\SDL2-2.0.8\include;libraries\SDL2_image-2.0.3\include;libraries\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>libraries\SDLTemplate\libraries\glm;libraries\SDL2-2.0.8\include;libraries\SDL2_image-2.0.3\include;libraries\assimp-4.1.0\include;libraries\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)\..\libraries\glew-2.1.0\lib\Release\Win32;$(ProjectDir)\..\libraries\SDL2-2.0.8\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\libraries\glew-2.1.0\lib\Release\Win32;$(ProjectDir)\..\libraries\assimp-4.1.0\lib\x86;$(ProjectDir)\..\libraries\SDL2_image-2.0.3\lib\x86;$(ProjectDir)\..\libraries\SDL2-2.0.8\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)\..\libraries\SDL2_image-2.0.3\lib\x86\libjpeg-9.dll "$(OutDir)\libjpeg-9.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
