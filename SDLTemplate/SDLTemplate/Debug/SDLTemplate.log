@@ -1,6 +1,2 @@
-﻿  Game.cpp
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(18): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(90): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  Main.cpp
-  Generating Code...
+﻿  Texture.cpp
   SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe

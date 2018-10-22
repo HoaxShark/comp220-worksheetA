@@ -40,6 +40,7 @@ private:
 
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);
+	vec3 viewPos = vec3(1.0f);
 	// set up perspective camera
 	mat4 proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 100.0f);
 	mat4 view;

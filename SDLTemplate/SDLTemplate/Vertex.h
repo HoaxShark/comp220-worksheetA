@@ -5,4 +5,6 @@ struct Vertex
 {
 	float x, y, z;
 	float r, g, b, a;
+	// floats for texture coordinates
+	float tu, tv;
 };
