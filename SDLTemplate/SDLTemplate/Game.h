@@ -56,6 +56,13 @@ private:
 	GLuint projLocation;
 	GLuint textureID;
 
+
+	// init camera variables 
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	float baseCameraSpeed = 0.0025f;
+
 	float rotateAngle = 0.0f;
 	float lastTime;
 	float tickTime;

@@ -30,6 +30,19 @@ void Game::initialiseGame()
 	init.SetOpenGLAttributes();
 	gl_Context = init.initialiseContext(mainWindow);
 	init.initaliseGlew(mainWindow);
+
+	// set camera position
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	// set camera target
+	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	// calculate camera direction
+	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+	// set the up baseline
+	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+	// get the cross product of up and camera direction to be used as right
+	glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+	// get the cross product of up and right to get the up direction
+	glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 }
 
 void Game::gameLoop()
@@ -98,6 +111,9 @@ void Game::gameLoop()
 		tickTime = SDL_GetTicks();
 		deltaTime = (tickTime - lastTime);
 
+		// set camera speed relative to delta time
+		float cameraSpeed = baseCameraSpeed * deltaTime;
+
 		//Check for SDL events
 		if (SDL_PollEvent(&event))
 		{
@@ -119,20 +135,20 @@ void Game::gameLoop()
 					gameRunning = false;
 					break;
 
-				case SDLK_UP:
-					position = position + vec3(0.0f, 0.1f, 0.0f);
+				case SDLK_w:
+					cameraPos += cameraSpeed * cameraFront;
 					break;
 
-				case SDLK_LEFT:
-					position = position + vec3(-0.1f, 0.0f, 0.0f);
+				case SDLK_a:
+					cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 					break;
 
-				case SDLK_RIGHT:
-					position = position + vec3(0.1f, 0.0f, 0.0f);
+				case SDLK_s:
+					cameraPos -= cameraSpeed * cameraFront;
 					break;
 
-				case SDLK_DOWN:
-					position = position + vec3(0.0f, -0.1f, 0.0f);
+				case SDLK_d:
+					cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 					break;
 
 				case SDLK_7:
@@ -174,12 +190,13 @@ void Game::gameLoop()
 		glUseProgram(programID);
 
 		mat4 modelMatrix = translate(position);
-		// rotate around the z axis
-		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateAngle), glm::vec3(0.0, 0.0, 1.0));
+		// rotate around the z and y axis
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateAngle), glm::vec3(0.0, 1.0, 1.0));
 		// scale to vector shapeScale
-		modelMatrix = glm::scale(modelMatrix, shapeScale);		rotateAngle += 0.01f;
+		modelMatrix = glm::scale(modelMatrix, shapeScale);		rotateAngle += 5.0f;
 		// note that we're translating the scene in the reverse direction of where we want to move
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -0.001f));
+		glm::mat4 view;
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
 		// sends across modelMatrix
 		glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));

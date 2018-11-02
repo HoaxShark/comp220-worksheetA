@@ -1,2 +1,7 @@
-﻿  SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
+﻿  Game.cpp
+d:\temp\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(18): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\temp\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(111): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+  Main.cpp
+  Generating Code...
+  SDLTemplate.vcxproj -> D:\temp\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
           1 file(s) copied.
