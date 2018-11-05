@@ -5,6 +5,7 @@
 #include <SDL_opengl.h>
 #include <glm\glm.hpp>
 #include "Shader.h"
+#include "Model.h"
 
 #include <time.h>
 #include "Window.h"

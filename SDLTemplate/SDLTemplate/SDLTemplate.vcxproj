@@ -40,6 +40,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cube.nff" />
     <None Include="frag.glsl" />
     <None Include="fragTextured.glsl" />
     <None Include="vert.glsl" />

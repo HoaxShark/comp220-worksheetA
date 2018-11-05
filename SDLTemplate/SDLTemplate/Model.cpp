@@ -31,15 +31,25 @@ bool loadModelFromFile(const std::string & filename, GLuint VBO, GLuint EBO, uns
 			ourVertex.x = currentAIPosition.x;
 			ourVertex.y = currentAIPosition.y;
 			ourVertex.z = currentAIPosition.z;
+			ourVertex.r = 1.0f; ourVertex.b = 1.0f; ourVertex.g = 1.0f; ourVertex.r = 1.0f;
+
+			// push ourVertec into the vertices
+			vertices.push_back(ourVertex);
+
 		}
 		// loop through the faces of the current mesh
 		for (unsigned int f = 0; f < currentAIMesh->mNumFaces; f++)
 		{
 			const aiFace currentFace = currentAIMesh->mFaces[f];
+			
+			// push the 3 indices of the face
+			indices.push_back(currentFace.mIndices[0]);
+			indices.push_back(currentFace.mIndices[1]);
+			indices.push_back(currentFace.mIndices[2]);
 		}
 	}
 
 	return true;
 }
 
-/* TODO carry on https://www.youtube.com/watch?v=4Q3KDZMTaTw&feature=youtu.be from 24:30*/
+/* TODO carry on https://www.youtube.com/watch?v=4Q3KDZMTaTw&feature=youtu.be from 30:30*/

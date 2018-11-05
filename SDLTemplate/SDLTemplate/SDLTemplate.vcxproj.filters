@@ -74,5 +74,6 @@
     <None Include="vert.glsl" />
     <None Include="fragTextured.glsl" />
     <None Include="vertTextured.glsl" />
+    <None Include="cube.nff" />
   </ItemGroup>
 </Project>
