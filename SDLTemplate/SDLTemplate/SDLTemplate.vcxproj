@@ -22,6 +22,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Initialise.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -30,6 +31,7 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="Initialise.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -106,12 +108,13 @@
       <AdditionalIncludeDirectories>libraries\SDLTemplate\libraries\glm;libraries\SDL2-2.0.8\include;libraries\SDL2_image-2.0.3\include;libraries\assimp-4.1.0\include;libraries\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;OpenGL32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\libraries\glew-2.1.0\lib\Release\Win32;$(ProjectDir)\..\libraries\assimp-4.1.0\lib\x86;$(ProjectDir)\..\libraries\SDL2_image-2.0.3\lib\x86;$(ProjectDir)\..\libraries\SDL2-2.0.8\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)\..\libraries\SDL2_image-2.0.3\lib\x86\libjpeg-9.dll "$(OutDir)\libjpeg-9.dll"</Command>
+      <Command>copy $(ProjectDir)\..\libraries\SDL2_image-2.0.3\lib\x86\libjpeg-9.dll "$(OutDir)\libjpeg-9.dll"
+copy $(ProjectDir)\..\libraries\assimp-4.1.0\bin\x86\assimp-vc140-mt.dll "$(OutDir)\assimp-vc140-mt.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
