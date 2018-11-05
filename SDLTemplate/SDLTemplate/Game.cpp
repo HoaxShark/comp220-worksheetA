@@ -18,9 +18,9 @@ void Game::initialiseGame()
 	std::srand(time(NULL));
 
 	//Initialise times
-	float lastTime = 0;
-	float tickTime = 0;
-	float deltaTime = 0;
+	float lastTime = 0.0f;
+	float tickTime = 0.0f;
+	float deltaTime = 0.0f;
 
 	//Initalise the SDL components
 	mainWindow = init.initaliseSDLWindow();
@@ -106,13 +106,15 @@ void Game::gameLoop()
 	------------------------*/
 	while (gameRunning)
 	{
+		/* TODO fix delta time*/
 		//Calculate deltaTime
-		lastTime = tickTime;
-		tickTime = SDL_GetTicks();
-		deltaTime = (tickTime - lastTime);
+		//lastTime = tickTime;
+		//tickTime = SDL_GetTicks();
+		//deltaTime = (tickTime - lastTime);
 
 		// set camera speed relative to delta time
-		float cameraSpeed = baseCameraSpeed * deltaTime;
+		//float cameraSpeed = baseCameraSpeed * deltaTime;
+		//std::cout << lastTime << std::endl;
 
 		//Check for SDL events
 		if (SDL_PollEvent(&event))
@@ -136,19 +138,19 @@ void Game::gameLoop()
 					break;
 
 				case SDLK_w:
-					cameraPos += cameraSpeed * cameraFront;
+					cameraPos += baseCameraSpeed * cameraFront;
 					break;
 
 				case SDLK_a:
-					cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+					cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * baseCameraSpeed;
 					break;
 
 				case SDLK_s:
-					cameraPos -= cameraSpeed * cameraFront;
+					cameraPos -= baseCameraSpeed * cameraFront;
 					break;
 
 				case SDLK_d:
-					cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+					cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * baseCameraSpeed;
 					break;
 
 				case SDLK_7:
@@ -191,9 +193,9 @@ void Game::gameLoop()
 
 		mat4 modelMatrix = translate(position);
 		// rotate around the z and y axis
-		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateAngle), glm::vec3(0.0, 1.0, 1.0));
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateAngle), glm::vec3(0.0, 0.0, 1.0));
 		// scale to vector shapeScale
-		modelMatrix = glm::scale(modelMatrix, shapeScale);		rotateAngle += 5.0f;
+		modelMatrix = glm::scale(modelMatrix, shapeScale);		//rotateAngle += 5.0f;
 		// note that we're translating the scene in the reverse direction of where we want to move
 		glm::mat4 view;
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
