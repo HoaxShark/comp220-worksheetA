@@ -1,13 +1,7 @@
 ﻿  Game.cpp
 d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(18): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Initialise.cpp
   Main.cpp
-  Mesh.cpp
   Model.cpp
-  Shader.cpp
-  stdafx.cpp
-  Texture.cpp
-  Window.cpp
   Generating Code...
   SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
   D:\comp220-worksheetA\SDLTemplate\SDLTemplate\\..\libraries\SDL2_image-2.0.3\lib\x86\libjpeg-9.dll
