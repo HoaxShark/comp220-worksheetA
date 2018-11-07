@@ -8,7 +8,6 @@ GLuint loadTextureFromFile(const std::string& filename)
 	GLenum	textureFormat = GL_RGB;
 	GLenum	internalFormat = GL_RGB8;
 
-	// load img to surface from file
 	SDL_Surface * surface = IMG_Load(filename.c_str());
 	if (surface == nullptr)
 	{
@@ -16,7 +15,6 @@ GLuint loadTextureFromFile(const std::string& filename)
 		return 0;
 	}
 
-	// check for number of colours per pixel
 	GLint	nOfColors = surface->format->BytesPerPixel;
 	if (nOfColors == 4)					//	contains	an	alpha	channel
 	{
@@ -41,12 +39,9 @@ GLuint loadTextureFromFile(const std::string& filename)
 		}
 	}
 
-	// generate textureID
 	glGenTextures(1, &textureID);
-	// bind textureID
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	// Copy from surface to openGL texture
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, surface->w, surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
 
 

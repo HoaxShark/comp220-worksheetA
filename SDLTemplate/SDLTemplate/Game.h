@@ -72,6 +72,6 @@ private:
 	int fullHeight;
 
 	void initialiseGame();
-	void gameQuit();
+	void gameQuit(std::vector<Mesh*> meshes);
 };
 
