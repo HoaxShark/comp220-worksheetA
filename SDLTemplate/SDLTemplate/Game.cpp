@@ -49,6 +49,10 @@ void Game::gameLoop()
 {
 	initialiseGame();
 
+	//Mouse setup
+	SDL_ShowCursor(0);
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+
 	// Hold shader programme, rename to what the ID does
 	GLuint programID = LoadShaders("vertTextured.glsl", "fragTextured.glsl");
 
@@ -94,7 +98,7 @@ void Game::gameLoop()
 		//std::cout << lastTime << std::endl;
 
 		//Check for SDL events
-		if (SDL_PollEvent(&event))
+		while (SDL_PollEvent(&event))
 		{
 			//Events found
 			switch (event.type)
@@ -102,6 +106,12 @@ void Game::gameLoop()
 				//Window closed
 			case SDL_QUIT:
 				gameRunning = false;
+				break;
+
+			case SDL_MOUSEMOTION:
+				// pass event.motion.xrel and event.motion.yrel here
+				mouseUpdate(event.motion.xrel, event.motion.yrel);
+				// then update mouse pos
 				break;
 
 			case SDL_KEYDOWN:
@@ -154,7 +164,6 @@ void Game::gameLoop()
 					}
 					break;
 				}
-
 				break;
 			}
 		}
@@ -176,6 +185,8 @@ void Game::gameLoop()
 		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateAngle), glm::vec3(0.0, 0.0, 1.0));
 		// scale to vector shapeScale
 		modelMatrix = glm::scale(modelMatrix, shapeScale);
+
+
 		// note that we're translating the scene in the reverse direction of where we want to move
 		glm::mat4 view;
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
@@ -184,6 +195,7 @@ void Game::gameLoop()
 		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(proj));
 		glUniform1i(textureUniformLocation, 0);
+
 
 		// draw loop
 		for (Mesh*currentMesh : meshes)
@@ -231,4 +243,34 @@ void Game::gameQuit(std::vector<Mesh*> meshes)
 	//Close window
 	SDL_DestroyWindow(mainWindow);
 	SDL_Quit();
+}
+
+void Game::mouseUpdate(float xPos, float yPos)
+{
+	// multiply by the sensitivity of the mouse set in game.h
+	float sensitivity = 0.05f;
+	xPos *= sensitivity;
+	yPos *= sensitivity;
+
+	// add the offsets to the pitch and yaw
+	yaw += xPos;
+	pitch += yPos;
+
+	// constrain pitch to stop camera flipping
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	moveCamera();
+	std::cout << "xPos: " << xPos << "  yPos: " << yPos << std::endl;
+}
+
+void Game::moveCamera()
+{
+	glm::vec3 front;
+	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+	front.y = -sin(glm::radians(pitch));
+	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+	cameraFront = glm::normalize(front);
 }
