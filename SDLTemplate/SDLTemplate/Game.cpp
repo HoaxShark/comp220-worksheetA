@@ -30,19 +30,6 @@ void Game::initialiseGame()
 	init.SetOpenGLAttributes();
 	gl_Context = init.initialiseContext(mainWindow);
 	init.initaliseGlew(mainWindow);
-
-	// set camera position
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	// set camera target
-	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-	// calculate camera direction
-	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-	// set the up baseline
-	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-	// get the cross product of up and camera direction to be used as right
-	glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-	// get the cross product of up and right to get the up direction
-	glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 }
 
 void Game::gameLoop()
@@ -111,7 +98,6 @@ void Game::gameLoop()
 			case SDL_MOUSEMOTION:
 				// pass event.motion.xrel and event.motion.yrel here
 				mouseUpdate(event.motion.xrel, event.motion.yrel);
-				// then update mouse pos
 				break;
 
 			case SDL_KEYDOWN:
@@ -125,19 +111,19 @@ void Game::gameLoop()
 					break;
 
 				case SDLK_w:
-					cameraPos += baseCameraSpeed * cameraFront;
+					camera.increaseCameraPos(camera.getBaseCameraSpeed()*camera.getCameraFront());
 					break;
 
 				case SDLK_a:
-					cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * baseCameraSpeed;
+					camera.increaseCameraPos(-glm::normalize(glm::cross(camera.getCameraFront(), camera.getCameraUp())) * camera.getBaseCameraSpeed());
 					break;
 
 				case SDLK_s:
-					cameraPos -= baseCameraSpeed * cameraFront;
+					camera.increaseCameraPos(-camera.getBaseCameraSpeed()*camera.getCameraFront());
 					break;
 
 				case SDLK_d:
-					cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * baseCameraSpeed;
+					camera.increaseCameraPos(glm::normalize(glm::cross(camera.getCameraFront(), camera.getCameraUp())) * camera.getBaseCameraSpeed());
 					break;
 
 				case SDLK_7:
@@ -189,7 +175,7 @@ void Game::gameLoop()
 
 		// note that we're translating the scene in the reverse direction of where we want to move
 		glm::mat4 view;
-		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		view = glm::lookAt(camera.getCameraPos(), camera.getCameraPos() + camera.getCameraFront(), camera.getCameraUp());
 		// sends across modelMatrix
 		glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
@@ -272,5 +258,5 @@ void Game::moveCamera()
 	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
 	front.y = -sin(glm::radians(pitch));
 	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-	cameraFront = glm::normalize(front);
+	camera.setCameraFront(glm::normalize(front));
 }

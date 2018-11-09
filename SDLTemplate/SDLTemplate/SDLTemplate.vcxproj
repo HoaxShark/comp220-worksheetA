@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Initialise.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Initialise.h" />
     <ClInclude Include="Mesh.h" />
@@ -111,6 +113,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>libraries\SDLTemplate\libraries\glm;libraries\SDL2-2.0.8\include;libraries\SDL2_image-2.0.3\include;libraries\assimp-4.1.0\include;libraries\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;OpenGL32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>

@@ -20,6 +20,7 @@
 #include <time.h>
 #include "Vertex.h"
 #include "Texture.h"
+#include "Camera.h"
 
 using namespace glm;
 
@@ -39,6 +40,7 @@ private:
 
 	Window window;
 	Initialise init;
+	Camera camera;
 
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);
@@ -57,19 +59,13 @@ private:
 	GLuint projLocation;
 	GLuint textureID;
 
-
-	// init camera variables 
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	float baseCameraSpeed = 0.025f;
-
 	// mouse movement variables
 	float lastX = window.screenWidth / 2;
 	float lastY = window.screenHeight / 2;
 	float sensitivity = 0.05f;
 	float pitch = 0.0f;
-	float yaw = 0.0f;
+	float yaw = 270.0f;
+	bool firstMouse = true;
 
 	float rotateAngle = 0.0f;
 	float lastTime;
