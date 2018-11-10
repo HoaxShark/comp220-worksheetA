@@ -14,19 +14,19 @@ void Game::initialiseGame()
 {
 	bool inDevelopMode = false;
 
-	//Initalise random seed
+	// Initalise random seed
 	std::srand(time(NULL));
 
-	//Initialise times
+	// Initialise times
 	float lastTime = 0.0f;
 	float tickTime = 0.0f;
 	float deltaTime = 0.0f;
 
-	//Initalise the SDL components
+	// Initalise the SDL components
 	mainWindow = init.initaliseSDLWindow();
 	renderer = init.initaliseSDLRenderer();
 
-	//Initalise OpenGL 
+	// Initalise OpenGL 
 	init.SetOpenGLAttributes();
 	gl_Context = init.initialiseContext(mainWindow);
 	init.initaliseGlew(mainWindow);
@@ -36,7 +36,7 @@ void Game::gameLoop()
 {
 	initialiseGame();
 
-	//Mouse setup
+	// Mouse setup
 	SDL_ShowCursor(0);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
@@ -44,10 +44,6 @@ void Game::gameLoop()
 	GLuint programID = LoadShaders("vertTextured.glsl", "fragTextured.glsl");
 
 	GLuint textureID = loadTextureFromFile("Tank1DF.png");
-
-	//unsigned int numberOfVerts = 0;
-	//unsigned int numberOfIndices = 0;
-	//loadModelFromFile("Tank1.fbx", vertexbuffer, elementbuffer, numberOfVerts, numberOfIndices);
 
 	std::vector<Mesh*> meshes;
 	loadMeshesFromFile("Tank1.fbx", meshes);
@@ -58,15 +54,7 @@ void Game::gameLoop()
 	GLuint projLocation = glGetUniformLocation(programID, "proj");
 	GLuint textureUniformLocation = glGetUniformLocation(programID, "textureSampler");
 
-
-
-	// if we want another texture do the following
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, anothertextureID);
-
-	
-
-	//Current sdl event
+	// Current sdl event
 	SDL_Event event;
 
 	/*------------------------
@@ -74,64 +62,37 @@ void Game::gameLoop()
 	------------------------*/
 	while (gameRunning)
 	{
-		/* TODO fix delta time*/
 		//Calculate deltaTime
-		//lastTime = tickTime;
-		//tickTime = SDL_GetTicks();
-		//deltaTime = (tickTime - lastTime);
-
-		// set camera speed relative to delta time
-		//float cameraSpeed = baseCameraSpeed * deltaTime;
-		//std::cout << lastTime << std::endl;
+		lastTime = tickTime;
+		tickTime = SDL_GetTicks();
+		deltaTime = (tickTime - lastTime);
 
 		//Check for SDL events
 		while (SDL_PollEvent(&event))
 		{
-			//Events found
+			// Events found
 			switch (event.type)
 			{
-				//Window closed
+				// Window closed
 			case SDL_QUIT:
 				gameRunning = false;
 				break;
 
 			case SDL_MOUSEMOTION:
 				// pass event.motion.xrel and event.motion.yrel here
-				mouseUpdate(event.motion.xrel, event.motion.yrel);
+				player.mouseUpdate(event.motion.xrel, event.motion.yrel);
 				break;
 
 			case SDL_KEYDOWN:
+				// Update key map
+				player.manageKeyboardEvents(event);
 
-				//Check individual keys by code (can be moved out into main switch statement if fewer keys need to be checked.)
+				// Check individual keys by code
 				switch (event.key.keysym.sym)
 				{
 					// Exit the game
 				case SDLK_ESCAPE:
 					gameRunning = false;
-					break;
-
-				case SDLK_w:
-					camera.increaseCameraPos(camera.getBaseCameraSpeed()*camera.getCameraFront());
-					break;
-
-				case SDLK_a:
-					camera.increaseCameraPos(-glm::normalize(glm::cross(camera.getCameraFront(), camera.getCameraUp())) * camera.getBaseCameraSpeed());
-					break;
-
-				case SDLK_s:
-					camera.increaseCameraPos(-camera.getBaseCameraSpeed()*camera.getCameraFront());
-					break;
-
-				case SDLK_d:
-					camera.increaseCameraPos(glm::normalize(glm::cross(camera.getCameraFront(), camera.getCameraUp())) * camera.getBaseCameraSpeed());
-					break;
-
-				case SDLK_7:
-					shapeScale = shapeScale + vec3(-0.01f, -0.01f, 0.0f);
-					break;
-
-				case SDLK_8:
-					shapeScale = shapeScale + vec3(0.01f, 0.01f, 0.0f);
 					break;
 
 				case SDLK_F11:
@@ -151,10 +112,18 @@ void Game::gameLoop()
 					break;
 				}
 				break;
+
+			case SDL_KEYUP:
+				// Update key map
+				player.manageKeyboardEvents(event);
+				break;
 			}
 		}
 
-		//Update game and render with openGL
+		// move depending on pressed keys
+		player.handleKeyboard(deltaTime);
+
+		// Update game and render with openGL
 		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.0, 0.5, 0.0, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
@@ -163,19 +132,14 @@ void Game::gameLoop()
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
-		//Bind program
+		// Bind program
 		glUseProgram(programID);
 
 		mat4 modelMatrix = translate(position);
-		// rotate around the z and y axis
-		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateAngle), glm::vec3(0.0, 0.0, 1.0));
-		// scale to vector shapeScale
-		modelMatrix = glm::scale(modelMatrix, shapeScale);
-
 
 		// note that we're translating the scene in the reverse direction of where we want to move
 		glm::mat4 view;
-		view = glm::lookAt(camera.getCameraPos(), camera.getCameraPos() + camera.getCameraFront(), camera.getCameraUp());
+		view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
 		// sends across modelMatrix
 		glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
@@ -191,7 +155,7 @@ void Game::gameLoop()
 
 		SDL_GL_SwapWindow(mainWindow);
 	}
-	//Call all quit functions
+	// Call all quit functions
 	gameQuit(meshes);
 }
 
@@ -221,42 +185,15 @@ void Game::gameQuit(std::vector<Mesh*> meshes)
 	}
 	// final flush of vector
 	meshes.clear();
+	// clear key events
+	player.clearEvents();
+	// delete textures
 	glDeleteTextures(1, &textureID);
-	//Delete Program
+	// delete Program
 	glDeleteProgram(programID);
-	//Delete context
+	// delete context
 	SDL_GL_DeleteContext(gl_Context);
-	//Close window
+	// close window
 	SDL_DestroyWindow(mainWindow);
 	SDL_Quit();
-}
-
-void Game::mouseUpdate(float xPos, float yPos)
-{
-	// multiply by the sensitivity of the mouse set in game.h
-	float sensitivity = 0.05f;
-	xPos *= sensitivity;
-	yPos *= sensitivity;
-
-	// add the offsets to the pitch and yaw
-	yaw += xPos;
-	pitch += yPos;
-
-	// constrain pitch to stop camera flipping
-	if (pitch > 89.0f)
-		pitch = 89.0f;
-	if (pitch < -89.0f)
-		pitch = -89.0f;
-
-	moveCamera();
-	std::cout << "xPos: " << xPos << "  yPos: " << yPos << std::endl;
-}
-
-void Game::moveCamera()
-{
-	glm::vec3 front;
-	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
-	front.y = -sin(glm::radians(pitch));
-	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-	camera.setCameraFront(glm::normalize(front));
 }

@@ -1,19 +1,7 @@
-﻿  Camera.cpp
-  Game.cpp
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.h(63): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.h(64): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(18): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(100): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
-  Main.cpp
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.h(63): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.h(64): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
-  D:\comp220-worksheetA\SDLTemplate\SDLTemplate\\..\libraries\SDL2_image-2.0.3\lib\x86\libjpeg-9.dll
-  D:\comp220-worksheetA\SDLTemplate\SDLTemplate\\..\libraries\SDL2_image-2.0.3\lib\x86\libpng16-16.dll
-  D:\comp220-worksheetA\SDLTemplate\SDLTemplate\\..\libraries\SDL2_image-2.0.3\lib\x86\libtiff-5.dll
-  D:\comp220-worksheetA\SDLTemplate\SDLTemplate\\..\libraries\SDL2_image-2.0.3\lib\x86\libwebp-7.dll
-  D:\comp220-worksheetA\SDLTemplate\SDLTemplate\\..\libraries\SDL2_image-2.0.3\lib\x86\SDL2_image.dll
-  D:\comp220-worksheetA\SDLTemplate\SDLTemplate\\..\libraries\SDL2_image-2.0.3\lib\x86\zlib1.dll
-          6 file(s) copied.
-          1 file(s) copied.
+﻿  Game.cpp
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(18): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(67): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(83): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+  SDLTemplate.vcxproj -> C:\Users\HoaxShark\Desktop\Uni Year 2\Comp 220\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe

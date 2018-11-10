@@ -56,7 +56,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{4002CED7-89CB-4311-8E12-C39810858895}</ProjectGuid>
     <RootNamespace>SDLTemplate</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -121,8 +121,8 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)\..\libraries\SDL2_image-2.0.3\lib\x86\*.dll "$(OutDir)\*.dll"
-copy $(ProjectDir)\..\libraries\assimp-4.1.0\bin\x86\assimp-vc140-mt.dll "$(OutDir)\assimp-vc140-mt.dll"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

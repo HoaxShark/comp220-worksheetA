@@ -20,7 +20,7 @@
 #include <time.h>
 #include "Vertex.h"
 #include "Texture.h"
-#include "Camera.h"
+#include "PlayerController.h"
 
 using namespace glm;
 
@@ -41,6 +41,7 @@ private:
 	Window window;
 	Initialise init;
 	Camera camera;
+	PlayerController player;
 
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);
@@ -59,13 +60,13 @@ private:
 	GLuint projLocation;
 	GLuint textureID;
 
-	// mouse movement variables
+	/*// mouse movement variables
 	float lastX = window.screenWidth / 2;
 	float lastY = window.screenHeight / 2;
 	float sensitivity = 0.05f;
 	float pitch = 0.0f;
 	float yaw = 270.0f;
-	bool firstMouse = true;
+	bool firstMouse = true;*/
 
 	float rotateAngle = 0.0f;
 	float lastTime;
@@ -77,8 +78,8 @@ private:
 	void initialiseGame();
 	void gameQuit(std::vector<Mesh*> meshes);
 
-	// updates mouse movement
+	/*// updates mouse movement
 	void mouseUpdate(float xPos, float yPos);
-	void moveCamera();
+	void moveCamera();*/
 };
 
