@@ -14,7 +14,11 @@ out vec4 vertexColourOut;
 
 void main()
 {
-	gl_Position = proj* view * modelMatrix * vec4(vertexPos,1.0);
+	mat4 mvpMatrix = proj* view * modelMatrix;
+	vec4 mvpPosition = mvpMatrix*vec4(vertexPos,1.0f);
+
+	gl_Position = mvpPosition;
+
 	vertexColourOut = vertexColour;
 
 	vertextTextureCoordsOut = vertexTextureCoords;
