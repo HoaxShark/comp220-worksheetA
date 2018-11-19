@@ -11,7 +11,7 @@ public:
 	Mesh();
 	~Mesh();
 
-	void copyMeshData(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices);
+	void copyBufferData(Vertex *pVerts, unsigned int numberOfVerts, unsigned int *pIndices, unsigned int numberOfIndices);
 
 	void init();
 
@@ -24,7 +24,21 @@ private:
 	GLuint m_EBO; // element buffer object
 	GLuint m_VAO; // vertex array buffer
 
-	unsigned int m_NumberOfVerts;
+	unsigned int m_NumberOfVertices;
 	unsigned int m_NumberOfIndices;
 };
 
+class MeshCollection
+{
+public:
+	MeshCollection();
+	~MeshCollection();
+
+	void addMesh(Mesh *pMesh);
+
+	void render();
+	void destroy();
+
+private:
+	std::vector<Mesh*> m_Meshes;
+};

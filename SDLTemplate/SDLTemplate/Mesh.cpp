@@ -6,7 +6,7 @@ Mesh::Mesh()
 	m_EBO = 0;
 	m_VAO = 0;
 	m_NumberOfIndices = 0;
-	m_NumberOfVerts = 0;
+	m_NumberOfVertices = 0;
 }
 
 
@@ -15,54 +15,35 @@ Mesh::~Mesh()
 	destroy();
 }
 
-void Mesh::copyMeshData(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices)
+void Mesh::copyBufferData(Vertex * pVerts, unsigned int numberOfVerts, unsigned int * pIndices, unsigned int numberOfIndices)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, numberOfVerts * sizeof(Vertex), pVerts, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, numberOfIndices * sizeof(unsigned int), pIndices, GL_STATIC_DRAW);
 
+	m_NumberOfIndices = numberOfIndices;
+	m_NumberOfVertices = numberOfVerts;
 	glBindVertexArray(m_VAO);
-
-	// 1st attribute buffer : vertices
+	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer
-	(
-		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		sizeof(Vertex),     // stride
-		(void*)0            // array buffer offset
-	);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
 
-	// 2nd attribute buffer : colour
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer
-	(
-		1,
-		4,
-		GL_FLOAT,
-		GL_FALSE,
-		sizeof(Vertex),
-		(void*)(3 * sizeof(float))
-	);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(float)));
 
-	// 3rd attribute buffer : texture coords
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer
-	(
-		2,
-		2,
-		GL_FLOAT,
-		GL_FALSE,
-		sizeof(Vertex),
-		(void*)(7 * sizeof(float))
-	);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(7 * sizeof(float)));
 
-	m_NumberOfVerts = vertices.size();
-	m_NumberOfIndices = indices.size();
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(9 * sizeof(float)));
+
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(12 * sizeof(float)));
+
+	glEnableVertexAttribArray(5);
+	glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(15 * sizeof(float)));
 }
 
 void Mesh::init()
@@ -102,4 +83,55 @@ void Mesh::render()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 
 	glDrawElements(GL_TRIANGLES, m_NumberOfIndices, GL_UNSIGNED_INT, 0);
+}
+
+MeshCollection::MeshCollection()
+{
+}
+
+MeshCollection::~MeshCollection()
+{
+	destroy();
+}
+
+// add new mesh to the collection
+void MeshCollection::addMesh(Mesh * pMesh)
+{
+	m_Meshes.push_back(pMesh);
+}
+
+// loop through all meshes in the collection and call render on them
+void MeshCollection::render()
+{
+	for (Mesh *pMesh : m_Meshes)
+	{
+		pMesh->render();
+	}
+}
+
+void MeshCollection::destroy()
+{
+	// Delete the data in meshes - can't use the standard for loop as you can't modifiy anything instide the loop
+	auto iter = m_Meshes.begin();
+	// while iter isn't the end of meshes
+	while (iter != m_Meshes.end())
+	{
+		// check iter has memory
+		if ((*iter))
+		{
+			// destroy the mesh
+			(*iter)->destroy();
+			// delete the memory
+			delete (*iter);
+			// erase the slot in the vector and return new iter
+			iter = m_Meshes.erase(iter);
+		}
+		else
+		{
+			// if no memory move on
+			iter++;
+		}
+	}
+	// final flush of vector
+	m_Meshes.clear();
 }

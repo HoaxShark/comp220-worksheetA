@@ -1,5 +1,18 @@
 #include "Game.h"
 
+/* TODO:
+	use renderDoc for debugging very important for the coursework
+	game obejct class
+	mesh collection?
+	work off my feedback
+	joystick controls
+	render the game scene
+	create light with a base attached to camera with offset
+	throwable light
+	shadow casting from light
+	
+	consider orbiting planets/ moons
+	check out factory patterns for gameobject*/
 
 Game::Game()
 {
@@ -41,12 +54,30 @@ void Game::gameLoop()
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	// Hold shader programme, rename to what the ID does
-	GLuint programID = LoadShaders("vertTextured.glsl", "fragTextured.glsl");
+	//GLuint programID = LoadShaders("vertTextured.glsl", "fragTextured.glsl");
+
+	MeshCollection * tankMeshes = new MeshCollection();
+	loadMeshesFromFile("Tank1.fbx", tankMeshes);
+
+	Shader * texturedShader = new Shader();
+	texturedShader->Load("vertTextured.glsl", "fragTextured.glsl");
 
 	GLuint textureID = loadTextureFromFile("Tank1DF.png");
 
-	std::vector<Mesh*> meshes;
-	loadMeshesFromFile("Tank1.fbx", meshes);
+	GameObject * tankGO = new GameObject();
+	tankGO->SetPosition(0.0f, 0.0f, -50.0f);
+	tankGO->SetMesh(tankMeshes);
+	tankGO->SetShader(texturedShader);
+	tankGO->SetDiffuseTexture(textureID);
+
+	GameObjectList.push_back(tankGO);
+
+
+
+	//std::vector<Mesh*> meshes;
+	//loadMeshesFromFile("Tank1.fbx", meshes);
+
+
 
 	// set MVP matrix locations
 	GLuint modelMatrixLocation = glGetUniformLocation(programID, "modelMatrix");
@@ -94,7 +125,7 @@ void Game::gameLoop()
 				case SDLK_ESCAPE:
 					gameRunning = false;
 					break;
-
+					
 				case SDLK_F11:
 
 					// switch between fullscreen and window
@@ -123,6 +154,12 @@ void Game::gameLoop()
 		// move depending on pressed keys
 		player.handleKeyboard(deltaTime);
 
+		// update objects
+		for (GameObject * obj : GameObjectList)
+		{
+			obj->Update(deltaTime);
+		}
+
 		// Update game and render with openGL
 		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.0, 0.5, 0.0, 1.0);
@@ -148,43 +185,40 @@ void Game::gameLoop()
 
 
 		// draw loop
-		for (Mesh*currentMesh : meshes)
-		{
-			currentMesh->render();
+		//for (Mesh*currentMesh : meshes)
+		//{
+		//	currentMesh->render();
+		//}
+		
+		for (GameObject * obj : GameObjectList) {
+
+			Shader * currentShader = obj->GetShader();
+			currentShader->Use();
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, obj->GetDiffuseTexture());
+
+			glUniformMatrix4fv(currentShader->GetUniform("modelMatrix"), 1, GL_FALSE, glm::value_ptr(obj->GetModelTransformation()));
+			glUniformMatrix4fv(currentShader->GetUniform("viewMatrix"), 1, GL_FALSE, glm::value_ptr(view));
+			glUniformMatrix4fv(currentShader->GetUniform("projectionMatrix"), 1, GL_FALSE, glm::value_ptr(proj));
+			//glUniform1f(currentShader->GetUniform("morphBlendAlpha"), morphBlendAlpha);
+			glUniform1i(currentShader->GetUniform("diffuseTexture"), 0);
+
+
+			obj->Render();
 		}
 
 		SDL_GL_SwapWindow(mainWindow);
 	}
 	// Call all quit functions
-	gameQuit(meshes);
+	gameQuit();
 }
 
 // Clean up resources when the game is exited
-void Game::gameQuit(std::vector<Mesh*> meshes)
+void Game::gameQuit()
 {
-	// Delete the data in meshes - can't use the standard for loop as you can't modifiy anything instide the loop
-	auto iter = meshes.begin();
-	// while iter isn't the end of meshes
-	while (iter != meshes.end())
-	{
-		// check iter has memory
-		if ((*iter))
-		{
-			// destroy the mesh
-			(*iter)->destroy();
-			// delete the memory
-			delete (*iter);
-			// erase the slot in the vector and return new iter
-			iter = meshes.erase(iter);
-		}
-		else
-		{
-			// if no memory move on
-			iter++;
-		}
-	}
-	// final flush of vector
-	meshes.clear();
+	// call mesh collection destroy?
+
 	// clear key events
 	player.clearEvents();
 	// delete textures

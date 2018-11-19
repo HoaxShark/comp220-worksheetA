@@ -21,6 +21,8 @@
 #include "Vertex.h"
 #include "Texture.h"
 #include "PlayerController.h"
+#include "Shaders.h"
+#include "GameObject.h"
 
 using namespace glm;
 
@@ -42,6 +44,7 @@ private:
 	Initialise init;
 	Camera camera;
 	PlayerController player;
+	std::vector<GameObject*> GameObjectList;
 
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);
@@ -76,7 +79,7 @@ private:
 	int fullHeight;
 
 	void initialiseGame();
-	void gameQuit(std::vector<Mesh*> meshes);
+	void gameQuit();
 
 	/*// updates mouse movement
 	void mouseUpdate(float xPos, float yPos);

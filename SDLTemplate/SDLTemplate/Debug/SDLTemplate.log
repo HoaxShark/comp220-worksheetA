@@ -1,7 +1,19 @@
 ﻿  Game.cpp
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(18): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(67): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(83): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
-  SDLTemplate.vcxproj -> C:\Users\HoaxShark\Desktop\Uni Year 2\Comp 220\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(31): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(98): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(114): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+  GameObject.cpp
+  Main.cpp
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Mesh.cpp
+  Model.cpp
+d:\comp220-worksheeta\sdltemplate\sdltemplate\model.cpp(102): warning C4018: '<': signed/unsigned mismatch
+d:\comp220-worksheeta\sdltemplate\sdltemplate\model.cpp(108): warning C4018: '<': signed/unsigned mismatch
+d:\comp220-worksheeta\sdltemplate\sdltemplate\model.cpp(112): warning C4018: '<': signed/unsigned mismatch
+d:\comp220-worksheeta\sdltemplate\sdltemplate\model.cpp(150): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+Shaders.obj : error LNK2005: "unsigned int __cdecl LoadShaders(char const *,char const *)" (?LoadShaders@@YAIPBD0@Z) already defined in Shader.obj
+D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe : fatal error LNK1169: one or more multiply defined symbols found
