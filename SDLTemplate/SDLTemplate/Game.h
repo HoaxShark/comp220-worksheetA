@@ -33,6 +33,7 @@ public:
 	Game();
 	~Game();
 	void gameLoop();
+	void createObject(const std::string& fileLocation, const std::string& textureLocation);
 
 private:
 	SDL_Renderer* renderer = NULL;
@@ -45,6 +46,7 @@ private:
 	Camera camera;
 	PlayerController player;
 	std::vector<GameObject*> GameObjectList;
+	Shader * texturedShader;
 
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);
