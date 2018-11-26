@@ -65,7 +65,7 @@ void Game::gameLoop()
 	GLuint textureID = loadTextureFromFile("Tank1DF.png");
 
 	GameObject * tankGO = new GameObject();
-	tankGO->SetPosition(0.0f, 0.0f, -50.0f);
+	tankGO->SetPosition(0.0f, 0.0f, -10.0f);
 	tankGO->SetMesh(tankMeshes);
 	tankGO->SetShader(texturedShader);
 	tankGO->SetDiffuseTexture(textureID);
@@ -78,12 +78,6 @@ void Game::gameLoop()
 	//loadMeshesFromFile("Tank1.fbx", meshes);
 
 
-
-	// set MVP matrix locations
-	GLuint modelMatrixLocation = glGetUniformLocation(programID, "modelMatrix");
-	GLuint viewLocation = glGetUniformLocation(programID, "view");
-	GLuint projLocation = glGetUniformLocation(programID, "proj");
-	GLuint textureUniformLocation = glGetUniformLocation(programID, "textureSampler");
 
 	// Current sdl event
 	SDL_Event event;
@@ -161,10 +155,10 @@ void Game::gameLoop()
 		}
 
 		// Update game and render with openGL
-		glEnable(GL_DEPTH_TEST);
+
 		glClearColor(0.0, 0.5, 0.0, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 		glClearDepth(1.0f);
+		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureID);
@@ -172,39 +166,30 @@ void Game::gameLoop()
 		// Bind program
 		glUseProgram(programID);
 
-		mat4 modelMatrix = translate(position);
-
 		// note that we're translating the scene in the reverse direction of where we want to move
-		glm::mat4 view;
-		view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
-		// sends across modelMatrix
-		glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(proj));
-		glUniform1i(textureUniformLocation, 0);
-
+		//glm::mat4 view;
+		//view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
 
 		// draw loop
-		//for (Mesh*currentMesh : meshes)
-		//{
-		//	currentMesh->render();
-		//}
 		
 		for (GameObject * obj : GameObjectList) {
 
 			Shader * currentShader = obj->GetShader();
 			currentShader->Use();
 
+			view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
+			proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 1000.0f);
+			
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, obj->GetDiffuseTexture());
 
 			glUniformMatrix4fv(currentShader->GetUniform("modelMatrix"), 1, GL_FALSE, glm::value_ptr(obj->GetModelTransformation()));
-			glUniformMatrix4fv(currentShader->GetUniform("viewMatrix"), 1, GL_FALSE, glm::value_ptr(view));
-			glUniformMatrix4fv(currentShader->GetUniform("projectionMatrix"), 1, GL_FALSE, glm::value_ptr(proj));
+			glUniformMatrix4fv(currentShader->GetUniform("view"), 1, GL_FALSE, glm::value_ptr(view));
+			glUniformMatrix4fv(currentShader->GetUniform("proj"), 1, GL_FALSE, glm::value_ptr(proj));
 			//glUniform1f(currentShader->GetUniform("morphBlendAlpha"), morphBlendAlpha);
 			glUniform1i(currentShader->GetUniform("diffuseTexture"), 0);
 
-
+			glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
 			obj->Render();
 		}
 

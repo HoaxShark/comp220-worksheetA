@@ -4,7 +4,7 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <glm\glm.hpp>
-#include "Shader.h"
+//#include "Shader.h"
 #include "Model.h"
 
 #include <time.h>
@@ -49,7 +49,7 @@ private:
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);
 	// set up perspective camera
-	mat4 proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 100.0f);
+	mat4 proj;
 	mat4 view;
 	GLuint programID;
 	// This will identify our vertex buffer
