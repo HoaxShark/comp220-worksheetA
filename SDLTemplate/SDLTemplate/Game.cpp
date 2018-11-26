@@ -72,7 +72,18 @@ void Game::gameLoop()
 
 	GameObjectList.push_back(tankGO);
 
+	MeshCollection * dragonMeshes = new MeshCollection();
+	loadMeshesFromFile("Dragon.fbx", dragonMeshes);
 
+	textureID = loadTextureFromFile("DragonTexture.jpg");
+
+	GameObject * dragonGO = new GameObject();
+	dragonGO->SetPosition(0.0f, 0.0f, -50.0f);
+	dragonGO->SetMesh(dragonMeshes);
+	dragonGO->SetShader(texturedShader);
+	dragonGO->SetDiffuseTexture(textureID);
+
+	GameObjectList.push_back(dragonGO);
 
 	//std::vector<Mesh*> meshes;
 	//loadMeshesFromFile("Tank1.fbx", meshes);
@@ -155,7 +166,7 @@ void Game::gameLoop()
 		}
 
 		// Update game and render with openGL
-
+		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.0, 0.5, 0.0, 1.0);
 		glClearDepth(1.0f);
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
@@ -167,8 +178,9 @@ void Game::gameLoop()
 		glUseProgram(programID);
 
 		// note that we're translating the scene in the reverse direction of where we want to move
-		//glm::mat4 view;
-		//view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
+		view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
+		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 1000.0f);
+
 
 		// draw loop
 		
@@ -177,9 +189,6 @@ void Game::gameLoop()
 			Shader * currentShader = obj->GetShader();
 			currentShader->Use();
 
-			view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
-			proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 1000.0f);
-			
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, obj->GetDiffuseTexture());
 
@@ -189,7 +198,7 @@ void Game::gameLoop()
 			//glUniform1f(currentShader->GetUniform("morphBlendAlpha"), morphBlendAlpha);
 			glUniform1i(currentShader->GetUniform("diffuseTexture"), 0);
 
-			glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
+			
 			obj->Render();
 		}
 

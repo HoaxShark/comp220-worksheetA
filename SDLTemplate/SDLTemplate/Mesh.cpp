@@ -26,7 +26,7 @@ void Mesh::copyBufferData(Vertex * pVerts, unsigned int numberOfVerts, unsigned 
 	m_NumberOfIndices = numberOfIndices;
 	m_NumberOfVertices = numberOfVerts;
 	glBindVertexArray(m_VAO);
-	// 1rst attribute buffer : vertices
+	// 1st attribute buffer : vertices
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
 
@@ -82,7 +82,7 @@ void Mesh::render()
 	// bind the element buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 
-	glDrawElements(GL_TRIANGLES, m_NumberOfIndices, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, m_NumberOfIndices, GL_UNSIGNED_INT, (void*)0);
 }
 
 MeshCollection::MeshCollection()
@@ -123,6 +123,7 @@ void MeshCollection::destroy()
 			(*iter)->destroy();
 			// delete the memory
 			delete (*iter);
+			(*iter) = nullptr;
 			// erase the slot in the vector and return new iter
 			iter = m_Meshes.erase(iter);
 		}

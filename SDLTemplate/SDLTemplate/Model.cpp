@@ -105,10 +105,6 @@ bool loadMeshesFromFile(const std::string& filename, MeshCollection * pMeshColle
 		Mesh *pMesh = new Mesh();
 		pMesh->init();
 
-		for (int i = 0; i < scene->mNumMeshes; i++)
-		{
-			aiMesh *currentMesh = scene->mMeshes[i];
-
 			for (int v = 0; v < currentMesh->mNumVertices; v++)
 			{
 				aiVector3D currentModelVertex = currentMesh->mVertices[v];
@@ -145,7 +141,6 @@ bool loadMeshesFromFile(const std::string& filename, MeshCollection * pMeshColle
 
 				vertices.push_back(currentVertex);
 			}
-		}
 
 		for (int f = 0; f < currentMesh->mNumFaces; f++)
 		{
