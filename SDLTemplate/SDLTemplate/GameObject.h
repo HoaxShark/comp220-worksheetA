@@ -56,6 +56,11 @@ public:
 		return DiffuseTexture;
 	};
 
+	void setScale(glm::vec3 scale)
+	{
+		Scale = scale;
+	}
+
 	void Render();
 
 private:

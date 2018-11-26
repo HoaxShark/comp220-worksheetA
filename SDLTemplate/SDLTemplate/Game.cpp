@@ -67,23 +67,25 @@ void Game::gameLoop()
 	GameObject * tankGO = new GameObject();
 	tankGO->SetPosition(0.0f, 0.0f, -10.0f);
 	tankGO->SetMesh(tankMeshes);
+	tankGO->setScale(vec3(0.5f, 0.5f, 0.5f));
 	tankGO->SetShader(texturedShader);
 	tankGO->SetDiffuseTexture(textureID);
 
 	GameObjectList.push_back(tankGO);
 
-	MeshCollection * dragonMeshes = new MeshCollection();
-	loadMeshesFromFile("Dragon.fbx", dragonMeshes);
+	MeshCollection * egyptMeshes = new MeshCollection();
+	loadMeshesFromFile("Model/egypt.fbx", egyptMeshes);
 
-	textureID = loadTextureFromFile("DragonTexture.jpg");
+	textureID = loadTextureFromFile("Model/color_webgl.png");
 
-	GameObject * dragonGO = new GameObject();
-	dragonGO->SetPosition(0.0f, 0.0f, -50.0f);
-	dragonGO->SetMesh(dragonMeshes);
-	dragonGO->SetShader(texturedShader);
-	dragonGO->SetDiffuseTexture(textureID);
+	GameObject * egyptGO = new GameObject();
+	egyptGO->SetPosition(0.0f, 0.0f, -30.0f);
+	egyptGO->SetMesh(egyptMeshes);
+	egyptGO->setScale(vec3(0.1f, 0.1f, 0.1f));
+	egyptGO->SetShader(texturedShader);
+	egyptGO->SetDiffuseTexture(textureID);
 
-	GameObjectList.push_back(dragonGO);
+	GameObjectList.push_back(egyptGO);
 
 	//std::vector<Mesh*> meshes;
 	//loadMeshesFromFile("Tank1.fbx", meshes);
