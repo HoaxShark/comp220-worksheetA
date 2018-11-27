@@ -33,7 +33,9 @@ public:
 	Game();
 	~Game();
 	void gameLoop();
-	void createObject(const std::string& fileLocation, const std::string& textureLocation);
+	/* Creates a new game object and stores it in the objectList
+	takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set to 0 for no rotation*/
+	void createObject(const std::string& fileLocation, const std::string& textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed);
 
 private:
 	SDL_Renderer* renderer = NULL;

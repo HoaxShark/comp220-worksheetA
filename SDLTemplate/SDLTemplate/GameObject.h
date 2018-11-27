@@ -61,6 +61,16 @@ public:
 		Scale = scale;
 	}
 
+	void setRotationAxis(glm::vec3 axis)
+	{
+		rotationAxis = axis;
+	}
+
+	void setRotationSpeed(float speed)
+	{
+		rotationSpeed = speed;
+	}
+
 	void Render();
 
 private:
@@ -84,4 +94,8 @@ private:
 
 	//Texture
 	GLuint DiffuseTexture;
+
+	float rotateAmount;
+	float rotationSpeed = 0.2f;
+	glm::vec3 rotationAxis; // angle of the axis an object will rotate around
 };

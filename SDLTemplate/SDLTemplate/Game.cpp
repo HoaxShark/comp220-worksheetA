@@ -59,118 +59,13 @@ void Game::gameLoop()
 	texturedShader = new Shader();
 	texturedShader->Load("vertTextured.glsl", "fragTextured.glsl");
 
-	/*MeshCollection * tankMeshes = new MeshCollection();
-	loadMeshesFromFile("Tank1.fbx", tankMeshes);
-
-	textureID = loadTextureFromFile("Tank1DF.png");
-
-	GameObject * tankGO = new GameObject();
-	tankGO->SetPosition(0.0f, 0.0f, -10.0f);
-	tankGO->SetMesh(tankMeshes);
-	tankGO->setScale(vec3(0.5f, 0.5f, 0.5f));
-	tankGO->SetShader(texturedShader);
-	tankGO->SetDiffuseTexture(textureID);
-
-	GameObjectList.push_back(tankGO);*/
-	//////////////////////
-	MeshCollection * egyptMeshes = new MeshCollection();
-	loadMeshesFromFile("Model/egypt.fbx", egyptMeshes);
-
-	textureID = loadTextureFromFile("Model/colour.png");
-
-	GameObject * egyptGO = new GameObject();
-	egyptGO->SetPosition(0.0f, 30.0f, -100.0f);
-	egyptGO->SetMesh(egyptMeshes);
-	egyptGO->setScale(vec3(0.1f, 0.1f, 0.1f));
-	egyptGO->SetShader(texturedShader);
-	egyptGO->SetDiffuseTexture(textureID);
-
-	GameObjectList.push_back(egyptGO);
-	//////////////////
-	MeshCollection * forestMeshes = new MeshCollection();
-	loadMeshesFromFile("Model/forest.fbx", forestMeshes);
-
-	textureID = loadTextureFromFile("Model/colour.png");
-
-	GameObject * forestGO = new GameObject();
-	forestGO->SetPosition(250.0f, 0.0f, -40.0f);
-	forestGO->SetMesh(forestMeshes);
-	forestGO->setScale(vec3(0.1f, 0.1f, 0.1f));
-	forestGO->SetShader(texturedShader);
-	forestGO->SetDiffuseTexture(textureID);
-
-	GameObjectList.push_back(forestGO);
-	////////////////////////
-	MeshCollection * havayMeshes = new MeshCollection();
-	loadMeshesFromFile("Model/havay.fbx", havayMeshes);
-
-	textureID = loadTextureFromFile("Model/colour.png");
-
-	GameObject * havayGO = new GameObject();
-	havayGO->SetPosition(150.0f, 0.0f, -40.0f);
-	havayGO->SetMesh(havayMeshes);
-	havayGO->setScale(vec3(0.1f, 0.1f, 0.1f));
-	havayGO->SetShader(texturedShader);
-	havayGO->SetDiffuseTexture(textureID);
-
-	GameObjectList.push_back(havayGO);
-	/////////////////////////
-	MeshCollection * iceMeshes = new MeshCollection();
-	loadMeshesFromFile("Model/ice.fbx", iceMeshes);
-
-	textureID = loadTextureFromFile("Model/colour.png");
-
-	GameObject * iceGO = new GameObject();
-	iceGO->SetPosition(-150.0f, 0.0f, -40.0f);
-	iceGO->SetMesh(iceMeshes);
-	iceGO->setScale(vec3(0.1f, 0.1f, 0.1f));
-	iceGO->SetShader(texturedShader);
-	iceGO->SetDiffuseTexture(textureID);
-
-	GameObjectList.push_back(iceGO);
-	/////////////////////////
-	MeshCollection * iceGrayMeshes = new MeshCollection();
-	loadMeshesFromFile("Model/ice_gray.fbx", iceGrayMeshes);
-
-	textureID = loadTextureFromFile("Model/colour.png");
-
-	GameObject * iceGrayGO = new GameObject();
-	iceGrayGO->SetPosition(-250.0f, 50.0f, 40.0f);
-	iceGrayGO->SetMesh(iceGrayMeshes);
-	iceGrayGO->setScale(vec3(0.1f, 0.1f, 0.1f));
-	iceGrayGO->SetShader(texturedShader);
-	iceGrayGO->SetDiffuseTexture(textureID);
-
-	GameObjectList.push_back(iceGrayGO);
-	/////////////////////////
-	MeshCollection * orangeMeshes = new MeshCollection();
-	loadMeshesFromFile("Model/orange.fbx", orangeMeshes);
-
-	textureID = loadTextureFromFile("Model/colour.png");
-
-	GameObject * orangeGO = new GameObject();
-	orangeGO->SetPosition(200.0f, -60.0f, 240.0f);
-	orangeGO->SetMesh(orangeMeshes);
-	orangeGO->setScale(vec3(0.1f, 0.1f, 0.1f));
-	orangeGO->SetShader(texturedShader);
-	orangeGO->SetDiffuseTexture(textureID);
-
-	GameObjectList.push_back(orangeGO);
-	/////////////////////////
-	MeshCollection * pineMeshes = new MeshCollection();
-	loadMeshesFromFile("Model/pine.fbx", pineMeshes);
-
-	textureID = loadTextureFromFile("Model/colour.png");
-
-	GameObject * pineGO = new GameObject();
-	pineGO->SetPosition(-150.0f, 40.0f, -200.0f);
-	pineGO->SetMesh(pineMeshes);
-	pineGO->setScale(vec3(0.1f, 0.1f, 0.1f));
-	pineGO->SetShader(texturedShader);
-	pineGO->SetDiffuseTexture(textureID);
-
-	GameObjectList.push_back(pineGO);
-
+	// generate planets
+	createObject("Model/egypt.fbx", "Model/colour.png", 0.0f, 40.0f, -300.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 1.0f, 0.0f), -0.1f);
+	createObject("Model/forest.fbx", "Model/colour.png", 100.0f, -40.0f, -150.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.4f, 1.0f, 0.0f), 0.1f);
+	createObject("Model/ice.fbx", "Model/colour.png", -300.0f, -20.0f, -450.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 0.5f, 0.5f), 0.1f);
+	createObject("Model/iceGray.fbx", "Model/colour.png", 100.0f, -140.0f, -250.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 0.0f, 1.0f), -0.1f);
+	createObject("Model/orange.fbx", "Model/colour.png", 600.0f, 100.0f, -650.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 1.0f, 0.0f), 0.1f);
+	createObject("Model/pine.fbx", "Model/colour.png", -500.0f, -200.0f, -450.0f, vec3(0.1f, 0.1f, 0.1f), vec3(1.0f, 1.0f, 0.0f), 0.1f);
 
 	// Current sdl event
 	SDL_Event event;
@@ -261,7 +156,7 @@ void Game::gameLoop()
 
 		// note that we're translating the scene in the reverse direction of where we want to move
 		view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
-		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 1000.0f);
+		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 3000.0f);
 
 
 		// draw loop
@@ -292,7 +187,7 @@ void Game::gameLoop()
 
 
 /* Needs work isn't currently working correctly*/
-void Game::createObject(const std::string & fileLocation, const std::string & textureLocation)
+void Game::createObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed)
 {
 	MeshCollection * Meshes = new MeshCollection();
 	loadMeshesFromFile(fileLocation, Meshes);
@@ -300,12 +195,13 @@ void Game::createObject(const std::string & fileLocation, const std::string & te
 	textureID = loadTextureFromFile(textureLocation);
 
 	GameObject * GO = new GameObject();
-	GO->SetPosition(0.0f, 0.0f, -30.0f);
+	GO->SetPosition(posX, posY, posZ);
 	GO->SetMesh(Meshes);
-	GO->setScale(vec3(0.1f, 0.1f, 0.1f));
+	GO->setScale(scale);
+	GO->setRotationAxis(rotationAxis);
+	GO->setRotationSpeed(speed);
 	GO->SetShader(texturedShader);
 	GO->SetDiffuseTexture(textureID);
-
 	GameObjectList.push_back(GO);
 }
 

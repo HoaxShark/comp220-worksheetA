@@ -38,7 +38,11 @@ void GameObject::Update(float deltaTime)
 	ScaleMatrix = glm::scale(Scale);
 
 	//combine the above matrices into the model matrix (order is important!!!! - TRS)
-	ModelMatrix = TranslationMatrix * RotationMatrix*ScaleMatrix;
+	ModelMatrix = TranslationMatrix * RotationMatrix * ScaleMatrix;
+	// rotate the ModelMatrix
+	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotateAmount), rotationAxis);
+	// increase rotation by rotationSpeed
+	rotateAmount += rotationSpeed;
 }
 
 void GameObject::Render()
