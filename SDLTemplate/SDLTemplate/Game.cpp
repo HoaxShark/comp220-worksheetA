@@ -234,7 +234,9 @@ void Game::gameQuit()
 	SDL_DestroyWindow(mainWindow);
 	SDL_Quit();
 }
-/*unsigned int loadCubemap(std::vector<std::string> faces)
+/* https://learnopengl.com/Advanced-OpenGL/Cubemaps
+
+unsigned int loadCubemap(std::vector<std::string> faces)
 {
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
