@@ -67,6 +67,19 @@ void Game::gameLoop()
 	createObject("Model/orange.fbx", "Model/colour.png", 600.0f, 100.0f, -650.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 1.0f, 0.0f), 0.1f);
 	createObject("Model/pine.fbx", "Model/colour.png", -500.0f, -200.0f, -450.0f, vec3(0.1f, 0.1f, 0.1f), vec3(1.0f, 1.0f, 0.0f), 0.1f);
 
+	// create vector to hold skybox image locations
+	std::vector<std::string> skyboxFaces
+	{
+		"Skybox/right.tga",
+		"Skybox/left.tga",
+		"Skybox/top.tga",
+		"Skybox/bottom.tga",
+		"Skybox/front.tga",
+		"Skybox/back.tga"
+	};
+
+	//unsigned int cubemapTexture = loadCubemap(skyboxFaces);
+
 	// Current sdl event
 	SDL_Event event;
 
@@ -156,7 +169,7 @@ void Game::gameLoop()
 
 		// note that we're translating the scene in the reverse direction of where we want to move
 		view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
-		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 3000.0f);
+		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 6000.0f);
 
 
 		// draw loop
@@ -186,7 +199,8 @@ void Game::gameLoop()
 }
 
 
-/* Needs work isn't currently working correctly*/
+/* Creates a new game object and stores it in the objectList
+takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
 void Game::createObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed)
 {
 	MeshCollection * Meshes = new MeshCollection();
@@ -208,8 +222,6 @@ void Game::createObject(const std::string & fileLocation, const std::string & te
 // Clean up resources when the game is exited
 void Game::gameQuit()
 {
-	// call mesh collection destroy?
-
 	// clear key events
 	player.clearEvents();
 	// delete textures
@@ -222,3 +234,33 @@ void Game::gameQuit()
 	SDL_DestroyWindow(mainWindow);
 	SDL_Quit();
 }
+/*unsigned int loadCubemap(std::vector<std::string> faces)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+	int skyboxWidth, skyboxHeight;
+	for (unsigned int i = 0; i < faces.size(); i++)
+	{
+		SDL_Surface * surface = IMG_Load(faces[i].c_str());
+		if (surface == nullptr)
+		{
+			printf("Could not load file %s", IMG_GetError());
+			return 0;
+		}
+		else
+		{
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+				0, GL_RGB, skyboxWidth, skyboxHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
+			SDL_FreeSurface(surface);
+		}
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return textureID;
+}*/
