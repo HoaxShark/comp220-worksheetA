@@ -129,12 +129,12 @@ void Game::gameLoop()
 	// create vector to hold skybox image locations
 	std::vector<std::string> skyboxFaces
 	{
-		"Skybox/left.tga",
-		"Skybox/right.tga",
-		"Skybox/top.tga",
-		"Skybox/bottom.tga",
-		"Skybox/front.tga",
-		"Skybox/back.tga"
+		"Skybox/right.png",
+		"Skybox/left.png",
+		"Skybox/top.png",
+		"Skybox/bottom.png",
+		"Skybox/front.png",
+		"Skybox/back.png"
 	};
 
 	unsigned int cubemapTexture = loadCubemap(skyboxFaces);
