@@ -50,6 +50,7 @@ private:
 	PlayerController player;
 	std::vector<GameObject*> GameObjectList;
 	Shader * texturedShader;
+	Shader * skyboxShader;
 
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);

@@ -17,6 +17,10 @@ public:
 	void setCameraFront(glm::vec3 newCameraFront);
 	glm::vec3 getCameraUp();
 	float getBaseCameraSpeed();
+	glm::mat4 getViewMatrix()
+	{
+		return glm::lookAt(this->cameraPos, this->cameraPos + this->cameraFront, this->cameraUp);
+	}
 
 private:
 

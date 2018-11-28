@@ -20,6 +20,10 @@ public:
 	~Shader();
 
 	GLint GetUniform(std::string name);
+	GLuint& GetShaderProgramID()
+	{
+		return ShaderProgramID;
+	}
 
 	void Use();
 

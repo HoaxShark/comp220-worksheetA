@@ -94,10 +94,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="frag.glsl" />
-    <None Include="vert.glsl" />
     <None Include="fragTextured.glsl" />
     <None Include="vertTextured.glsl" />
     <None Include="cube.nff" />
+    <None Include="vertSkybox.glsl" />
+    <None Include="fragSkybox.glsl" />
   </ItemGroup>
 </Project>

@@ -1,12 +1,10 @@
 #include "Game.h"
 
 /* TODO:
+	REFACTOR SKYBOX CODE AND DELETE MEMORY ON CLOSE
 	use renderDoc for debugging very important for the coursework
-	game obejct class
-	mesh collection?
 	work off my feedback
 	joystick controls
-	render the game scene
 	create light with a base attached to camera with offset
 	throwable light
 	shadow casting from light
@@ -56,8 +54,69 @@ void Game::gameLoop()
 	// Hold shader programme, rename to what the ID does
 	//GLuint programID = LoadShaders("vertTextured.glsl", "fragTextured.glsl");
 
+	// create shaders
 	texturedShader = new Shader();
 	texturedShader->Load("vertTextured.glsl", "fragTextured.glsl");
+
+	skyboxShader = new Shader();
+	skyboxShader->Load("vertSkybox.glsl", "fragSkybox.glsl");
+
+	// skybox vertices
+	float skyboxVertices[] = {
+		// positions          
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f
+	};
+
+	// generate array and buffer for the skybox
+	GLuint skyboxVAO, skyboxVBO;
+	glGenVertexArrays(1, &skyboxVAO);
+	glGenBuffers(1, &skyboxVBO);
+	glBindVertexArray(skyboxVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+
 
 	// generate planets
 	createObject("Model/egypt.fbx", "Model/colour.png", 0.0f, 40.0f, -300.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 1.0f, 0.0f), -0.1f);
@@ -70,15 +129,15 @@ void Game::gameLoop()
 	// create vector to hold skybox image locations
 	std::vector<std::string> skyboxFaces
 	{
-		"Skybox/right.tga",
 		"Skybox/left.tga",
+		"Skybox/right.tga",
 		"Skybox/top.tga",
 		"Skybox/bottom.tga",
 		"Skybox/front.tga",
 		"Skybox/back.tga"
 	};
 
-	//unsigned int cubemapTexture = loadCubemap(skyboxFaces);
+	unsigned int cubemapTexture = loadCubemap(skyboxFaces);
 
 	// Current sdl event
 	SDL_Event event;
@@ -167,13 +226,24 @@ void Game::gameLoop()
 		// Bind program
 		glUseProgram(programID);
 
+		// draw skybox
+		glDepthMask(GL_FALSE);
+		skyboxShader->Use();
+		view = glm::mat4(glm::mat3(player.camera.getViewMatrix()));
+		glUniformMatrix4fv(glGetUniformLocation(skyboxShader->GetShaderProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(skyboxShader->GetShaderProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
+
+		glBindVertexArray(skyboxVAO);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthMask(GL_TRUE);
+
 		// note that we're translating the scene in the reverse direction of where we want to move
-		view = glm::lookAt(player.camera.getCameraPos(), player.camera.getCameraPos() + player.camera.getCameraFront(), player.camera.getCameraUp());
+		view = player.camera.getViewMatrix();
 		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 6000.0f);
-
-
-		// draw loop
 		
+		// draw objects
 		for (GameObject * obj : GameObjectList) {
 
 			Shader * currentShader = obj->GetShader();
@@ -219,6 +289,37 @@ void Game::createObject(const std::string & fileLocation, const std::string & te
 	GameObjectList.push_back(GO);
 }
 
+unsigned int Game::loadCubemap(std::vector<std::string> faces)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+	int width, height;
+	for (unsigned int i = 0; i < faces.size(); i++)
+	{
+		SDL_Surface * surface = IMG_Load(faces[i].c_str());
+		if (surface == nullptr)
+		{
+			printf("Could not load file %s", IMG_GetError());
+			return 0;
+		}
+		else
+		{
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+				0, GL_RGB, surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
+			SDL_FreeSurface(surface);
+		}
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return textureID;
+}
+
 // Clean up resources when the game is exited
 void Game::gameQuit()
 {
@@ -234,35 +335,5 @@ void Game::gameQuit()
 	SDL_DestroyWindow(mainWindow);
 	SDL_Quit();
 }
-/* https://learnopengl.com/Advanced-OpenGL/Cubemaps
+/* https://learnopengl.com/Advanced-OpenGL/Cubemaps */
 
-unsigned int loadCubemap(std::vector<std::string> faces)
-{
-	unsigned int textureID;
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
-
-	int skyboxWidth, skyboxHeight;
-	for (unsigned int i = 0; i < faces.size(); i++)
-	{
-		SDL_Surface * surface = IMG_Load(faces[i].c_str());
-		if (surface == nullptr)
-		{
-			printf("Could not load file %s", IMG_GetError());
-			return 0;
-		}
-		else
-		{
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-				0, GL_RGB, skyboxWidth, skyboxHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
-			SDL_FreeSurface(surface);
-		}
-	}
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-	return textureID;
-}*/
