@@ -26,16 +26,17 @@ void Mesh::copyBufferData(Vertex * pVerts, unsigned int numberOfVerts, unsigned 
 	m_NumberOfIndices = numberOfIndices;
 	m_NumberOfVertices = numberOfVerts;
 	glBindVertexArray(m_VAO);
-	// 1st attribute buffer : vertices
+	// enable vertex attribute arrays
+	// vertext locations
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
 
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(float)));
-
+	// texture coords
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(7 * sizeof(float)));
-
+	// normals
 	glEnableVertexAttribArray(3);
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(9 * sizeof(float)));
 

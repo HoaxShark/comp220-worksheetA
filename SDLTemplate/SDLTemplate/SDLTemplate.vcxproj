@@ -48,6 +48,8 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="blinnPhongFrag.glsl" />
+    <None Include="blinnPhongVert.glsl" />
     <None Include="cube.nff" />
     <None Include="fragSkybox.glsl" />
     <None Include="fragTextured.glsl" />

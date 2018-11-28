@@ -49,6 +49,11 @@ bool loadModelFromFile(const std::string & filename, GLuint VBO, GLuint EBO, uns
 				ourVertex.b = currentColour.b;
 				ourVertex.a = currentColour.a;
 			}
+			if (currentAIMesh->HasNormals())
+			{
+				aiVector3D currentNormals = aiVector3D(0.0f, 0.0f, 0.0f);
+				currentNormals = currentAIMesh->mNormals[v];
+			}
 
 			// push ourVertec into the vertices
 			vertices.push_back(ourVertex);
@@ -91,22 +96,27 @@ bool loadMeshesFromFile(const std::string& filename, MeshCollection * pMeshColle
 
 	Assimp::Importer importer;
 
+	// import the file 
 	const aiScene* scene = importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_GenUVCoords | aiProcess_CalcTangentSpace);
 
+	// if failed importing to scene return error
 	if (!scene)
 	{
 		printf("Model Loading Error - %s\n", importer.GetErrorString());
 		return false;
 	}
 
+	// loop all meshes in the scene
 	for (int i = 0; i < scene->mNumMeshes; i++)
 	{
 		aiMesh *currentMesh = scene->mMeshes[i];
 		Mesh *pMesh = new Mesh();
 		pMesh->init();
-
+			
+			// loop all vertices in the current mesh
 			for (int v = 0; v < currentMesh->mNumVertices; v++)
 			{
+				// create vectors to store the read information
 				aiVector3D currentModelVertex = currentMesh->mVertices[v];
 				aiColor4D currentModelColour = aiColor4D(1.0, 1.0, 1.0, 1.0);
 				aiVector3D currentTextureCoordinates = aiVector3D(0.0f, 0.0f, 0.0f);
@@ -114,6 +124,7 @@ bool loadMeshesFromFile(const std::string& filename, MeshCollection * pMeshColle
 				aiVector3D currentModelTangents = aiVector3D(0.0f, 0.0f, 0.0f);
 				aiVector3D currentModelBitangents = aiVector3D(0.0f, 0.0f, 0.0f);
 
+				// if the model file has certain types of data store them in the correct vector
 				if (currentMesh->HasVertexColors(0))
 				{
 					currentModelColour = currentMesh->mColors[0][v];
@@ -132,6 +143,7 @@ bool loadMeshesFromFile(const std::string& filename, MeshCollection * pMeshColle
 					currentModelBitangents = currentMesh->mBitangents[v];
 				}
 
+				// place all the gathered data into a vertex
 				Vertex currentVertex = { currentModelVertex.x,currentModelVertex.y,currentModelVertex.z,
 					currentModelColour.r,currentModelColour.g,currentModelColour.b,currentModelColour.a,
 					currentTextureCoordinates.x,currentTextureCoordinates.y,
@@ -139,6 +151,7 @@ bool loadMeshesFromFile(const std::string& filename, MeshCollection * pMeshColle
 					currentModelTangents.x,currentModelTangents.y,currentModelTangents.z,
 					currentModelBitangents.x,currentModelBitangents.y,currentModelBitangents.z };
 
+				// add current vertex to the list of vertices
 				vertices.push_back(currentVertex);
 			}
 

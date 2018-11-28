@@ -99,5 +99,7 @@
     <None Include="cube.nff" />
     <None Include="vertSkybox.glsl" />
     <None Include="fragSkybox.glsl" />
+    <None Include="blinnPhongVert.glsl" />
+    <None Include="blinnPhongFrag.glsl" />
   </ItemGroup>
 </Project>

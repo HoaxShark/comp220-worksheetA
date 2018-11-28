@@ -1,0 +1,4 @@
+http://www.opengl-tutorial.org/intermediate-tutorials/billboards-particles/particles-instancing/
+https://learnopengl.com/In-Practice/2D-Game/Particles
+https://www.3dgep.com/simulating-particle-effects-using-opengl/
+https://www.bfilipek.com/2014/07/flexible-particle-system-opengl-renderer.html

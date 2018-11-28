@@ -51,15 +51,39 @@ void Game::gameLoop()
 	SDL_ShowCursor(0);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
-	// Hold shader programme, rename to what the ID does
-	//GLuint programID = LoadShaders("vertTextured.glsl", "fragTextured.glsl");
-
 	// create shaders
 	texturedShader = new Shader();
-	texturedShader->Load("vertTextured.glsl", "fragTextured.glsl");
+	texturedShader->Load("blinnPhongVert.glsl", "blinnPhongFrag.glsl");
 
 	skyboxShader = new Shader();
 	skyboxShader->Load("vertSkybox.glsl", "fragSkybox.glsl");
+
+	// Materials for lighting
+	glm::vec4 ambientMaterialColour = glm::vec4(0.0f, 0.0f, 0.01f, 1.0f);
+	glm::vec4 diffuseMaterialColour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
+	glm::vec4 specularMaterialColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	float specularMaterialPower = 50.0f;
+	// camera
+	glm::vec3 cameraPosition = player.camera.getCameraPos();
+	// Light
+	glm::vec4 ambientLightColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 diffuseLightColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 specularLightColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+
+	// get locations for lighting
+	GLint ambientMaterialColourLocation = glGetUniformLocation(texturedShader->GetShaderProgramID(), "ambientMaterialColour");
+	GLint diffuseMaterialColourLocation = glGetUniformLocation(texturedShader->GetShaderProgramID(), "diffuseMaterialColour");
+	GLint specularMaterialColourLocation = glGetUniformLocation(texturedShader->GetShaderProgramID(), "specularMaterialColour");
+
+	GLint ambientLightColourLocation = glGetUniformLocation(texturedShader->GetShaderProgramID(), "ambientLightColour");
+	GLint diffuseLightColourLocation = glGetUniformLocation(texturedShader->GetShaderProgramID(), "diffuseLightColour");
+	GLint specularLightColourLocation = glGetUniformLocation(texturedShader->GetShaderProgramID(), "specularLightColour");
+
+	GLint lightDirectionLocation = glGetUniformLocation(texturedShader->GetShaderProgramID(), "lightDirection");
+	GLint specularMaterialPowerLocation = glGetUniformLocation(texturedShader->GetShaderProgramID(), "specularMaterialPower");
+
+	GLint cameraPositionLocation = glGetUniformLocation(texturedShader->GetShaderProgramID(), "cameraPosition");
 
 	// skybox vertices
 	float skyboxVertices[] = {
@@ -257,7 +281,19 @@ void Game::gameLoop()
 			glUniformMatrix4fv(currentShader->GetUniform("proj"), 1, GL_FALSE, glm::value_ptr(proj));
 			//glUniform1f(currentShader->GetUniform("morphBlendAlpha"), morphBlendAlpha);
 			glUniform1i(currentShader->GetUniform("diffuseTexture"), 0);
+			// refactor the below it for lighting
+			glUniform4fv(ambientMaterialColourLocation, 1, glm::value_ptr(ambientMaterialColour));
+			glUniform4fv(diffuseMaterialColourLocation, 1, glm::value_ptr(diffuseMaterialColour));
+			glUniform4fv(specularMaterialColourLocation, 1, glm::value_ptr(specularMaterialColour));
 
+			glUniform4fv(ambientLightColourLocation, 1, glm::value_ptr(ambientLightColour));
+			glUniform4fv(diffuseLightColourLocation, 1, glm::value_ptr(diffuseLightColour));
+			glUniform4fv(specularLightColourLocation, 1, glm::value_ptr(specularLightColour));
+
+			glUniform3fv(lightDirectionLocation, 1, glm::value_ptr(lightDirection));
+			glUniform1f(specularMaterialPowerLocation, specularMaterialPower);
+			
+			glUniform3fv(cameraPositionLocation, 1, glm::value_ptr(cameraPosition));
 			
 			obj->Render();
 		}
