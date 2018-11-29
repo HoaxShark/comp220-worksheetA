@@ -58,6 +58,14 @@ void Game::gameLoop()
 	skyboxShader = new Shader();
 	skyboxShader->Load("vertSkybox.glsl", "fragSkybox.glsl");
 
+	particleShader = new Shader();
+	particleShader->Load("vertParticle.glsl", "fragParticle.glsl");
+
+	// load particle texture
+	particleTextureID = loadTextureFromFile("Model/spark.png");
+
+	Particles = new ParticleGenerator(particleShader , particleTextureID, 10);
+
 	// Materials for lighting
 	glm::vec4 ambientMaterialColour = glm::vec4(0.0f, 0.0f, 0.01f, 1.0f);
 	glm::vec4 diffuseMaterialColour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
@@ -132,6 +140,7 @@ void Game::gameLoop()
 	};
 
 	// generate array and buffer for the skybox
+
 	GLuint skyboxVAO, skyboxVBO;
 	glGenVertexArrays(1, &skyboxVAO);
 	glGenBuffers(1, &skyboxVBO);
@@ -238,6 +247,9 @@ void Game::gameLoop()
 			obj->Update(deltaTime);
 		}
 
+		// update particles
+		Particles->Update(deltaTime, *GameObjectList[0], 2, glm::vec2(0.0f,0.0f));
+
 		// Update game and render with openGL
 		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -267,6 +279,9 @@ void Game::gameLoop()
 		view = player.camera.getViewMatrix();
 		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 6000.0f);
 		
+		// Draw particles	
+		Particles->Draw(proj);
+
 		// draw objects
 		for (GameObject * obj : GameObjectList) {
 
@@ -279,7 +294,6 @@ void Game::gameLoop()
 			glUniformMatrix4fv(currentShader->GetUniform("modelMatrix"), 1, GL_FALSE, glm::value_ptr(obj->GetModelTransformation()));
 			glUniformMatrix4fv(currentShader->GetUniform("view"), 1, GL_FALSE, glm::value_ptr(view));
 			glUniformMatrix4fv(currentShader->GetUniform("proj"), 1, GL_FALSE, glm::value_ptr(proj));
-			//glUniform1f(currentShader->GetUniform("morphBlendAlpha"), morphBlendAlpha);
 			glUniform1i(currentShader->GetUniform("diffuseTexture"), 0);
 			// refactor the below it for lighting
 			glUniform4fv(ambientMaterialColourLocation, 1, glm::value_ptr(ambientMaterialColour));
@@ -359,6 +373,7 @@ unsigned int Game::loadCubemap(std::vector<std::string> faces)
 // Clean up resources when the game is exited
 void Game::gameQuit()
 {
+	delete Particles;
 	// clear key events
 	player.clearEvents();
 	// delete textures

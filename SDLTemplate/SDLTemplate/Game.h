@@ -23,6 +23,7 @@
 #include "PlayerController.h"
 #include "Shaders.h"
 #include "GameObject.h"
+#include "ParticleGenerator.h"
 
 using namespace glm;
 
@@ -51,6 +52,8 @@ private:
 	std::vector<GameObject*> GameObjectList;
 	Shader * texturedShader;
 	Shader * skyboxShader;
+	Shader * particleShader;
+	ParticleGenerator *Particles;
 
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);
@@ -68,6 +71,7 @@ private:
 	GLuint viewLocation;
 	GLuint projLocation;
 	GLuint textureID;
+	GLuint particleTextureID;
 
 	/*// mouse movement variables
 	float lastX = window.screenWidth / 2;

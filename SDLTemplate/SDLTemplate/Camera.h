@@ -3,6 +3,8 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <glm\glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class Camera
 {
@@ -21,7 +23,7 @@ public:
 	{
 		return glm::lookAt(this->cameraPos, this->cameraPos + this->cameraFront, this->cameraUp);
 	}
-
+	
 private:
 
 	// set camera target
