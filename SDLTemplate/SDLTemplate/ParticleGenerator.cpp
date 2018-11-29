@@ -44,7 +44,9 @@ void ParticleGenerator::Draw(glm::mat4 proj)
 			glUniformMatrix2fv(shader.GetUniform("offset"), 1, GL_FALSE, glm::value_ptr(particle.Position));
 			glUniformMatrix4fv(shader.GetUniform("color"), 1, GL_FALSE, glm::value_ptr(particle.Colour));
 			glActiveTexture(GL_TEXTURE0);
+			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
+			glUniform1i(shader.GetUniform("sprite"), 0);
 			//this->texture.Bind();
 			glBindVertexArray(this->VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
