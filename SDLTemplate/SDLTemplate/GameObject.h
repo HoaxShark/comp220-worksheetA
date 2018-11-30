@@ -61,6 +61,11 @@ public:
 		Scale = scale;
 	}
 
+	glm::vec3 getScale()
+	{
+		return Scale;
+	}
+
 	void setRotationAxis(glm::vec3 axis)
 	{
 		rotationAxis = axis;
@@ -69,6 +74,11 @@ public:
 	void setRotationSpeed(float speed)
 	{
 		rotationSpeed = speed;
+	}
+
+	void setScaleFactor(float factor)
+	{
+		scaleFactor = factor;
 	}
 
 	void Render();
@@ -97,5 +107,6 @@ private:
 
 	float rotateAmount;
 	float rotationSpeed = 0.2f;
+	float scaleFactor = 0.0f;
 	glm::vec3 rotationAxis; // angle of the axis an object will rotate around
 };

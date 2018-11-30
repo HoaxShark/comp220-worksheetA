@@ -1,8 +1,9 @@
-﻿  ParticleGenerator.cpp
-d:\comp220-worksheeta\sdltemplate\sdltemplate\particlegenerator.cpp(30): warning C4244: '-=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-d:\comp220-worksheeta\sdltemplate\sdltemplate\particlegenerator.cpp(114): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+﻿  Game.cpp
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(30): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(196): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(212): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(424): warning C4101: 'height': unreferenced local variable
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(424): warning C4101: 'width': unreferenced local variable
   SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe

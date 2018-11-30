@@ -43,6 +43,18 @@ void GameObject::Update(float deltaTime)
 	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotateAmount), rotationAxis);
 	// increase rotation by rotationSpeed
 	rotateAmount += rotationSpeed;
+	// if at max size, flip scale factor so it gets smaller
+	if (Scale.x >= 10.f)
+	{
+		scaleFactor = -scaleFactor;
+	}
+	// if at min size, flip scale factor so it gets bigger
+	else if (Scale.x <= 1.0f) 
+	{
+		scaleFactor = -scaleFactor;
+	}
+
+	Scale += scaleFactor;
 }
 
 void GameObject::Render()

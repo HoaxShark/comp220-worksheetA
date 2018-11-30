@@ -2,6 +2,7 @@
 
 /* TODO:
 	REFACTOR SKYBOX CODE AND DELETE MEMORY ON CLOSE
+	Object Creation Class
 	use renderDoc for debugging very important for the coursework
 	work off my feedback
 	joystick controls
@@ -55,16 +56,20 @@ void Game::gameLoop()
 	texturedShader = new Shader();
 	texturedShader->Load("blinnPhongVert.glsl", "blinnPhongFrag.glsl");
 
+	lightOrbShader = new Shader();
+	lightOrbShader->Load("vertTextured.glsl", "fragTextured.glsl");
+
 	skyboxShader = new Shader();
 	skyboxShader->Load("vertSkybox.glsl", "fragSkybox.glsl");
 
-	particleShader = new Shader();
+	/*particleShader = new Shader();
 	particleShader->Load("vertParticle.glsl", "fragParticle.glsl");
 
 	// load particle texture
 	particleTextureID = loadTextureFromFile("Model/spark.png");
 
 	Particles = new ParticleGenerator(particleShader , particleTextureID, 10);
+	*/
 
 	// Materials for lighting
 	glm::vec4 ambientMaterialColour = glm::vec4(0.0f, 0.0f, 0.01f, 1.0f);
@@ -159,6 +164,12 @@ void Game::gameLoop()
 	createObject("Model/orange.fbx", "Model/colour.png", 600.0f, 100.0f, -650.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 1.0f, 0.0f), 0.1f);
 	createObject("Model/pine.fbx", "Model/colour.png", -500.0f, -200.0f, -450.0f, vec3(0.1f, 0.1f, 0.1f), vec3(1.0f, 1.0f, 0.0f), 0.1f);
 
+	// create light object
+	createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(3.5f, 3.5f, 3.5f), vec3(1.0f, 1.0f, 0.0f), 1.4f, 0.1f);
+	createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(5.0f, 5.0f, 5.0f), vec3(1.0f, 0.0f, 0.0f), 1.2f, 0.2f);
+	createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(2.0f, 2.0f, 2.0f), vec3(0.0f, 1.0f, 0.0f), 1.0f, 0.1f);
+	createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(1.2f, 1.2f, 1.2f), vec3(0.0f, 0.0f, 1.0f), 0.8f, 0.05f);
+
 	// create vector to hold skybox image locations
 	std::vector<std::string> skyboxFaces
 	{
@@ -247,8 +258,20 @@ void Game::gameLoop()
 			obj->Update(deltaTime);
 		}
 
+		// update light
+		for (GameObject * obj : LightObjectList)
+		{
+			vec3 offset = vec3(20.0f, -10.0f, -50.0f);
+			vec3 pos = player.camera.getCameraFront();
+			std::cout << pos.x << pos.y << pos.z << std::endl;
+			//pos = pos * offset;
+			obj->SetPosition(pos.x, pos.y, pos.z);
+			obj->Update(deltaTime);
+		}
+		/*
 		// update particles
 		Particles->Update(deltaTime, *GameObjectList[0], 2, glm::vec2(0.0f,0.0f));
+		*/
 
 		// Update game and render with openGL
 		glEnable(GL_DEPTH_TEST);
@@ -279,8 +302,10 @@ void Game::gameLoop()
 		view = player.camera.getViewMatrix();
 		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 6000.0f);
 		
+		/*
 		// Draw particles	
 		Particles->Draw(proj);
+		*/
 
 		// draw objects
 		for (GameObject * obj : GameObjectList) {
@@ -312,6 +337,36 @@ void Game::gameLoop()
 			obj->Render();
 		}
 
+		// draw lights
+		for (GameObject * obj : LightObjectList) {
+
+			Shader * currentShader = obj->GetShader();
+			currentShader->Use();
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, obj->GetDiffuseTexture());
+
+			glUniformMatrix4fv(currentShader->GetUniform("modelMatrix"), 1, GL_FALSE, glm::value_ptr(obj->GetModelTransformation()));
+			glUniformMatrix4fv(currentShader->GetUniform("view"), 1, GL_FALSE, glm::value_ptr(view));
+			glUniformMatrix4fv(currentShader->GetUniform("proj"), 1, GL_FALSE, glm::value_ptr(proj));
+			glUniform1i(currentShader->GetUniform("diffuseTexture"), 0);
+			// refactor the below it for lighting
+			glUniform4fv(ambientMaterialColourLocation, 1, glm::value_ptr(ambientMaterialColour));
+			glUniform4fv(diffuseMaterialColourLocation, 1, glm::value_ptr(diffuseMaterialColour));
+			glUniform4fv(specularMaterialColourLocation, 1, glm::value_ptr(specularMaterialColour));
+
+			glUniform4fv(ambientLightColourLocation, 1, glm::value_ptr(ambientLightColour));
+			glUniform4fv(diffuseLightColourLocation, 1, glm::value_ptr(diffuseLightColour));
+			glUniform4fv(specularLightColourLocation, 1, glm::value_ptr(specularLightColour));
+
+			glUniform3fv(lightDirectionLocation, 1, glm::value_ptr(lightDirection));
+			glUniform1f(specularMaterialPowerLocation, specularMaterialPower);
+
+			glUniform3fv(cameraPositionLocation, 1, glm::value_ptr(cameraPosition));
+
+			obj->Render();
+		}
+
 		SDL_GL_SwapWindow(mainWindow);
 	}
 	// Call all quit functions
@@ -337,6 +392,27 @@ void Game::createObject(const std::string & fileLocation, const std::string & te
 	GO->SetShader(texturedShader);
 	GO->SetDiffuseTexture(textureID);
 	GameObjectList.push_back(GO);
+}
+
+/* Creates a new game object and stores it in the objectList
+takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
+void Game::createLightObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor)
+{
+	MeshCollection * Meshes = new MeshCollection();
+	loadMeshesFromFile(fileLocation, Meshes);
+
+	textureID = loadTextureFromFile(textureLocation);
+
+	GameObject * GO = new GameObject();
+	GO->SetPosition(posX, posY, posZ);
+	GO->SetMesh(Meshes);
+	GO->setScale(scale);
+	GO->setRotationAxis(rotationAxis);
+	GO->setRotationSpeed(speed);
+	GO->setScaleFactor(scaleFactor);
+	GO->SetShader(texturedShader);
+	GO->SetDiffuseTexture(textureID);
+	LightObjectList.push_back(GO);
 }
 
 unsigned int Game::loadCubemap(std::vector<std::string> faces)
