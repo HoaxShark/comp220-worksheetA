@@ -261,11 +261,13 @@ void Game::gameLoop()
 		// update light
 		for (GameObject * obj : LightObjectList)
 		{
-			vec3 offset = vec3(20.0f, -10.0f, -50.0f);
+			vec3 offset = vec3(2.0f, -1.0f, -5.0f);
 			vec3 pos = player.camera.getCameraFront();
-			std::cout << pos.x << pos.y << pos.z << std::endl;
-			//pos = pos * offset;
+			vec3 playerPos = player.camera.getCameraPos();
+			pos = pos * 100.f;
+			pos = pos + playerPos;
 			obj->SetPosition(pos.x, pos.y, pos.z);
+			std::cout << pos.x << pos.y << pos.z << std::endl;
 			obj->Update(deltaTime);
 		}
 		/*
