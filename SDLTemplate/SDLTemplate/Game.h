@@ -4,7 +4,6 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <glm\glm.hpp>
-//#include "Shader.h"
 #include "Model.h"
 
 #include <time.h>
@@ -24,6 +23,7 @@
 #include "Shaders.h"
 #include "GameObject.h"
 #include "ParticleGenerator.h"
+#include "Skybox.h"
 
 using namespace glm;
 
@@ -34,13 +34,7 @@ public:
 	Game();
 	~Game();
 	void gameLoop();
-	/* Creates a new game object and stores it in the objectList
-	takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
-	void createObject(const std::string& fileLocation, const std::string& textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed);
-	/* Creates a new game object and stores it in the objectList
-takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
-	void createLightObject(const std::string& fileLocation, const std::string& textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor);
-	unsigned int loadCubemap(std::vector<std::string> faces);
+	
 
 private:
 	SDL_Renderer* renderer = NULL;
@@ -54,11 +48,12 @@ private:
 	PlayerController player;
 	std::vector<GameObject*> GameObjectList;
 	std::vector<GameObject*> LightObjectList;
+	Skybox * skybox;
 	Shader * texturedShader;
 	Shader * lightOrbShader;
 	Shader * skyboxShader;
-	Shader * particleShader;
-	ParticleGenerator *Particles;
+	//Shader * particleShader;
+	//ParticleGenerator *Particles;
 
 	vec3 position = vec3(0.0f);
 	vec3 shapeScale = vec3(1.0f);
@@ -78,13 +73,18 @@ private:
 	GLuint textureID;
 	GLuint particleTextureID;
 
-	/*// mouse movement variables
-	float lastX = window.screenWidth / 2;
-	float lastY = window.screenHeight / 2;
-	float sensitivity = 0.05f;
-	float pitch = 0.0f;
-	float yaw = 270.0f;
-	bool firstMouse = true;*/
+	// Materials for lighting
+	glm::vec4 ambientMaterialColour = glm::vec4(0.0f, 0.0f, 0.01f, 1.0f);
+	glm::vec4 diffuseMaterialColour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
+	glm::vec4 specularMaterialColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	float specularMaterialPower = 50.0f;
+	// camera
+	glm::vec3 cameraPosition = player.camera.getCameraPos();
+	// Light
+	glm::vec4 ambientLightColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 diffuseLightColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 specularLightColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, -1.0f);
 
 	float rotateAngle = 0.0f;
 	float lastTime;
@@ -94,10 +94,15 @@ private:
 	int fullHeight;
 
 	void initialiseGame();
+	/* Creates a new game object and stores it in the objectList
+	takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
+	void createObject(const std::string& fileLocation, const std::string& textureLocation, float posX, float posY, float posZ, glm::vec3 scale, 
+						glm::vec3 rotationAxis, float speed);
+	/* Creates a new game object and stores it in the objectList
+takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
+	void createLightObject(const std::string& fileLocation, const std::string& textureLocation, float posX, float posY, float posZ, 
+							glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor);
+	void drawObjects(std::vector<GameObject*> list);
 	void gameQuit();
-
-	/*// updates mouse movement
-	void mouseUpdate(float xPos, float yPos);
-	void moveCamera();*/
 };
 

@@ -81,13 +81,31 @@ public:
 		scaleFactor = factor;
 	}
 
+	void setIsParticle(bool particle)
+	{
+		isParticle = particle;
+	}
+
+	float getLife()
+	{
+		return life;
+	}
+
 	void Render();
+	void RandomNormal();
 
 private:
 	//Set up positions for position, rotation and scale
 	glm::vec3 Position;
 	glm::vec3 Rotation;
 	glm::vec3 Scale;
+
+	// a random normal for particle direction
+	glm::vec3 randomNormal;
+	float normalIncrease = 1.001f;
+
+	bool isParticle = false;
+	float life = 20000.0f;
 
 	//calculate the translation, rotation and scale matrices using the above vectores
 	glm::mat4 TranslationMatrix;

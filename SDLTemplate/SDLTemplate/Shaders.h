@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 
-GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path);
 
 class Shader
 {
@@ -24,9 +23,9 @@ public:
 	{
 		return ShaderProgramID;
 	}
-
 	void Use();
 
+	GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path);
 	bool Load(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename);
 private:
 	void InitialiseUniforms();

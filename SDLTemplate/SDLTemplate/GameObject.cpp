@@ -14,6 +14,8 @@ GameObject::GameObject()
 	Meshes = nullptr;
 	ShaderProgram = nullptr;
 	DiffuseTexture = 0;
+
+	RandomNormal();
 }
 
 GameObject::~GameObject()
@@ -31,6 +33,28 @@ GameObject::~GameObject()
 
 void GameObject::Update(float deltaTime)
 {
+	
+	if (isParticle)
+	{
+		/*
+		std::cout << deltaTime << std::endl;
+		glm::vec3 directionVec = randomNormal * normalIncrease;
+		Position = Position * directionVec;
+		normalIncrease += 0.01f;
+		life = -0.1f;*/
+		// if at max size, flip scale factor so it gets smaller
+		if (Scale.x >= 0.8f)
+		{
+			scaleFactor = -scaleFactor;
+		}
+		// if at min size, flip scale factor so it gets bigger
+		else if (Scale.x <= 0.005f)
+		{
+			scaleFactor = -scaleFactor;
+		}
+
+		Scale += scaleFactor;
+	}
 	TranslationMatrix = glm::translate(Position);
 	RotationMatrix = glm::rotate(Rotation.x, glm::vec3(1.0f, 0.0f, 0.0f))
 		*glm::rotate(Rotation.y, glm::vec3(0.0f, 1.0f, 0.0f))
@@ -43,18 +67,6 @@ void GameObject::Update(float deltaTime)
 	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotateAmount), rotationAxis);
 	// increase rotation by rotationSpeed
 	rotateAmount += rotationSpeed;
-	// if at max size, flip scale factor so it gets smaller
-	if (Scale.x >= 10.f)
-	{
-		scaleFactor = -scaleFactor;
-	}
-	// if at min size, flip scale factor so it gets bigger
-	else if (Scale.x <= 1.0f) 
-	{
-		scaleFactor = -scaleFactor;
-	}
-
-	Scale += scaleFactor;
 }
 
 void GameObject::Render()
@@ -63,4 +75,14 @@ void GameObject::Render()
 	{
 		Meshes->render();
 	}
+}
+
+void GameObject::RandomNormal()
+{
+	float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	float z = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	randomNormal.x = x;
+	randomNormal.y = y;
+	randomNormal.z = z;
 }

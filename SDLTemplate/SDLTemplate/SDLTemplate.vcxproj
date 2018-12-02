@@ -29,6 +29,7 @@
     <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Shaders.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
@@ -64,7 +66,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{4002CED7-89CB-4311-8E12-C39810858895}</ProjectGuid>
     <RootNamespace>SDLTemplate</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
