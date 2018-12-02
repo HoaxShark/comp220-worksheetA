@@ -51,3 +51,6 @@ For the particles I will be looking to have them spawn, move randomly from a poi
 Given the amount of elements in the current object I was planning to use, I will either, look into finding a new model (most likely) or create an array where "dead" particles are not destroyed but just not rendered and stored until a new one is born. Realistically I will probably do both as combining both options will be most efficent.
 
 The light position that the particles will be tied too will need to be controllable in a sense by the player. I have been working on this already and will continue to aim for it being locked to the players camera, however I have back up plans of it being summonable to points in the camera lock continues to alude me.
+
+### Additional Resources
+Please see [this page](https://github.com/HoaxShark/comp220-worksheetA/tree/Worksheet-C/Effect%20Resources/Particles) for my lists of additional resources that have been used to help guide me along with implementing a particle system.
