@@ -1,6 +1,10 @@
 #include "Game.h"
 
-/* TODO:
+/*
+The particle generator class isn't currently in use, I was struggling to get it
+to work so have been doing it another way with generating objects with the same object creation as previously
+
+TODO:
 	Object Creation Class
 	use renderDoc for debugging very important for the coursework
 	work off my feedback
