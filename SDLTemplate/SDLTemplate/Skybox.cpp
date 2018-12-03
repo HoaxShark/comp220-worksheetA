@@ -119,7 +119,7 @@ void Skybox::renderSkybox(glm::mat4 playerViewMatrix, glm::mat4 proj)
 }
 
 void Skybox::initSkybox()
-{
+{ 
 	skyboxShader = new Shader;
 	skyboxShader->Load("vertSkybox.glsl", "fragSkybox.glsl");
 

@@ -2,12 +2,11 @@
 
 /* TODO:
 	Object Creation Class
-	use renderDoc for debugging very important for the coursework
 	work off my feedback
-	joystick controls
+	joystick controls?
 	create light with a base attached to camera with offset
 	throwable light
-	shadow casting from light
+	shadow casting from light?
 	
 	consider orbiting planets/ moons
 	check out factory patterns for gameobject*/
@@ -81,11 +80,12 @@ void Game::gameLoop()
 	createObject("Model/orange.fbx", "Model/colour.png", 600.0f, 100.0f, -650.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 1.0f, 0.0f), 0.1f);
 	createObject("Model/pine.fbx", "Model/colour.png", -500.0f, -200.0f, -450.0f, vec3(0.1f, 0.1f, 0.1f), vec3(1.0f, 1.0f, 0.0f), 0.1f);
 
+	
 	// create light object
 	createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(1.0f, 1.0f, 0.0f), 1.4f, 0.001f);
-	createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(1.0f, 0.0f, 0.0f), 1.2f, 0.002f);
-	createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 1.0f, 0.0f), 1.0f, 0.001f);
-	createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 0.0f, 1.0f), 0.8f, 0.0005f);
+	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(1.0f, 0.0f, 0.0f), 1.2f, 0.002f);
+	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 1.0f, 0.0f), 1.0f, 0.001f);
+	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 0.0f, 1.0f), 0.8f, 0.0005f);
 
 	// Current sdl event
 	SDL_Event event;
@@ -199,12 +199,18 @@ void Game::gameLoop()
 		// Bind program
 		glUseProgram(programID);
 
-		// draw skybox
-		skybox->renderSkybox(player.camera.getViewMatrix(), proj);
+
 
 		// note that we're translating the scene in the reverse direction of where we want to move
 		view = player.camera.getViewMatrix();
-		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.1f, 6000.0f);
+		// close near clip for the skybox
+		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.8f, 1500.0f);
+
+		// draw skybox
+		skybox->renderSkybox(player.camera.getViewMatrix(), proj);
+
+		// change the near clip for other objects
+		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 5.0f, 1500.0f);
 
 		/*
 		// Draw particles	

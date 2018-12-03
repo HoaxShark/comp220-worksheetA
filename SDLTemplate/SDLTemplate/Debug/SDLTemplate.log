@@ -1,2 +1,7 @@
-﻿  GameObject.cpp
-  SDLTemplate.vcxproj -> C:\Users\HoaxShark\Desktop\Uni Year 2\Comp 220\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
+﻿  Game.cpp
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(29): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(101): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(117): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+  SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
