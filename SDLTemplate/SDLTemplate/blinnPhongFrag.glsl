@@ -21,9 +21,38 @@ uniform vec4 specularMaterialColour;
 uniform float specularMaterialPower;
 
 uniform vec3 lightDirection;
+uniform vec3 pointLightPos;
+
+vec4 CalculateLightColour(vec4 diffuseLightColour,vec4 specularLightColour,vec3 lightDirection,vec4 diffuseTextureColour)
+{
+	float nDotl=clamp(dot(vertexNormalOut,normalize(lightDirection)),0.0,1.0);
+
+	vec3 halfWay=normalize(lightDirection+viewDirection);
+	float nDoth=pow(clamp(dot(vertexNormalOut,halfWay),0.0,1.0),specularMaterialPower);
+
+	return 	(diffuseLightColour*nDotl*diffuseMaterialColour*diffuseTextureColour)+
+			(specularLightColour*nDoth*specularMaterialColour);
+}
 
 void main()
 {
+	vec3 pointLightDirection = worldVertexPosition - pointLightPos;
+	float pointLightDistance = length(pointLightDirection);
+	pointLightDirection = normalize(pointLightDirection);
+
+	// look up the texture colour
+	vec4 diffuseTextureColour = texture(diffuseTexture,vertextTextureCoordsOut);
+
+	vec4 colour=CalculateLightColour(diffuseLightColour,
+									specularLightColour,
+									-pointLightDirection,
+									diffuseTextureColour);
+
+	//float attenuation=1.0/(1.0+0.1*pointLightDistance+0.01*pointLightDistance*pointLightDistance);
+
+	color = colour; //*attenuation;
+
+	/*
 	// dot product gives us how much light is hitting the surface
 	float nDotl = dot(vertexNormalOut, -lightDirection);
 
@@ -31,10 +60,7 @@ void main()
 	// defines where the highlight will be on the surface
 	float nDoth = pow(dot(vertexNormalOut, maxReflectionVector),specularMaterialPower);
 
-	// look up the texture colour
-	vec4 diffuseTextureColour = texture(diffuseTexture,vertextTextureCoordsOut);
-
 	color = (ambientLightColour*ambientMaterialColour) + 
 			(diffuseLightColour*nDotl*diffuseMaterialColour*diffuseTextureColour) + 
-			(specularLightColour*nDoth*specularMaterialColour);
+			(specularLightColour*nDoth*specularMaterialColour);*/
 }

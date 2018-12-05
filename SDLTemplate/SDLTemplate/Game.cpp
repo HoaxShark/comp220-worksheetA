@@ -300,6 +300,7 @@ void Game::drawObjects(std::vector<GameObject*> list)
 		glUniform1f(currentShader->GetUniform("specularMaterialPower"), specularMaterialPower);
 
 		glUniform3fv(currentShader->GetUniform("cameraPosition"), 1, glm::value_ptr(cameraPosition));
+		glUniform3fv(currentShader->GetUniform("pointLightPos"), 1, glm::value_ptr(lightObjectPos));
 
 		obj->Render();
 	}
