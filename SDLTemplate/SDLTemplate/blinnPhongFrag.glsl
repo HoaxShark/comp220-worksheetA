@@ -48,9 +48,9 @@ void main()
 									-pointLightDirection,
 									diffuseTextureColour);
 
-	//float attenuation=1.0/(1.0+0.1*pointLightDistance+0.01*pointLightDistance*pointLightDistance);
+	float attenuation=1.0/(1.0+0.005*pointLightDistance+0.000001*pointLightDistance*pointLightDistance);
 
-	color = colour; //*attenuation;
+	color = colour *attenuation;
 
 	/*
 	// dot product gives us how much light is hitting the surface

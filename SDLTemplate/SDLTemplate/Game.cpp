@@ -116,6 +116,24 @@ void Game::gameLoop()
 				player.mouseUpdate(event.motion.xrel, event.motion.yrel);
 				break;
 
+			case SDL_MOUSEBUTTONDOWN:
+				if (event.button.button == SDL_BUTTON_LEFT)
+				{
+					for (GameObject * obj : LightObjectList)
+					{
+						obj->setWithPlayer(false);
+						obj->setThrownDirection(currentPos);
+						obj->setThrownNormal(player.camera.getCameraFront());
+					}
+				}
+				else if (event.button.button == SDL_BUTTON_RIGHT)
+				{
+					for (GameObject * obj : LightObjectList)
+					{
+						obj->setWithPlayer(true);
+					}
+				}
+
 			case SDL_KEYDOWN:
 				// Update key map
 				player.manageKeyboardEvents(event);
@@ -165,7 +183,6 @@ void Game::gameLoop()
 		// update light
 		for (GameObject * obj : LightObjectList)
 		{
-
 			// trying to make the light stay with the camera
 			vec3 offset = vec3(0.2f, -0.2f, 0.0f);
 			vec3 pos = player.camera.getCameraFront();
@@ -175,8 +192,21 @@ void Game::gameLoop()
 			pos = pos + offset;
 			// increase the vector
 			pos = pos * 10.f;
-			// add player pos to vector
-			lightObjectPos = pos + playerPos;
+			currentPos = pos + playerPos;
+
+			if (obj->getWithPlayer())
+			{
+				// add player pos to vector
+				lightObjectPos = currentPos;
+			}
+			else if (!obj->getWithPlayer())
+			{
+				vec3 currentDirection = obj->getThrownDirection();
+				currentDirection = currentDirection + obj->getThrownNormal();
+				obj->setThrownDirection(currentDirection);
+				lightObjectPos = currentDirection;
+			}
+
 			obj->SetPosition(lightObjectPos.x, lightObjectPos.y, lightObjectPos.z);
 			
 			obj->Update(deltaTime);
@@ -267,6 +297,7 @@ void Game::createLightObject(const std::string & fileLocation, const std::string
 	GO->setRotationSpeed(speed);
 	GO->setScaleFactor(scaleFactor);
 	GO->setIsParticle(true);
+	GO->setWithPlayer(true);
 	GO->SetShader(texturedShader);
 	GO->SetDiffuseTexture(textureID);
 	LightObjectList.push_back(GO);

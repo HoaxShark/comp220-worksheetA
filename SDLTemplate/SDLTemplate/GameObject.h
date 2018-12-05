@@ -91,6 +91,36 @@ public:
 		return life;
 	}
 
+	bool getWithPlayer()
+	{
+		return withPlayer;
+	}
+
+	void setWithPlayer(bool isWithPlayer)
+	{
+		withPlayer = isWithPlayer;
+	}
+
+	void setThrownDirection(glm::vec3 direction)
+	{
+		thrownDirection = direction;
+	}
+
+	glm::vec3 getThrownDirection()
+	{
+		return thrownDirection;
+	}
+
+	void setThrownNormal(glm::vec3 normal)
+	{
+		thrownNormal = normal;
+	}
+
+	glm::vec3 getThrownNormal()
+	{
+		return thrownNormal;
+	}
+
 	void Render();
 	void RandomNormal();
 
@@ -104,8 +134,11 @@ private:
 	glm::vec3 randomNormal;
 	float normalIncrease = 1.001f;
 
+	bool withPlayer = false;
 	bool isParticle = false;
 	float life = 20000.0f;
+	glm::vec3 thrownDirection;
+	glm::vec3 thrownNormal;
 
 	//calculate the translation, rotation and scale matrices using the above vectores
 	glm::mat4 TranslationMatrix;

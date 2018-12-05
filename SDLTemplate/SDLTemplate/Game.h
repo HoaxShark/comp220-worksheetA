@@ -88,6 +88,7 @@ private:
 
 	// lightObject position used to tell where the center of the light is
 	glm::vec3 lightObjectPos;
+	vec3 currentPos;
 
 	float rotateAngle = 0.0f;
 	float lastTime;
