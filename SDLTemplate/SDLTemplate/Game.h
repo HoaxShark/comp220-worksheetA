@@ -86,6 +86,9 @@ private:
 	glm::vec4 specularLightColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, -1.0f);
 
+	// lightObject position used to tell where the center of the light is
+	glm::vec3 lightObjectPos;
+
 	float rotateAngle = 0.0f;
 	float lastTime;
 	float tickTime;

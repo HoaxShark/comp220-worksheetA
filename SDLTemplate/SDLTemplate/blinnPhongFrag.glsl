@@ -6,6 +6,7 @@ in vec4 vertexColourOut;
 in vec2 vertextTextureCoordsOut;
 in vec3 vertexNormalOut;
 in vec3 viewDirection;
+in vec3 worldVertexPosition;
 
 uniform sampler2D diffuseTexture;
 

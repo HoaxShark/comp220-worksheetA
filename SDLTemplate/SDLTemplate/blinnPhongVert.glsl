@@ -15,6 +15,7 @@ out vec2 vertextTextureCoordsOut;
 out vec4 vertexColourOut;
 out vec3 vertexNormalOut;
 out vec3 viewDirection;
+out vec3 worldVertexPosition;
 
 void main()
 {
@@ -22,14 +23,13 @@ void main()
 
 	// translate vertex positions to world space
 	vec4 vertexWorldPosition = modelMatrix * vec4(vertexPos,1.0f);
-
 	vec4 mvpPosition = mvpMatrix*vec4(vertexPos,1.0f);
-	gl_Position = mvpPosition;
-
-	vertexNormalOut = vertexNormal;
+	
+	vertexNormalOut = normalize(modelMatrix*vec4(vertexNormal,0.0f)).xyz;;
 	vertexColourOut = vertexColour;
-
+	worldVertexPosition = vertexWorldPosition.xyz;
 	viewDirection = normalize(cameraPosition - vertexWorldPosition.xyz);
-
 	vertextTextureCoordsOut = vertexTextureCoords;
+
+	gl_Position = mvpPosition;
 }

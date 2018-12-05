@@ -176,8 +176,8 @@ void Game::gameLoop()
 			// increase the vector
 			pos = pos * 10.f;
 			// add player pos to vector
-			pos = pos + playerPos;
-			obj->SetPosition(pos.x, pos.y, pos.z);
+			lightObjectPos = pos + playerPos;
+			obj->SetPosition(lightObjectPos.x, lightObjectPos.y, lightObjectPos.z);
 			
 			obj->Update(deltaTime);
 		}

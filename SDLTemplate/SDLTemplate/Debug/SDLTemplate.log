@@ -1,7 +1,11 @@
 ﻿  Game.cpp
 d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(29): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(101): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(117): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(28): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(100): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(116): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+  Main.cpp
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
