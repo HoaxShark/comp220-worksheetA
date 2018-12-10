@@ -82,7 +82,7 @@ void Game::gameLoop()
 
 	
 	// create light object
-	createLightObject("Model/star.obj", "Model/light3.png", 10.0f, 10.0f, -20.0f, vec3(0.0055f, 0.0055f, 0.0055f), vec3(1.0f, 1.0f, 0.0f), 1.4f, 0.001f);
+	createLightObject("Model/star.obj", "Model/light3.png", 10.0f, 10.0f, -20.0f, vec3(0.085f, 0.085f, 0.085f), vec3(1.0f, 1.0f, 0.0f), 0.5f, 0.0f);
 	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(1.0f, 0.0f, 0.0f), 1.2f, 0.002f);
 	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 1.0f, 0.0f), 1.0f, 0.001f);
 	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 0.0f, 1.0f), 0.8f, 0.0005f);

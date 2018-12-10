@@ -157,7 +157,7 @@ private:
 	GLuint DiffuseTexture;
 
 	float rotateAmount;
-	float rotationSpeed = 0.2f;
+	float rotationSpeed = 0.5f;
 	float scaleFactor = 0.0f;
 	glm::vec3 rotationAxis; // angle of the axis an object will rotate around
 };
