@@ -21,6 +21,8 @@ void Game::initialiseGame()
 {
 	bool inDevelopMode = false;
 
+	objectManager = new ObjectManager();
+
 	// Initalise random seed
 	std::srand(time(NULL));
 
@@ -58,17 +60,10 @@ void Game::gameLoop()
 	lightOrbShader = new Shader();
 	lightOrbShader->Load("vertTextured.glsl", "fragTextured.glsl");
 
-	/*particleShader = new Shader();
-	particleShader->Load("vertParticle.glsl", "fragParticle.glsl");
-
-	// load particle texture
-	particleTextureID = loadTextureFromFile("Model/spark.png");
-
-	Particles = new ParticleGenerator(particleShader , particleTextureID, 10);
-	*/
+	particleGenerator = new ParticleGenerator(10, objectManager, lightOrbShader);
 
 	// Load in objects
-	objectManager.loadAllObjects(texturedShader, lightOrbShader);
+	objectManager->loadAllObjects(texturedShader, lightOrbShader);
 
 	// Current sdl event
 	SDL_Event event;
@@ -102,16 +97,16 @@ void Game::gameLoop()
 			case SDL_MOUSEBUTTONDOWN:
 				if (event.button.button == SDL_BUTTON_LEFT)
 				{
-					for (GameObject * obj : objectManager.GetLightObjectList())
+					for (GameObject * obj : objectManager->GetLightObjectList())
 					{
 						obj->setWithPlayer(false);
-						obj->setThrownDirection(objectManager.GetCurrentLightPos());
+						obj->setThrownDirection(objectManager->GetCurrentLightPos());
 						obj->setThrownNormal(player.camera.getCameraFront());
 					}
 				}
 				else if (event.button.button == SDL_BUTTON_RIGHT)
 				{
-					for (GameObject * obj : objectManager.GetLightObjectList())
+					for (GameObject * obj : objectManager->GetLightObjectList())
 					{
 						obj->setWithPlayer(true);
 					}
@@ -158,15 +153,13 @@ void Game::gameLoop()
 		player.handleKeyboard(deltaTime);
 
 		// update objects
-		objectManager.updateObjectList(objectManager.GetGameObjectList(), player, false, deltaTime);
+		objectManager->updateObjectList(objectManager->GetGameObjectList(), player, false, deltaTime);
 
 		// update light
-		objectManager.updateObjectList(objectManager.GetLightObjectList(), player, true, deltaTime);
+		objectManager->updateObjectList(objectManager->GetLightObjectList(), player, true, deltaTime);
 
-		/*
 		// update particles
-		Particles->Update(deltaTime, *GameObjectList[0], 2, glm::vec2(0.0f,0.0f));
-		*/
+		particleGenerator->Update(deltaTime, *objectManager->GetLightObjectList()[0], 2);
 
 		// Update game and render with openGL
 		glEnable(GL_DEPTH_TEST);
@@ -193,16 +186,14 @@ void Game::gameLoop()
 		// change the near clip for other objects
 		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 5.0f, 1500.0f);
 
-		/*
 		// Draw particles	
-		Particles->Draw(proj);
-		*/
+		objectManager->drawObjects(objectManager->GetParticleObjectList(), view, proj, cameraPosition);
 
 		// draw objects
-		objectManager.drawObjects(objectManager.GetGameObjectList(), view, proj, cameraPosition);
+		objectManager->drawObjects(objectManager->GetGameObjectList(), view, proj, cameraPosition);
 
 		// draw lights
-		objectManager.drawObjects(objectManager.GetLightObjectList(), view, proj, cameraPosition);
+		objectManager->drawObjects(objectManager->GetLightObjectList(), view, proj, cameraPosition);
 
 		SDL_GL_SwapWindow(mainWindow);
 	}

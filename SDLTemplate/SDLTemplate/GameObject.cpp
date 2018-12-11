@@ -69,6 +69,11 @@ void GameObject::Update(float deltaTime)
 	rotateAmount += rotationSpeed;
 }
 
+void GameObject::ResetLife()
+{
+	life = lifeDefault;
+}
+
 void GameObject::Render()
 {
 	if (Meshes)

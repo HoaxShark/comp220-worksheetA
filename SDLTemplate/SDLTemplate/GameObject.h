@@ -21,6 +21,11 @@ public:
 		Position = glm::vec3(x, y, z);
 	};
 
+	void SetPositionVec3(glm::vec3 newPos)
+	{
+		Position = newPos;
+	};
+
 	glm::vec3& GetPosition()
 	{
 		return Position;
@@ -86,11 +91,6 @@ public:
 		isParticle = particle;
 	}
 
-	float getLife()
-	{
-		return life;
-	}
-
 	bool getWithPlayer()
 	{
 		return withPlayer;
@@ -121,6 +121,22 @@ public:
 		return thrownNormal;
 	}
 
+	float GetLife()
+	{
+		return life;
+	}
+
+	void DecreaseLife(float deltaTime)
+	{
+		life -= deltaTime;
+	}
+
+	glm::vec3 GetRandomNormal()
+	{
+		return randomNormal;
+	}
+
+	void ResetLife();
 	void Render();
 	void RandomNormal();
 
@@ -136,6 +152,7 @@ private:
 
 	bool withPlayer = false;
 	bool isParticle = false;
+	float lifeDefault = 20000.0f;
 	float life = 20000.0f;
 	glm::vec3 thrownDirection;
 	glm::vec3 thrownNormal;

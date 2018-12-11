@@ -24,6 +24,8 @@ public:
 
 	void createLightObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader);
 
+	void createParticleObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader);
+
 	void drawObjects(std::vector<GameObject*> list, mat4 view, mat4 projection, vec3 cameraPosition);
 
 	void loadAllObjects(Shader* objectShader, Shader* lightShader);
@@ -40,6 +42,11 @@ public:
 		return LightObjectList;
 	}
 
+	std::vector<GameObject*> GetParticleObjectList()
+	{
+		return ParticleObjectList;
+	}
+
 	vec3 GetLightObjectPos()
 	{
 		return lightObjectPos;
@@ -54,6 +61,7 @@ private:
 	GLuint textureID;
 	std::vector<GameObject*> GameObjectList;
 	std::vector<GameObject*> LightObjectList;
+	std::vector<GameObject*> ParticleObjectList;
 	LightValues lightValues;
 
 	// lightObject position used to tell where the center of the light is

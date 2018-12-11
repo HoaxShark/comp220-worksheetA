@@ -50,10 +50,8 @@ private:
 	Shader * texturedShader;
 	Shader * lightOrbShader;
 	Shader * skyboxShader;
-
-	//ParticleGenerator *Particles;
-
-	ObjectManager objectManager;
+	ParticleGenerator * particleGenerator;
+	ObjectManager * objectManager;
 
 	// used for the perspective camera
 	mat4 proj;
@@ -70,7 +68,6 @@ private:
 	GLuint viewLocation;
 	GLuint projLocation;
 	GLuint textureID;
-	//GLuint particleTextureID;
 
 	// camera
 	glm::vec3 cameraPosition = player.camera.getCameraPos();

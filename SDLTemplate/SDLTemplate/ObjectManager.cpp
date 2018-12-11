@@ -54,6 +54,29 @@ void ObjectManager::createLightObject(const std::string & fileLocation, const st
 	LightObjectList.push_back(GO);
 }
 
+/* Creates a new game object and stores it in the objectList
+takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
+void ObjectManager::createParticleObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader)
+{
+	MeshCollection * Meshes = new MeshCollection();
+	loadMeshesFromFile(fileLocation, Meshes);
+
+	textureID = loadTextureFromFile(textureLocation);
+
+	GameObject * GO = new GameObject();
+	GO->SetPosition(posX, posY, posZ);
+	GO->SetMesh(Meshes);
+	GO->setScale(scale);
+	GO->setRotationAxis(rotationAxis);
+	GO->setRotationSpeed(speed);
+	GO->setScaleFactor(scaleFactor);
+	GO->setIsParticle(true);
+	GO->setWithPlayer(true);
+	GO->SetShader(shader);
+	GO->SetDiffuseTexture(textureID);
+	ParticleObjectList.push_back(GO);
+}
+
 
 //Renders game objects from a given list 
 void ObjectManager::drawObjects(std::vector<GameObject*> list, mat4 view, mat4 projection, vec3 cameraPosition)
