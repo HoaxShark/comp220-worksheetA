@@ -45,46 +45,42 @@ private:
 
 	Window window;
 	Initialise init;
-	//Camera camera;
 	PlayerController player;
 	Skybox * skybox;
 	Shader * texturedShader;
 	Shader * lightOrbShader;
 	Shader * skyboxShader;
-	//Shader * particleShader;
+
 	//ParticleGenerator *Particles;
 
 	ObjectManager objectManager;
 
-	vec3 position = vec3(0.0f);
-	vec3 shapeScale = vec3(1.0f);
-	// set up perspective camera
+	// used for the perspective camera
 	mat4 proj;
 	mat4 view;
 	GLuint programID;
+
 	// This will identify our vertex buffer
 	GLuint vertexbuffer;
 	// create elemenet buffer variable
 	GLuint elementbuffer;
-	//Create Vertex Array
+	// Create Vertex Array
 	GLuint VertexArrayID;
 	GLuint modelMatrixLocation;
 	GLuint viewLocation;
 	GLuint projLocation;
 	GLuint textureID;
-	GLuint particleTextureID;
+	//GLuint particleTextureID;
 
 	// camera
 	glm::vec3 cameraPosition = player.camera.getCameraPos();
 
-	// lightObject position used to tell where the center of the light is
-	glm::vec3 lightObjectPos;
-	vec3 currentPos;
-
-	float rotateAngle = 0.0f;
+	// variables for delta time calulations
 	float lastTime;
 	float tickTime;
 	float deltaTime;
+
+	// SDL window size
 	int fullWidth;
 	int fullHeight;
 

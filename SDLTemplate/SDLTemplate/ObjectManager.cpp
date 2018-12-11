@@ -56,7 +56,7 @@ void ObjectManager::createLightObject(const std::string & fileLocation, const st
 
 
 //Renders game objects from a given list 
-void ObjectManager::drawObjects(std::vector<GameObject*> list, mat4 view, mat4 projection, vec3 cameraPosition, vec3 lightPosition)
+void ObjectManager::drawObjects(std::vector<GameObject*> list, mat4 view, mat4 projection, vec3 cameraPosition)
 {
 	for (GameObject * obj : list) {
 
@@ -83,7 +83,7 @@ void ObjectManager::drawObjects(std::vector<GameObject*> list, mat4 view, mat4 p
 		glUniform1f(currentShader->GetUniform("specularMaterialPower"), lightValues.specularMaterialPower);
 
 		glUniform3fv(currentShader->GetUniform("cameraPosition"), 1, glm::value_ptr(cameraPosition));
-		glUniform3fv(currentShader->GetUniform("pointLightPos"), 1, glm::value_ptr(lightPosition));
+		glUniform3fv(currentShader->GetUniform("pointLightPos"), 1, glm::value_ptr(lightObjectPos));
 
 		obj->Render();
 	}
@@ -106,4 +106,41 @@ void ObjectManager::loadAllObjects(Shader* objectShader, Shader* lightShader)
 	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 1.0f, 0.0f), 1.0f, 0.001f);
 	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 0.0f, 1.0f), 0.8f, 0.0005f);
 
+}
+
+void ObjectManager::updateObjectList(std::vector<GameObject*> list, PlayerController player, bool light, float deltaTime)
+{
+	for (GameObject * obj : list)
+	{
+		if (light)
+		{
+			// trying to make the light stay with the camera
+			vec3 offset = vec3(0.2f, -0.2f, 0.0f);
+			vec3 pos = player.camera.getCameraFront();
+			vec3 playerPos = player.camera.getCameraPos();
+			// add the offset to the normalised vector for where we are looking
+			pos = pos + offset;
+			// increase the vector
+			pos = pos * 10.f;
+			currentLightPos = pos + playerPos;
+
+			if (obj->getWithPlayer())
+			{
+				// add player pos to vector
+				lightObjectPos = currentLightPos;
+			}
+			else if (!obj->getWithPlayer())
+			{
+				vec3 currentDirection = obj->getThrownDirection();
+				currentDirection = currentDirection + obj->getThrownNormal();
+				obj->setThrownDirection(currentDirection);
+				lightObjectPos = currentDirection;
+			}
+
+			obj->SetPosition(lightObjectPos.x, lightObjectPos.y, lightObjectPos.z);
+		}
+
+		obj->Update(deltaTime);
+
+	}
 }

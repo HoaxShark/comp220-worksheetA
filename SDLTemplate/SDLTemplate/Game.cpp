@@ -1,11 +1,8 @@
 #include "Game.h"
 
 /* TODO:
-	Object Creation Class
 	work off my feedback
 	joystick controls?
-	create light with a base attached to camera with offset
-	throwable light
 	shadow casting from light?
 	
 	consider orbiting planets/ moons
@@ -108,7 +105,7 @@ void Game::gameLoop()
 					for (GameObject * obj : objectManager.GetLightObjectList())
 					{
 						obj->setWithPlayer(false);
-						obj->setThrownDirection(currentPos);
+						obj->setThrownDirection(objectManager.GetCurrentLightPos());
 						obj->setThrownNormal(player.camera.getCameraFront());
 					}
 				}
@@ -161,42 +158,10 @@ void Game::gameLoop()
 		player.handleKeyboard(deltaTime);
 
 		// update objects
-		for (GameObject * obj : objectManager.GetGameObjectList())
-		{
-			obj->Update(deltaTime);
-		}
+		objectManager.updateObjectList(objectManager.GetGameObjectList(), player, false, deltaTime);
 
 		// update light
-		for (GameObject * obj : objectManager.GetLightObjectList())
-		{
-			// trying to make the light stay with the camera
-			vec3 offset = vec3(0.2f, -0.2f, 0.0f);
-			vec3 pos = player.camera.getCameraFront();
-			vec3 playerPos = player.camera.getCameraPos();
-			std::cout << pos.x << pos.y << pos.z << std::endl;
-			// add the offset to the normalised vector for where we are looking
-			pos = pos + offset;
-			// increase the vector
-			pos = pos * 10.f;
-			currentPos = pos + playerPos;
-
-			if (obj->getWithPlayer())
-			{
-				// add player pos to vector
-				lightObjectPos = currentPos;
-			}
-			else if (!obj->getWithPlayer())
-			{
-				vec3 currentDirection = obj->getThrownDirection();
-				currentDirection = currentDirection + obj->getThrownNormal();
-				obj->setThrownDirection(currentDirection);
-				lightObjectPos = currentDirection;
-			}
-
-			obj->SetPosition(lightObjectPos.x, lightObjectPos.y, lightObjectPos.z);
-			
-			obj->Update(deltaTime);
-		}
+		objectManager.updateObjectList(objectManager.GetLightObjectList(), player, true, deltaTime);
 
 		/*
 		// update particles
@@ -234,10 +199,10 @@ void Game::gameLoop()
 		*/
 
 		// draw objects
-		objectManager.drawObjects(objectManager.GetGameObjectList(), view, proj, cameraPosition, lightObjectPos);
+		objectManager.drawObjects(objectManager.GetGameObjectList(), view, proj, cameraPosition);
 
 		// draw lights
-		objectManager.drawObjects(objectManager.GetLightObjectList(), view, proj, cameraPosition, lightObjectPos);
+		objectManager.drawObjects(objectManager.GetLightObjectList(), view, proj, cameraPosition);
 
 		SDL_GL_SwapWindow(mainWindow);
 	}
