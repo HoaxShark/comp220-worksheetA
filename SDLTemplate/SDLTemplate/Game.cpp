@@ -60,7 +60,7 @@ void Game::gameLoop()
 	lightOrbShader = new Shader();
 	lightOrbShader->Load("vertTextured.glsl", "fragTextured.glsl");
 
-	particleGenerator = new ParticleGenerator(10, objectManager, lightOrbShader);
+	particleGenerator = new ParticleGenerator(100, objectManager, lightOrbShader);
 
 	// Load in objects
 	objectManager->loadAllObjects(texturedShader, lightOrbShader);
@@ -186,14 +186,14 @@ void Game::gameLoop()
 		// change the near clip for other objects
 		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 5.0f, 1500.0f);
 
-		// Draw particles	
-		objectManager->drawObjects(objectManager->GetParticleObjectList(), view, proj, cameraPosition);
-
 		// draw objects
 		objectManager->drawObjects(objectManager->GetGameObjectList(), view, proj, cameraPosition);
 
 		// draw lights
 		objectManager->drawObjects(objectManager->GetLightObjectList(), view, proj, cameraPosition);
+
+		// Draw particles	
+		objectManager->drawObjects(objectManager->GetParticleObjectList(), view, proj, cameraPosition);
 
 		SDL_GL_SwapWindow(mainWindow);
 	}

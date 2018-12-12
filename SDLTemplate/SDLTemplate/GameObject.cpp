@@ -43,12 +43,12 @@ void GameObject::Update(float deltaTime)
 		normalIncrease += 0.01f;
 		life = -0.1f;*/
 		// if at max size, flip scale factor so it gets smaller
-		if (Scale.x >= 0.8f)
+		if (Scale.x >= 0.0085f)
 		{
 			scaleFactor = -scaleFactor;
 		}
 		// if at min size, flip scale factor so it gets bigger
-		else if (Scale.x <= 0.005f)
+		else if (Scale.x <= 0.0015f)
 		{
 			scaleFactor = -scaleFactor;
 		}
@@ -84,9 +84,11 @@ void GameObject::Render()
 
 void GameObject::RandomNormal()
 {
-	float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	float z = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	const int maximum_number = 1.0f;
+	const int minimum_number = -1.0f;
+	double x = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number; 
+	double y = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number;
+	double z = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number;
 	randomNormal.x = x;
 	randomNormal.y = y;
 	randomNormal.z = z;

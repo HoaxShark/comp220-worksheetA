@@ -124,11 +124,7 @@ void ObjectManager::loadAllObjects(Shader* objectShader, Shader* lightShader)
 
 
 	// create light object
-	createLightObject("Model/star.obj", "Model/light3.png", 10.0f, 10.0f, -20.0f, vec3(0.085f, 0.085f, 0.085f), vec3(1.0f, 1.0f, 0.0f), 0.5f, 0.0f, lightShader);
-	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(1.0f, 0.0f, 0.0f), 1.2f, 0.002f);
-	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 1.0f, 0.0f), 1.0f, 0.001f);
-	//createLightObject("Model/myCube.fbx", "Model/light2.png", 10.0f, 10.0f, -20.0f, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f, 0.0f, 1.0f), 0.8f, 0.0005f);
-
+	createLightObject("Model/star.obj", "Model/light3.png", 10.0f, 10.0f, -20.0f, vec3(0.085f, 0.085f, 0.085f), vec3(1.0f, 1.0f, 0.0f), 1.5f, 0.0f, lightShader);
 }
 
 void ObjectManager::updateObjectList(std::vector<GameObject*> list, PlayerController player, bool light, float deltaTime)

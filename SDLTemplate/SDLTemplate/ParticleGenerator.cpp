@@ -14,7 +14,7 @@ ParticleGenerator::~ParticleGenerator()
 
 void ParticleGenerator::Update(GLfloat deltaTime, GameObject & object, GLuint newParticles)
 {
-	//ParticleObjectList = objectManager.GetParticleObjectList();
+	//ParticleObjectList = objectManager->GetParticleObjectList();
 	// Add new particles
 	for (GLuint i = 0; i < newParticles; ++i)
 	{
@@ -30,9 +30,10 @@ void ParticleGenerator::Update(GLfloat deltaTime, GameObject & object, GLuint ne
 		{	// particle is alive, thus update
 			vec3 currentPos = p->GetPosition();
 			vec3 objectsDirection = p->GetRandomNormal();
-			currentPos = currentPos + objectsDirection;
+			currentPos = currentPos + (objectsDirection / 100.0f); // increase the division to slow down the movement
 			p->SetPositionVec3(currentPos);
 		}
+		p->Update(deltaTime);
 	}
 }
 
@@ -41,7 +42,7 @@ void ParticleGenerator::init()
 	// Create this->amount default particle instances
 	for (GLuint i = 0; i < this->amount; ++i)
 	{
-		objectManager->createParticleObject("Model/star.obj", "Model/light3.png", 15.0f, 15.0f, -20.0f, vec3(0.085f, 0.085f, 0.085f), vec3(1.0f, 1.0f, 0.0f), 0.5f, 0.0f, lightShader);
+		objectManager->createParticleObject("Model/star.obj", "Model/light3.png", 15.0f, 15.0f, -20.0f, vec3(0.0085f, 0.0085f, 0.0085f), vec3(1.0f, 1.0f, 0.0f), 0.5f, 0.0f, lightShader);
 	}
 }
 

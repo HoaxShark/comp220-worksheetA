@@ -152,8 +152,8 @@ private:
 
 	bool withPlayer = false;
 	bool isParticle = false;
-	float lifeDefault = 20000.0f;
-	float life = 20000.0f;
+	float lifeDefault = 1000.0f;
+	float life = 1000.0f;
 	glm::vec3 thrownDirection;
 	glm::vec3 thrownNormal;
 
