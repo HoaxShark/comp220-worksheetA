@@ -23,7 +23,7 @@ void ObjectManager::createObject(const std::string & fileLocation, const std::st
 	GameObject * GO = new GameObject();
 	GO->SetPosition(posX, posY, posZ);
 	GO->SetMesh(Meshes);
-	GO->setScale(scale);
+	GO->SetScale(scale);
 	GO->setRotationAxis(rotationAxis);
 	GO->setRotationSpeed(speed);
 	GO->SetShader(shader);
@@ -43,10 +43,10 @@ void ObjectManager::createLightObject(const std::string & fileLocation, const st
 	GameObject * GO = new GameObject();
 	GO->SetPosition(posX, posY, posZ);
 	GO->SetMesh(Meshes);
-	GO->setScale(scale);
+	GO->SetScale(scale);
 	GO->setRotationAxis(rotationAxis);
 	GO->setRotationSpeed(speed);
-	GO->setScaleFactor(scaleFactor);
+	GO->SetScaleFactor(scaleFactor);
 	GO->setIsParticle(true);
 	GO->setWithPlayer(true);
 	GO->SetShader(shader);
@@ -66,10 +66,10 @@ void ObjectManager::createParticleObject(const std::string & fileLocation, const
 	GameObject * GO = new GameObject();
 	GO->SetPosition(posX, posY, posZ);
 	GO->SetMesh(Meshes);
-	GO->setScale(scale);
+	GO->SetScale(scale);
 	GO->setRotationAxis(rotationAxis);
 	GO->setRotationSpeed(speed);
-	GO->setScaleFactor(scaleFactor);
+	GO->SetScaleFactor(scaleFactor);
 	GO->setIsParticle(true);
 	GO->setWithPlayer(true);
 	GO->SetShader(shader);

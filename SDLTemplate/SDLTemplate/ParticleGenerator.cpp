@@ -1,8 +1,8 @@
 #include "ParticleGenerator.h"
 
-ParticleGenerator::ParticleGenerator(GLuint Amount, ObjectManager* manager, Shader* shader)
+ParticleGenerator::ParticleGenerator(GLuint amountOfParticles, ObjectManager* manager, Shader* shader)
 {
-	amount = Amount;
+	amount = amountOfParticles;
 	objectManager = manager;
 	lightShader = shader;
 	init();
@@ -12,14 +12,14 @@ ParticleGenerator::~ParticleGenerator()
 {
 }
 
+// Gets unused particles and respawns new ones, then decreases particle life by delta time and updates position
 void ParticleGenerator::Update(GLfloat deltaTime, GameObject & object, GLuint newParticles)
 {
-	//ParticleObjectList = objectManager->GetParticleObjectList();
 	// Add new particles
 	for (GLuint i = 0; i < newParticles; ++i)
 	{
-		int unusedParticle = this->firstUnusedParticle();
-		this->respawnParticle(objectManager->GetParticleObjectList()[unusedParticle], object);
+		int unusedParticle = firstUnusedParticle();
+		respawnParticle(objectManager->GetParticleObjectList()[unusedParticle], object);
 	}
 	// Update all particles
 	for (GLuint i = 0; i < this->amount; ++i)
@@ -30,7 +30,7 @@ void ParticleGenerator::Update(GLfloat deltaTime, GameObject & object, GLuint ne
 		{	// particle is alive, thus update
 			vec3 currentPos = p->GetPosition();
 			vec3 objectsDirection = p->GetRandomNormal();
-			currentPos = currentPos + (objectsDirection / 100.0f); // increase the division to slow down the movement
+			currentPos = currentPos + (objectsDirection / speed); // increase the division to slow down the movement
 			p->SetPositionVec3(currentPos);
 		}
 		p->Update(deltaTime);
@@ -39,36 +39,37 @@ void ParticleGenerator::Update(GLfloat deltaTime, GameObject & object, GLuint ne
 
 void ParticleGenerator::init()
 {
-	// Create this->amount default particle instances
-	for (GLuint i = 0; i < this->amount; ++i)
+	// Create the default amount of particle instances
+	for (GLuint i = 0; i < amount; ++i)
 	{
 		objectManager->createParticleObject("Model/star.obj", "Model/light3.png", 15.0f, 15.0f, -20.0f, vec3(0.0085f, 0.0085f, 0.0085f), vec3(1.0f, 1.0f, 0.0f), 0.5f, 0.0f, lightShader);
 	}
 }
 
-// Stores the index of the last particle used to save on computing time
+// Stores the index of the last particle
 GLuint lastUsedParticle = 0;
 GLuint ParticleGenerator::firstUnusedParticle()
 {
-	// First search from last used particle, this will usually return almost instantly
+	// Search from last used particle
 	for (GLuint i = lastUsedParticle; i < this->amount; ++i) {
 		if (objectManager->GetParticleObjectList()[i]->GetLife() <= 0.0f) {
 			lastUsedParticle = i;
 			return i;
 		}
 	}
-	// Otherwise, do a linear search
+	// Otherwise serach from the begining
 	for (GLuint i = 0; i < lastUsedParticle; ++i) {
 		if (objectManager->GetParticleObjectList()[i]->GetLife() <= 0.0f) {
 			lastUsedParticle = i;
 			return i;
 		}
 	}
-	// All particles are taken, override the first one (note that if it repeatedly hits this case, more particles should be reserved)
+	// If there are no dead particles use the first one in the list
 	lastUsedParticle = 0;
 	return 0;
 }
 
+// Respawn the particle and give it a new random direction
 void ParticleGenerator::respawnParticle(GameObject * particle, GameObject & object)
 {
 	particle->SetPositionVec3(object.GetPosition());

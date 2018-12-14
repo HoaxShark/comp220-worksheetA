@@ -61,7 +61,7 @@ public:
 		return DiffuseTexture;
 	};
 
-	void setScale(glm::vec3 scale)
+	void SetScale(glm::vec3 scale)
 	{
 		Scale = scale;
 	}
@@ -81,7 +81,7 @@ public:
 		rotationSpeed = speed;
 	}
 
-	void setScaleFactor(float factor)
+	void SetScaleFactor(float factor)
 	{
 		scaleFactor = factor;
 	}
@@ -148,12 +148,15 @@ private:
 
 	// a random normal for particle direction
 	glm::vec3 randomNormal;
-	float normalIncrease = 1.001f;
 
-	bool withPlayer = false;
+	// variables for partivle usage
 	bool isParticle = false;
-	float lifeDefault = 1000.0f;
+	const int lifeMax = 1000;
+	const int lifeMin = 800;
 	float life = 1000.0f;
+
+	// variables for throwing the light gameObject
+	bool withPlayer = false;
 	glm::vec3 thrownDirection;
 	glm::vec3 thrownNormal;
 
@@ -161,7 +164,7 @@ private:
 	glm::mat4 TranslationMatrix;
 	glm::mat4 RotationMatrix;
 	glm::mat4 ScaleMatrix;
-	//combine the above matrices into the model matrix (order is important!!!! - TRS)
+	//combine the above matrices into the model matrix
 	glm::mat4 ModelMatrix;
 
 	//Mesh
@@ -173,6 +176,7 @@ private:
 	//Texture
 	GLuint DiffuseTexture;
 
+	// Variables for rotating and scaling 
 	float rotateAmount;
 	float rotationSpeed = 0.5f;
 	float scaleFactor = 0.0f;

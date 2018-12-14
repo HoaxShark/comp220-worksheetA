@@ -33,15 +33,8 @@ GameObject::~GameObject()
 
 void GameObject::Update(float deltaTime)
 {
-	
 	if (isParticle)
 	{
-		/*
-		std::cout << deltaTime << std::endl;
-		glm::vec3 directionVec = randomNormal * normalIncrease;
-		Position = Position * directionVec;
-		normalIncrease += 0.01f;
-		life = -0.1f;*/
 		// if at max size, flip scale factor so it gets smaller
 		if (Scale.x >= 0.0085f)
 		{
@@ -57,11 +50,11 @@ void GameObject::Update(float deltaTime)
 	}
 	TranslationMatrix = glm::translate(Position);
 	RotationMatrix = glm::rotate(Rotation.x, glm::vec3(1.0f, 0.0f, 0.0f))
-		*glm::rotate(Rotation.y, glm::vec3(0.0f, 1.0f, 0.0f))
-		*glm::rotate(Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+					*glm::rotate(Rotation.y, glm::vec3(0.0f, 1.0f, 0.0f))
+					*glm::rotate(Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
 	ScaleMatrix = glm::scale(Scale);
 
-	//combine the above matrices into the model matrix (order is important!!!! - TRS)
+	//combine the above matrices into the model matrix
 	ModelMatrix = TranslationMatrix * RotationMatrix * ScaleMatrix;
 	// rotate the ModelMatrix
 	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotateAmount), rotationAxis);
@@ -71,7 +64,7 @@ void GameObject::Update(float deltaTime)
 
 void GameObject::ResetLife()
 {
-	life = lifeDefault;
+	life = (rand() % (lifeMax + 1 - lifeMin)) + lifeMin;
 }
 
 void GameObject::Render()
@@ -82,6 +75,7 @@ void GameObject::Render()
 	}
 }
 
+// Creates a random normal for the game object
 void GameObject::RandomNormal()
 {
 	const int maximum_number = 1.0f;
