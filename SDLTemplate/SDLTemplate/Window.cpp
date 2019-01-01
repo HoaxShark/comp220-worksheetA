@@ -12,12 +12,12 @@ Window::~Window()
 {
 }
 
-bool Window::getIsFullscreen()
+bool Window::GetIsFullscreen()
 {
 	return isFullscreen;
 }
 
-void Window::setIsFullscreen()
+void Window::SetIsFullscreen()
 {
 	isFullscreen = !isFullscreen;
 }

@@ -6,7 +6,9 @@
 	shadow casting from light?
 	
 	consider orbiting planets/ moons
-	check out factory patterns for gameobject*/
+	check out factory patterns for gameobject
+	
+	check stdafx and targetver refactor them out?*/
 
 Game::Game()
 {
@@ -129,13 +131,13 @@ void Game::GameLoop()
 				case SDLK_F11:
 
 					// switch between fullscreen and window
-					if (window.getIsFullscreen()) {
-						window.setIsFullscreen();
+					if (window.GetIsFullscreen()) {
+						window.SetIsFullscreen();
 						SDL_SetWindowFullscreen(mainWindow, 0);
 						glViewport(0, 0, window.screenWidth, window.screenHeight);
 					}
 					else {
-						window.setIsFullscreen();
+						window.SetIsFullscreen();
 						SDL_SetWindowFullscreen(mainWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 						SDL_GetWindowSize(mainWindow, &fullWidth, &fullHeight);
 						glViewport(0, 0, fullWidth, fullHeight);
@@ -183,7 +185,7 @@ void Game::GameLoop()
 		proj = glm::perspective(glm::radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.8f, 1500.0f);
 
 		// draw skybox
-		skybox->renderSkybox(player.camera.GetViewMatrix(), proj);
+		skybox->RenderSkybox(player.camera.GetViewMatrix(), proj);
 
 		// change the near clip for other objects
 		proj = glm::perspective(glm::radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 5.0f, 1500.0f);

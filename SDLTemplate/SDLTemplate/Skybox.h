@@ -1,12 +1,13 @@
 #pragma once
 
+#include <vector>
+
 #include <SDL.h>
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <glm\glm.hpp>
 #include <SDL_image.h>
 #include <glm\gtc\type_ptr.hpp>
-#include <vector>
 
 #include "Shaders.h"
 
@@ -15,27 +16,29 @@ class Skybox
 public:
 	Skybox();
 	~Skybox();
-	void renderSkybox(glm::mat4 playerViewMatrix, glm::mat4 proj);
-	void initSkybox();
-	unsigned int getCubemapTexture()
+
+	unsigned int GetCubemapTexture()
 	{
 		return cubemapTexture;
 	}
-	GLuint getSkyboxVAO()
+	GLuint GetSkyboxVAO()
 	{
 		return skyboxVAO;
 	}
-	Shader* getShader()
+	Shader* GetShader()
 	{
 		return skyboxShader;
 	}
+
+	void RenderSkybox(glm::mat4 playerViewMatrix, glm::mat4 proj);
+	void InitSkybox();
 
 private: 
 	unsigned int cubemapTexture;
 	GLuint skyboxVAO, skyboxVBO;
 	Shader * skyboxShader;
 	glm::mat4 view;
-	unsigned int loadCubemap(std::vector<std::string> faces);
-	
+
+	unsigned int LoadCubemap(std::vector<std::string> faces);
 };
 

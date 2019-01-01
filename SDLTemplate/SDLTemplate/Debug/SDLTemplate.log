@@ -1,28 +1,10 @@
 ﻿  Game.cpp
 c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(25): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(80): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(96): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
-  GameObject.cpp
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(67): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(81): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(82): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(86): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(87): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(88): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(27): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(82): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(98): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+  Initialise.cpp
   Main.cpp
 c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
@@ -35,9 +17,6 @@ c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sd
   PlayerController.cpp
 c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Shaders.cpp
-  Skybox.cpp
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\skybox.cpp(79): warning C4101: 'height': unreferenced local variable
-c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\skybox.cpp(79): warning C4101: 'width': unreferenced local variable
+  Window.cpp
   Generating Code...
   SDLTemplate.vcxproj -> C:\Users\HoaxShark\Desktop\Uni Year 2\Comp 220\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe

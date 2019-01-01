@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-GLuint loadTextureFromFile(const std::string& filename)
+GLuint LoadTextureFromFile(const std::string& filename)
 {
 	GLuint textureID;
 

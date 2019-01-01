@@ -1,6 +1,8 @@
 #pragma once
-#include <SDL.h>
+
 #include <iostream>
+
+#include <SDL.h>
 
 class Window
 {
@@ -19,8 +21,8 @@ public:
 	char* windowTitle;
 
 	// get and set isFullscreen
-	bool getIsFullscreen();
-	void setIsFullscreen();
+	bool GetIsFullscreen();
+	void SetIsFullscreen();
 
 };
 

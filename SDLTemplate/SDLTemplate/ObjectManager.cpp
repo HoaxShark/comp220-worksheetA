@@ -18,7 +18,7 @@ void ObjectManager::CreateObject(const std::string & fileLocation, const std::st
 	MeshCollection * Meshes = new MeshCollection();
 	LoadMeshesFromFile(fileLocation, Meshes);
 
-	textureID = loadTextureFromFile(textureLocation);
+	textureID = LoadTextureFromFile(textureLocation);
 
 	GameObject * GO = new GameObject();
 	GO->SetPosition(posX, posY, posZ);
@@ -38,7 +38,7 @@ void ObjectManager::CreateLightObject(const std::string & fileLocation, const st
 	MeshCollection * Meshes = new MeshCollection();
 	LoadMeshesFromFile(fileLocation, Meshes);
 
-	textureID = loadTextureFromFile(textureLocation);
+	textureID = LoadTextureFromFile(textureLocation);
 
 	GameObject * GO = new GameObject();
 	GO->SetPosition(posX, posY, posZ);
@@ -61,7 +61,7 @@ void ObjectManager::CreateParticleObject(const std::string & fileLocation, const
 	MeshCollection * Meshes = new MeshCollection();
 	LoadMeshesFromFile(fileLocation, Meshes);
 
-	textureID = loadTextureFromFile(textureLocation);
+	textureID = LoadTextureFromFile(textureLocation);
 
 	GameObject * GO = new GameObject();
 	GO->SetPosition(posX, posY, posZ);

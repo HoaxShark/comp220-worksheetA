@@ -59,7 +59,7 @@ std::vector<std::string> skyboxFaces
 
 Skybox::Skybox()
 {
-	initSkybox();
+	InitSkybox();
 }
 
 
@@ -70,7 +70,7 @@ Skybox::~Skybox()
 	glDeleteTextures(1, &cubemapTexture);
 }
 
-unsigned int Skybox::loadCubemap(std::vector<std::string> faces)
+unsigned int Skybox::LoadCubemap(std::vector<std::string> faces)
 {
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
@@ -102,7 +102,7 @@ unsigned int Skybox::loadCubemap(std::vector<std::string> faces)
 }
 
 
-void Skybox::renderSkybox(glm::mat4 playerViewMatrix, glm::mat4 proj)
+void Skybox::RenderSkybox(glm::mat4 playerViewMatrix, glm::mat4 proj)
 {
 	// draw skybox
 	glDepthMask(GL_FALSE);
@@ -118,7 +118,7 @@ void Skybox::renderSkybox(glm::mat4 playerViewMatrix, glm::mat4 proj)
 	glDepthMask(GL_TRUE);
 }
 
-void Skybox::initSkybox()
+void Skybox::InitSkybox()
 { 
 	skyboxShader = new Shader;
 	skyboxShader->Load("vertSkybox.glsl", "fragSkybox.glsl");
@@ -131,7 +131,7 @@ void Skybox::initSkybox()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 
-	cubemapTexture = loadCubemap(skyboxFaces);
+	cubemapTexture = LoadCubemap(skyboxFaces);
 }
 
 
