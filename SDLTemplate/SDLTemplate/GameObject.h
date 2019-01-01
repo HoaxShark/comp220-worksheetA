@@ -62,14 +62,14 @@ public:
 		return diffuseTexture;
 	};
 
-	void SetScale(glm::vec3 scale)
+	void SetScale(glm::vec3 newScale)
 	{
-		Scale = scale;
+		scale = newScale;
 	}
 
 	glm::vec3 getScale()
 	{
-		return Scale;
+		return scale;
 	}
 
 	void setRotationAxis(glm::vec3 axis)
@@ -145,7 +145,7 @@ private:
 	//Set up positions for position, rotation and scale
 	glm::vec3 Position;
 	glm::vec3 Rotation;
-	glm::vec3 Scale;
+	glm::vec3 scale;
 
 	// a random normal for particle direction
 	glm::vec3 randomNormal;
@@ -162,9 +162,9 @@ private:
 	glm::vec3 thrownNormal;
 
 	//calculate the translation, rotation and scale matrices using the above vectores
-	glm::mat4 TranslationMatrix;
-	glm::mat4 RotationMatrix;
-	glm::mat4 ScaleMatrix;
+	glm::mat4 translationMatrix;
+	glm::mat4 rotationMatrix;
+	glm::mat4 scaleMatrix;
 	//combine the above matrices into the model matrix
 	glm::mat4 modelMatrix;
 
