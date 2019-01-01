@@ -2,9 +2,9 @@
 
 GameObject::GameObject()
 {
-	Position = glm::vec3(0.0f);
+	position = glm::vec3(0.0f);
 	scale = glm::vec3(1.0f);
-	Rotation = glm::vec3(0.0f);
+	rotation = glm::vec3(0.0f);
 
 	translationMatrix = glm::mat4(0.0f);
 	rotationMatrix = glm::mat4(0.0f);
@@ -48,10 +48,10 @@ void GameObject::Update(float deltaTime)
 
 		scale += scaleFactor;
 	}
-	translationMatrix = glm::translate(Position);
-	rotationMatrix = glm::rotate(Rotation.x, glm::vec3(1.0f, 0.0f, 0.0f))
-					*glm::rotate(Rotation.y, glm::vec3(0.0f, 1.0f, 0.0f))
-					*glm::rotate(Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+	translationMatrix = glm::translate(position);
+	rotationMatrix = glm::rotate(rotation.x, glm::vec3(1.0f, 0.0f, 0.0f))
+					*glm::rotate(rotation.y, glm::vec3(0.0f, 1.0f, 0.0f))
+					*glm::rotate(rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
 	scaleMatrix = glm::scale(scale);
 
 	//combine the above matrices into the model matrix

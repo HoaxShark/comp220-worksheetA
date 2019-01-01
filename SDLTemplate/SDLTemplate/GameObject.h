@@ -19,17 +19,17 @@ public:
 
 	void SetPosition(float x, float y, float z)
 	{
-		Position = glm::vec3(x, y, z);
+		position = glm::vec3(x, y, z);
 	};
 
 	void SetPositionVec3(glm::vec3 newPos)
 	{
-		Position = newPos;
+		position = newPos;
 	};
 
 	glm::vec3& GetPosition()
 	{
-		return Position;
+		return position;
 	};
 
 	glm::mat4& GetModelTransformation()
@@ -143,8 +143,8 @@ public:
 
 private:
 	//Set up positions for position, rotation and scale
-	glm::vec3 Position;
-	glm::vec3 Rotation;
+	glm::vec3 position;
+	glm::vec3 rotation;
 	glm::vec3 scale;
 
 	// a random normal for particle direction
