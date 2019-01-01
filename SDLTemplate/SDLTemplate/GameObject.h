@@ -19,7 +19,7 @@ public:
 	{
 		return thrownDirection;
 	}
-	glm::vec3 getThrownNormal()
+	glm::vec3 GetThrownNormal()
 	{
 		return thrownNormal;
 	}
@@ -27,7 +27,7 @@ public:
 	{
 		return randomNormal;
 	}
-	glm::vec3 getScale()
+	glm::vec3 GetScale()
 	{
 		return scale;
 	}
@@ -43,11 +43,11 @@ public:
 	{
 		return shaderProgram;
 	}
-	GLuint GetdiffuseTexture()
+	GLuint GetDiffuseTexture()
 	{
 		return diffuseTexture;
 	}
-	bool getWithPlayer()
+	bool GetWithPlayer()
 	{
 		return withPlayer;
 	}
@@ -56,11 +56,11 @@ public:
 		return life;
 	}
 
-	void setThrownDirection(glm::vec3 direction)
+	void SetThrownDirection(glm::vec3 direction)
 	{
 		thrownDirection = direction;
 	}
-	void setThrownNormal(glm::vec3 normal)
+	void SetThrownNormal(glm::vec3 normal)
 	{
 		thrownNormal = normal;
 	}
@@ -84,15 +84,15 @@ public:
 	{
 		diffuseTexture = texture;
 	}
-	void setWithPlayer(bool isWithPlayer)
+	void SetWithPlayer(bool isWithPlayer)
 	{
 		withPlayer = isWithPlayer;
 	}
-	void setRotationAxis(glm::vec3 axis)
+	void SetRotationAxis(glm::vec3 axis)
 	{
 		rotationAxis = axis;
 	}
-	void setRotationSpeed(float speed)
+	void SetRotationSpeed(float speed)
 	{
 		rotationSpeed = speed;
 	}
@@ -100,7 +100,7 @@ public:
 	{
 		scaleFactor = factor;
 	}
-	void setIsParticle(bool particle)
+	void SetIsParticle(bool particle)
 	{
 		isParticle = particle;
 	}

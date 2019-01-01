@@ -101,16 +101,16 @@ void Game::GameLoop()
 				{
 					for (GameObject * obj : objectManager->GetLightObjectList())
 					{
-						obj->setWithPlayer(false);
-						obj->setThrownDirection(objectManager->GetCurrentLightPos());
-						obj->setThrownNormal(player.camera.GetCameraFront());
+						obj->SetWithPlayer(false);
+						obj->SetThrownDirection(objectManager->GetCurrentLightPos());
+						obj->SetThrownNormal(player.camera.GetCameraFront());
 					}
 				}
 				else if (event.button.button == SDL_BUTTON_RIGHT)
 				{
 					for (GameObject * obj : objectManager->GetLightObjectList())
 					{
-						obj->setWithPlayer(true);
+						obj->SetWithPlayer(true);
 					}
 				}
 

@@ -24,8 +24,8 @@ void ObjectManager::createObject(const std::string & fileLocation, const std::st
 	GO->SetPosition(posX, posY, posZ);
 	GO->SetMesh(Meshes);
 	GO->SetScale(scale);
-	GO->setRotationAxis(rotationAxis);
-	GO->setRotationSpeed(speed);
+	GO->SetRotationAxis(rotationAxis);
+	GO->SetRotationSpeed(speed);
 	GO->SetShader(shader);
 	GO->SetdiffuseTexture(textureID);
 	GameObjectList.push_back(GO);
@@ -44,11 +44,11 @@ void ObjectManager::createLightObject(const std::string & fileLocation, const st
 	GO->SetPosition(posX, posY, posZ);
 	GO->SetMesh(Meshes);
 	GO->SetScale(scale);
-	GO->setRotationAxis(rotationAxis);
-	GO->setRotationSpeed(speed);
+	GO->SetRotationAxis(rotationAxis);
+	GO->SetRotationSpeed(speed);
 	GO->SetScaleFactor(scaleFactor);
-	GO->setIsParticle(true);
-	GO->setWithPlayer(true);
+	GO->SetIsParticle(true);
+	GO->SetWithPlayer(true);
 	GO->SetShader(shader);
 	GO->SetdiffuseTexture(textureID);
 	LightObjectList.push_back(GO);
@@ -67,11 +67,11 @@ void ObjectManager::createParticleObject(const std::string & fileLocation, const
 	GO->SetPosition(posX, posY, posZ);
 	GO->SetMesh(Meshes);
 	GO->SetScale(scale);
-	GO->setRotationAxis(rotationAxis);
-	GO->setRotationSpeed(speed);
+	GO->SetRotationAxis(rotationAxis);
+	GO->SetRotationSpeed(speed);
 	GO->SetScaleFactor(scaleFactor);
-	GO->setIsParticle(true);
-	GO->setWithPlayer(true);
+	GO->SetIsParticle(true);
+	GO->SetWithPlayer(true);
 	GO->SetShader(shader);
 	GO->SetdiffuseTexture(textureID);
 	ParticleObjectList.push_back(GO);
@@ -87,7 +87,7 @@ void ObjectManager::drawObjects(std::vector<GameObject*> list, mat4 view, mat4 p
 		currentShader->Use();
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, obj->GetdiffuseTexture());
+		glBindTexture(GL_TEXTURE_2D, obj->GetDiffuseTexture());
 
 		glUniformMatrix4fv(currentShader->GetUniform("modelMatrix"), 1, GL_FALSE, glm::value_ptr(obj->GetModelTransformation()));
 		glUniformMatrix4fv(currentShader->GetUniform("view"), 1, GL_FALSE, glm::value_ptr(view));
@@ -143,16 +143,16 @@ void ObjectManager::updateObjectList(std::vector<GameObject*> list, PlayerContro
 			pos = pos * 10.f;
 			currentLightPos = pos + playerPos;
 
-			if (obj->getWithPlayer())
+			if (obj->GetWithPlayer())
 			{
 				// add player pos to vector
 				lightObjectPos = currentLightPos;
 			}
-			else if (!obj->getWithPlayer())
+			else if (!obj->GetWithPlayer())
 			{
 				vec3 currentDirection = obj->GetThrownDirection();
-				currentDirection = currentDirection + obj->getThrownNormal();
-				obj->setThrownDirection(currentDirection);
+				currentDirection = currentDirection + obj->GetThrownNormal();
+				obj->SetThrownDirection(currentDirection);
 				lightObjectPos = currentDirection;
 			}
 
