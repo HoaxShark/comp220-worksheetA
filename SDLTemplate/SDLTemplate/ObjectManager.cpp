@@ -150,7 +150,7 @@ void ObjectManager::updateObjectList(std::vector<GameObject*> list, PlayerContro
 			}
 			else if (!obj->getWithPlayer())
 			{
-				vec3 currentDirection = obj->getThrownDirection();
+				vec3 currentDirection = obj->GetThrownDirection();
 				currentDirection = currentDirection + obj->getThrownNormal();
 				obj->setThrownDirection(currentDirection);
 				lightObjectPos = currentDirection;

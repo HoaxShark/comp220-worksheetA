@@ -15,128 +15,105 @@ public:
 	GameObject();
 	~GameObject();
 
-	void Update(float deltaTime);
-
-	void SetPosition(float x, float y, float z)
+	glm::vec3 GetThrownDirection()
 	{
-		position = glm::vec3(x, y, z);
-	};
-
-	void SetPositionVec3(glm::vec3 newPos)
-	{
-		position = newPos;
-	};
-
-	glm::vec3& GetPosition()
-	{
-		return position;
-	};
-
-	glm::mat4& GetModelTransformation()
-	{
-		return modelMatrix;
-	};
-
-	void SetMesh(MeshCollection * newMeshes)
-	{
-		meshes = newMeshes;
-	};
-
-	void SetShader(Shader * shader)
-	{
-		shaderProgram = shader;
-	};
-
-	Shader * GetShader()
-	{
-		return shaderProgram;
-	};
-
-	void SetdiffuseTexture(GLuint texture)
-	{
-		diffuseTexture = texture;
-	};
-
-	GLuint GetdiffuseTexture()
-	{
-		return diffuseTexture;
-	};
-
-	void SetScale(glm::vec3 newScale)
-	{
-		scale = newScale;
+		return thrownDirection;
 	}
-
+	glm::vec3 getThrownNormal()
+	{
+		return thrownNormal;
+	}
+	glm::vec3 GetRandomNormal()
+	{
+		return randomNormal;
+	}
 	glm::vec3 getScale()
 	{
 		return scale;
 	}
-
-	void setRotationAxis(glm::vec3 axis)
+	glm::vec3& GetPosition()
 	{
-		rotationAxis = axis;
+		return position;
 	}
-
-	void setRotationSpeed(float speed)
+	glm::mat4& GetModelTransformation()
 	{
-		rotationSpeed = speed;
+		return modelMatrix;
 	}
-
-	void SetScaleFactor(float factor)
+	Shader* GetShader()
 	{
-		scaleFactor = factor;
+		return shaderProgram;
 	}
-
-	void setIsParticle(bool particle)
+	GLuint GetdiffuseTexture()
 	{
-		isParticle = particle;
+		return diffuseTexture;
 	}
-
 	bool getWithPlayer()
 	{
 		return withPlayer;
 	}
-
-	void setWithPlayer(bool isWithPlayer)
+	float GetLife()
 	{
-		withPlayer = isWithPlayer;
+		return life;
 	}
 
 	void setThrownDirection(glm::vec3 direction)
 	{
 		thrownDirection = direction;
 	}
-
-	glm::vec3 getThrownDirection()
-	{
-		return thrownDirection;
-	}
-
 	void setThrownNormal(glm::vec3 normal)
 	{
 		thrownNormal = normal;
 	}
-
-	glm::vec3 getThrownNormal()
+	void SetScale(glm::vec3 newScale)
 	{
-		return thrownNormal;
+		scale = newScale;
 	}
-
-	float GetLife()
+	void SetPosition(float x, float y, float z)
 	{
-		return life;
+		position = glm::vec3(x, y, z);
+	}
+	void SetPositionVec3(glm::vec3 newPos)
+	{
+		position = newPos;
+	}
+	void SetShader(Shader * shader)
+	{
+		shaderProgram = shader;
+	}
+	void SetdiffuseTexture(GLuint texture)
+	{
+		diffuseTexture = texture;
+	}
+	void setWithPlayer(bool isWithPlayer)
+	{
+		withPlayer = isWithPlayer;
+	}
+	void setRotationAxis(glm::vec3 axis)
+	{
+		rotationAxis = axis;
+	}
+	void setRotationSpeed(float speed)
+	{
+		rotationSpeed = speed;
+	}
+	void SetScaleFactor(float factor)
+	{
+		scaleFactor = factor;
+	}
+	void setIsParticle(bool particle)
+	{
+		isParticle = particle;
+	}
+	void SetMesh(MeshCollection * newMeshes)
+	{
+		meshes = newMeshes;
 	}
 
 	void DecreaseLife(float deltaTime)
 	{
 		life -= deltaTime;
 	}
-
-	glm::vec3 GetRandomNormal()
-	{
-		return randomNormal;
-	}
-
+	void Update(float deltaTime);
 	void ResetLife();
 	void Render();
 	void RandomNormal();
