@@ -42,7 +42,7 @@ void ParticleGenerator::init()
 	// Create the default amount of particle instances
 	for (GLuint i = 0; i < amount; ++i)
 	{
-		objectManager->createParticleObject("Model/star.obj", "Model/light3.png", 15.0f, 15.0f, -20.0f, glm::vec3(0.0085f, 0.0085f, 0.0085f), glm::vec3(1.0f, 1.0f, 0.0f), 0.5f, 0.0f, lightShader);
+		objectManager->CreateParticleObject("Model/star.obj", "Model/light3.png", 15.0f, 15.0f, -20.0f, glm::vec3(0.0085f, 0.0085f, 0.0085f), glm::vec3(1.0f, 1.0f, 0.0f), 0.5f, 0.0f, lightShader);
 	}
 }
 

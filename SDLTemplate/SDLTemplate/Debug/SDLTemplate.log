@@ -7,5 +7,11 @@ c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sd
   Main.cpp
 c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  ObjectManager.cpp
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  ParticleGenerator.cpp
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\hoaxshark\desktop\uni year 2\comp 220\comp220-worksheeta\sdltemplate\sdltemplate\playercontroller.h(51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   Generating Code...
   SDLTemplate.vcxproj -> C:\Users\HoaxShark\Desktop\Uni Year 2\Comp 220\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe

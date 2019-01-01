@@ -65,7 +65,7 @@ void Game::GameLoop()
 	particleGenerator = new ParticleGenerator(100, objectManager, lightOrbShader);
 
 	// Load in objects
-	objectManager->loadAllObjects(texturedShader, lightOrbShader);
+	objectManager->LoadAllObjects(texturedShader, lightOrbShader);
 
 	// Current sdl event
 	SDL_Event event;
@@ -155,10 +155,10 @@ void Game::GameLoop()
 		player.handleKeyboard(deltaTime);
 
 		// update objects
-		objectManager->updateObjectList(objectManager->GetGameObjectList(), player, false, deltaTime);
+		objectManager->UpdateObjectList(objectManager->GetGameObjectList(), player, false, deltaTime);
 
 		// update light
-		objectManager->updateObjectList(objectManager->GetLightObjectList(), player, true, deltaTime);
+		objectManager->UpdateObjectList(objectManager->GetLightObjectList(), player, true, deltaTime);
 
 		// update particles
 		particleGenerator->Update(deltaTime, *objectManager->GetLightObjectList()[0], 2);
@@ -189,13 +189,13 @@ void Game::GameLoop()
 		proj = glm::perspective(glm::radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 5.0f, 1500.0f);
 
 		// draw objects
-		objectManager->drawObjects(objectManager->GetGameObjectList(), view, proj, cameraPosition);
+		objectManager->DrawObjects(objectManager->GetGameObjectList(), view, proj, cameraPosition);
 
 		// draw lights
-		objectManager->drawObjects(objectManager->GetLightObjectList(), view, proj, cameraPosition);
+		objectManager->DrawObjects(objectManager->GetLightObjectList(), view, proj, cameraPosition);
 
 		// Draw particles	
-		objectManager->drawObjects(objectManager->GetParticleObjectList(), view, proj, cameraPosition);
+		objectManager->DrawObjects(objectManager->GetParticleObjectList(), view, proj, cameraPosition);
 
 		SDL_GL_SwapWindow(mainWindow);
 	}
