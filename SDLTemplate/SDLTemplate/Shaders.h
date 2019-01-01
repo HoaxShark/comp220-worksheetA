@@ -19,9 +19,9 @@ public:
 	~Shader();
 
 	GLint GetUniform(std::string name);
-	GLuint& GetShaderProgramID()
+	GLuint& GetshaderProgramID()
 	{
-		return ShaderProgramID;
+		return shaderProgramID;
 	}
 	void Use();
 
@@ -29,7 +29,7 @@ public:
 	bool Load(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename);
 private:
 	void InitialiseUniforms();
-	GLuint ShaderProgramID;
+	GLuint shaderProgramID;
 	std::map<std::string, GLint> UniformMap;
 
 };

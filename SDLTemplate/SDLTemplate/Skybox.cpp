@@ -108,8 +108,8 @@ void Skybox::renderSkybox(glm::mat4 playerViewMatrix, glm::mat4 proj)
 	glDepthMask(GL_FALSE);
 	skyboxShader->Use();
 	view = glm::mat4(glm::mat3(playerViewMatrix));
-	glUniformMatrix4fv(glGetUniformLocation(skyboxShader->GetShaderProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
-	glUniformMatrix4fv(glGetUniformLocation(skyboxShader->GetShaderProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
+	glUniformMatrix4fv(glGetUniformLocation(skyboxShader->GetshaderProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(skyboxShader->GetshaderProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
 
 	glBindVertexArray(skyboxVAO);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);

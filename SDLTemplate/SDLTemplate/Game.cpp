@@ -17,11 +17,9 @@ Game::~Game()
 {
 }
 
-void Game::initialiseGame()
+void Game::InitialiseGame()
 {
 	bool inDevelopMode = false;
-
-	objectManager = new ObjectManager();
 
 	// Initalise random seed
 	std::srand(time(NULL));
@@ -37,29 +35,33 @@ void Game::initialiseGame()
 
 	// Initalise OpenGL 
 	init.SetOpenGLAttributes();
-	gl_Context = init.initialiseContext(mainWindow);
+	glContext = init.initialiseContext(mainWindow);
 	init.initaliseGlew(mainWindow);
+
+	// Initalise objectManager
+	objectManager = new ObjectManager();
 
 	// Initalise Skybox 
 	skybox = new Skybox();
 }
 
 
-void Game::gameLoop()
+void Game::GameLoop()
 {
-	initialiseGame();
+	InitialiseGame();
 
 	// Mouse setup
 	SDL_ShowCursor(0);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
-	// create shaders
+	// Create shaders
 	texturedShader = new Shader();
 	texturedShader->Load("blinnPhongVert.glsl", "blinnPhongFrag.glsl");
 
 	lightOrbShader = new Shader();
 	lightOrbShader->Load("vertTextured.glsl", "fragTextured.glsl");
 
+	// Start particleGenerator
 	particleGenerator = new ParticleGenerator(100, objectManager, lightOrbShader);
 
 	// Load in objects
@@ -84,13 +86,13 @@ void Game::gameLoop()
 			// Events found
 			switch (event.type)
 			{
-				// Window closed
+				// Window close
 			case SDL_QUIT:
 				gameRunning = false;
 				break;
 
 			case SDL_MOUSEMOTION:
-				// pass event.motion.xrel and event.motion.yrel here
+				// pass mouse movements
 				player.mouseUpdate(event.motion.xrel, event.motion.yrel);
 				break;
 
@@ -101,7 +103,7 @@ void Game::gameLoop()
 					{
 						obj->setWithPlayer(false);
 						obj->setThrownDirection(objectManager->GetCurrentLightPos());
-						obj->setThrownNormal(player.camera.getCameraFront());
+						obj->setThrownNormal(player.camera.GetCameraFront());
 					}
 				}
 				else if (event.button.button == SDL_BUTTON_RIGHT)
@@ -119,7 +121,7 @@ void Game::gameLoop()
 				// Check individual keys by code
 				switch (event.key.keysym.sym)
 				{
-					// Exit the game
+				// Exit the game
 				case SDLK_ESCAPE:
 					gameRunning = false;
 					break;
@@ -176,12 +178,12 @@ void Game::gameLoop()
 
 
 		// note that we're translating the scene in the reverse direction of where we want to move
-		view = player.camera.getViewMatrix();
+		view = player.camera.GetViewMatrix();
 		// close near clip for the skybox
 		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.8f, 1500.0f);
 
 		// draw skybox
-		skybox->renderSkybox(player.camera.getViewMatrix(), proj);
+		skybox->renderSkybox(player.camera.GetViewMatrix(), proj);
 
 		// change the near clip for other objects
 		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 5.0f, 1500.0f);
@@ -198,11 +200,11 @@ void Game::gameLoop()
 		SDL_GL_SwapWindow(mainWindow);
 	}
 	// Call all quit functions
-	gameQuit();
+	GameQuit();
 }
 
 // Clean up resources when the game is exited
-void Game::gameQuit()
+void Game::GameQuit()
 {
 	delete skybox;
 	// clear key events
@@ -212,7 +214,7 @@ void Game::gameQuit()
 	// delete Program
 	glDeleteProgram(programID);
 	// delete context
-	SDL_GL_DeleteContext(gl_Context);
+	SDL_GL_DeleteContext(glContext);
 	// close window
 	SDL_DestroyWindow(mainWindow);
 	SDL_Quit();

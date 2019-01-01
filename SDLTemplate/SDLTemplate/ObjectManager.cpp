@@ -27,7 +27,7 @@ void ObjectManager::createObject(const std::string & fileLocation, const std::st
 	GO->setRotationAxis(rotationAxis);
 	GO->setRotationSpeed(speed);
 	GO->SetShader(shader);
-	GO->SetDiffuseTexture(textureID);
+	GO->SetdiffuseTexture(textureID);
 	GameObjectList.push_back(GO);
 }
 
@@ -50,7 +50,7 @@ void ObjectManager::createLightObject(const std::string & fileLocation, const st
 	GO->setIsParticle(true);
 	GO->setWithPlayer(true);
 	GO->SetShader(shader);
-	GO->SetDiffuseTexture(textureID);
+	GO->SetdiffuseTexture(textureID);
 	LightObjectList.push_back(GO);
 }
 
@@ -73,7 +73,7 @@ void ObjectManager::createParticleObject(const std::string & fileLocation, const
 	GO->setIsParticle(true);
 	GO->setWithPlayer(true);
 	GO->SetShader(shader);
-	GO->SetDiffuseTexture(textureID);
+	GO->SetdiffuseTexture(textureID);
 	ParticleObjectList.push_back(GO);
 }
 
@@ -87,7 +87,7 @@ void ObjectManager::drawObjects(std::vector<GameObject*> list, mat4 view, mat4 p
 		currentShader->Use();
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, obj->GetDiffuseTexture());
+		glBindTexture(GL_TEXTURE_2D, obj->GetdiffuseTexture());
 
 		glUniformMatrix4fv(currentShader->GetUniform("modelMatrix"), 1, GL_FALSE, glm::value_ptr(obj->GetModelTransformation()));
 		glUniformMatrix4fv(currentShader->GetUniform("view"), 1, GL_FALSE, glm::value_ptr(view));
@@ -135,8 +135,8 @@ void ObjectManager::updateObjectList(std::vector<GameObject*> list, PlayerContro
 		{
 			// trying to make the light stay with the camera
 			vec3 offset = vec3(0.2f, -0.2f, 0.0f);
-			vec3 pos = player.camera.getCameraFront();
-			vec3 playerPos = player.camera.getCameraPos();
+			vec3 pos = player.camera.GetCameraFront();
+			vec3 playerPos = player.camera.GetCameraPos();
 			// add the offset to the normalised vector for where we are looking
 			pos = pos + offset;
 			// increase the vector

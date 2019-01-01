@@ -1,12 +1,13 @@
 #pragma once
 
-#define GLM_ENABLE_EXPERIMENTAL
 #include <glm\glm.hpp>
 #include <glm\gtx\transform.hpp>
 #include <glm\gtc\type_ptr.hpp>
 
 #include "Mesh.h"
 #include "Shaders.h"
+
+#define GLM_ENABLE_EXPERIMENTAL
 
 class GameObject
 {
@@ -33,32 +34,32 @@ public:
 
 	glm::mat4& GetModelTransformation()
 	{
-		return ModelMatrix;
+		return modelMatrix;
 	};
 
-	void SetMesh(MeshCollection * meshes)
+	void SetMesh(MeshCollection * newMeshes)
 	{
-		Meshes = meshes;
+		meshes = newMeshes;
 	};
 
 	void SetShader(Shader * shader)
 	{
-		ShaderProgram = shader;
+		shaderProgram = shader;
 	};
 
 	Shader * GetShader()
 	{
-		return ShaderProgram;
+		return shaderProgram;
 	};
 
-	void SetDiffuseTexture(GLuint texture)
+	void SetdiffuseTexture(GLuint texture)
 	{
-		DiffuseTexture = texture;
+		diffuseTexture = texture;
 	};
 
-	GLuint GetDiffuseTexture()
+	GLuint GetdiffuseTexture()
 	{
-		return DiffuseTexture;
+		return diffuseTexture;
 	};
 
 	void SetScale(glm::vec3 scale)
@@ -165,16 +166,16 @@ private:
 	glm::mat4 RotationMatrix;
 	glm::mat4 ScaleMatrix;
 	//combine the above matrices into the model matrix
-	glm::mat4 ModelMatrix;
+	glm::mat4 modelMatrix;
 
 	//Mesh
-	MeshCollection * Meshes;
+	MeshCollection * meshes;
 
 	//Shader
-	Shader * ShaderProgram;
+	Shader * shaderProgram;
 
 	//Texture
-	GLuint DiffuseTexture;
+	GLuint diffuseTexture;
 
 	// Variables for rotating and scaling 
 	float rotateAmount;

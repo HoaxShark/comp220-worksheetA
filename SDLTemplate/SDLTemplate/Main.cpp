@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
 	Game game;
-	game.gameLoop();
+	game.GameLoop();
 
 	return 0;
 }

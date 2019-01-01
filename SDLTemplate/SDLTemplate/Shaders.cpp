@@ -91,12 +91,12 @@ GLuint Shader::LoadShaders(const char * vertex_file_path, const char * fragment_
 
 Shader::Shader()
 {
-	ShaderProgramID = 0;
+	shaderProgramID = 0;
 }
 
 Shader::~Shader()
 {
-	glDeleteProgram(ShaderProgramID);
+	glDeleteProgram(shaderProgramID);
 }
 
 void Shader::InitialiseUniforms()
@@ -108,10 +108,10 @@ void Shader::InitialiseUniforms()
 	GLchar nameBuffer[64];
 	GLsizei nameLength;
 
-	glGetProgramiv(ShaderProgramID, GL_ACTIVE_UNIFORMS, &uniformCount);
+	glGetProgramiv(shaderProgramID, GL_ACTIVE_UNIFORMS, &uniformCount);
 	for (int i = 0; i < uniformCount; i++)
 	{
-		glGetActiveUniform(ShaderProgramID, i, 64, &nameLength, &uniformSize, &uniformType, nameBuffer);
+		glGetActiveUniform(shaderProgramID, i, 64, &nameLength, &uniformSize, &uniformType, nameBuffer);
 		std::cout << "Uniform " << i << " " << nameBuffer << std::endl;
 		UniformMap.insert(std::pair<std::string, GLint>(nameBuffer, i));
 	}
@@ -124,14 +124,14 @@ GLint Shader::GetUniform(std::string name)
 
 void Shader::Use()
 {
-	glUseProgram(ShaderProgramID);
+	glUseProgram(shaderProgramID);
 }
 
 bool Shader::Load(const std::string & vertexShaderFilename, const std::string & fragmentShaderFilename)
 {
-	ShaderProgramID = LoadShaders(vertexShaderFilename.c_str(), fragmentShaderFilename.c_str());
+	shaderProgramID = LoadShaders(vertexShaderFilename.c_str(), fragmentShaderFilename.c_str());
 
-	if (ShaderProgramID == 0)
+	if (shaderProgramID == 0)
 		return false;
 
 	InitialiseUniforms();

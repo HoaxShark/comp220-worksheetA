@@ -1,7 +1,5 @@
 #include "Camera.h"
 
-
-
 Camera::Camera()
 {
 	// set camera position
@@ -18,43 +16,6 @@ Camera::Camera()
 	glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 }
 
-
 Camera::~Camera()
 {
 }
-
-glm::vec3 Camera::getCameraPos()
-{
-	return cameraPos;
-}
-
-void Camera::setCameraPos(glm::vec3 newCameraPos)
-{
-	cameraPos = newCameraPos;
-}
-
-void Camera::increaseCameraPos(glm::vec3 newCameraPos)
-{
-	cameraPos += newCameraPos;
-}
-
-glm::vec3 Camera::getCameraFront()
-{
-	return cameraFront;
-}
-
-void Camera::setCameraFront(glm::vec3 newCameraFront)
-{
-	cameraFront = newCameraFront;
-}
-
-glm::vec3 Camera::getCameraUp()
-{
-	return cameraUp;
-}
-
-float Camera::getBaseCameraSpeed()
-{
-	return baseCameraSpeed;
-}
-

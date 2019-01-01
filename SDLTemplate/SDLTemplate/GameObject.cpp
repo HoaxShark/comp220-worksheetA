@@ -9,25 +9,25 @@ GameObject::GameObject()
 	TranslationMatrix = glm::mat4(0.0f);
 	RotationMatrix = glm::mat4(0.0f);
 	ScaleMatrix = glm::mat4(0.0f);
-	ModelMatrix = glm::mat4(0.0f);
+	modelMatrix = glm::mat4(0.0f);
 
-	Meshes = nullptr;
-	ShaderProgram = nullptr;
-	DiffuseTexture = 0;
+	meshes = nullptr;
+	shaderProgram = nullptr;
+	diffuseTexture = 0;
 
 	RandomNormal();
 }
 
 GameObject::~GameObject()
 {
-	glDeleteTextures(1, &DiffuseTexture);
+	glDeleteTextures(1, &diffuseTexture);
 
-	if (Meshes) {
-		delete Meshes;
+	if (meshes) {
+		delete meshes;
 	}
-	if (ShaderProgram)
+	if (shaderProgram)
 	{
-		delete ShaderProgram;
+		delete shaderProgram;
 	}
 }
 
@@ -55,9 +55,9 @@ void GameObject::Update(float deltaTime)
 	ScaleMatrix = glm::scale(Scale);
 
 	//combine the above matrices into the model matrix
-	ModelMatrix = TranslationMatrix * RotationMatrix * ScaleMatrix;
+	modelMatrix = TranslationMatrix * RotationMatrix * ScaleMatrix;
 	// rotate the ModelMatrix
-	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotateAmount), rotationAxis);
+	modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateAmount), rotationAxis);
 	// increase rotation by rotationSpeed
 	rotateAmount += rotationSpeed;
 }
@@ -69,9 +69,9 @@ void GameObject::ResetLife()
 
 void GameObject::Render()
 {
-	if (Meshes)
+	if (meshes)
 	{
-		Meshes->render();
+		meshes->render();
 	}
 }
 

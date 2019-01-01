@@ -13,39 +13,39 @@ PlayerController::~PlayerController()
 
 void PlayerController::handleKeyboard(float deltaTime)
 {
-	cameraPosition = camera.getCameraPos();
-	cameraTarget = camera.getCameraFront();
-	moveSpeed = camera.getBaseCameraSpeed() * deltaTime;
+	cameraPosition = camera.GetCameraPos();
+	cameraTarget = camera.GetCameraFront();
+	moveSpeed = camera.GetBaseCameraSpeed() * deltaTime;
 
 	//Check if inputs are pressed.
 	if (isPressed(SDLK_w)) // move forward
 	{
-		camera.increaseCameraPos(moveSpeed*camera.getCameraFront());
+		camera.IncreaseCameraPos(moveSpeed*camera.GetCameraFront());
 	}
 
 	if (isPressed(SDLK_a)) // move left
 	{
-		camera.increaseCameraPos(-glm::normalize(glm::cross(camera.getCameraFront(), camera.getCameraUp())) * moveSpeed);
+		camera.IncreaseCameraPos(-glm::normalize(glm::cross(camera.GetCameraFront(), camera.GetCameraUp())) * moveSpeed);
 	}
 
 	if (isPressed(SDLK_s)) // move backwards
 	{
-		camera.increaseCameraPos(-moveSpeed*camera.getCameraFront());
+		camera.IncreaseCameraPos(-moveSpeed*camera.GetCameraFront());
 	}
 
 	if (isPressed(SDLK_d)) // move right
 	{
-		camera.increaseCameraPos(glm::normalize(glm::cross(camera.getCameraFront(), camera.getCameraUp())) * moveSpeed);
+		camera.IncreaseCameraPos(glm::normalize(glm::cross(camera.GetCameraFront(), camera.GetCameraUp())) * moveSpeed);
 	}
 
 	if (isPressed(SDLK_SPACE)) // move up
 	{
-		camera.increaseCameraPos(glm::vec3(0, 1, 0)*moveSpeed);
+		camera.IncreaseCameraPos(glm::vec3(0, 1, 0)*moveSpeed);
 	}
 
 	if (isPressed(SDLK_LSHIFT)) // move down
 	{
-		camera.increaseCameraPos(glm::vec3(0, -1, 0)*moveSpeed);
+		camera.IncreaseCameraPos(glm::vec3(0, -1, 0)*moveSpeed);
 	}
 }
 
@@ -95,5 +95,5 @@ void PlayerController::moveCamera()
 	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
 	front.y = -sin(glm::radians(pitch));
 	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-	camera.setCameraFront(glm::normalize(front));
+	camera.SetCameraFront(glm::normalize(front));
 }
