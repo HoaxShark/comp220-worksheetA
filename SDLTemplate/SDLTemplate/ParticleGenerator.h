@@ -16,8 +16,8 @@ class ParticleGenerator
 public:
 	// Constructor
 	ParticleGenerator(GLuint amountOfParticles, ObjectManager* manager, Shader* shader);
-
 	~ParticleGenerator();
+
 	// Update particles
 	void Update(GLfloat dt, GameObject &object, GLuint newParticles);
 
@@ -30,11 +30,12 @@ private:
 	ObjectManager * objectManager;
 	Shader* lightShader;
 	// List of all particle objects
-	std::vector<GameObject*> ParticleObjectList;
+	std::vector<GameObject*> particleObjectList;
+
 	// Returns the first Particle index that's currently unused
-	GLuint firstUnusedParticle();
+	GLuint FirstUnusedParticle();
 	// Respawns particle
-	void respawnParticle(GameObject * particle, GameObject & object);
-	void init();
+	void RespawnParticle(GameObject * particle, GameObject & object);
+	void Init();
 };
 

@@ -1,15 +1,15 @@
 #pragma once
 
-#include <GL\glew.h>
-#include <SDL_opengl.h>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <map>
 #include <iostream>
-
 #include <stdio.h>
+
+#include <GL\glew.h>
+#include <SDL_opengl.h>
 
 
 class Shader
@@ -23,13 +23,14 @@ public:
 	{
 		return shaderProgramID;
 	}
-	void Use();
-
+	
 	GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path);
+	void Use();
 	bool Load(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename);
-private:
-	void InitialiseUniforms();
-	GLuint shaderProgramID;
-	std::map<std::string, GLint> UniformMap;
 
+private:
+	GLuint shaderProgramID;
+	std::map<std::string, GLint> uniformMap;
+
+	void InitialiseUniforms();
 };

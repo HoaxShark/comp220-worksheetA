@@ -113,13 +113,13 @@ void Shader::InitialiseUniforms()
 	{
 		glGetActiveUniform(shaderProgramID, i, 64, &nameLength, &uniformSize, &uniformType, nameBuffer);
 		std::cout << "Uniform " << i << " " << nameBuffer << std::endl;
-		UniformMap.insert(std::pair<std::string, GLint>(nameBuffer, i));
+		uniformMap.insert(std::pair<std::string, GLint>(nameBuffer, i));
 	}
 }
 
 GLint Shader::GetUniform(std::string name)
 {
-	return UniformMap[name];
+	return uniformMap[name];
 }
 
 void Shader::Use()

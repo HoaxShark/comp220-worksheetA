@@ -1,8 +1,9 @@
 #pragma once
 
-#include <SDL.h>
 #include <map>
 #include <iostream>
+
+#include <SDL.h>
 
 #include "Camera.h"
 #include "Window.h"
@@ -16,22 +17,22 @@ public:
 	Camera camera;
 
 	// checks pressed keys and changes camera position
-	void handleKeyboard(float deltaTime);
+	void HandleKeyboard(float deltaTime);
 
 	//Put keyboard events into map
-	void manageKeyboardEvents(SDL_Event event); 
+	void ManageKeyboardEvents(SDL_Event event); 
 
 	//Check if key is released
-	bool isReleased(SDL_Keycode key); 
+	bool IsReleased(SDL_Keycode key); 
 
 	//Check if key is pressed
-	bool isPressed(SDL_Keycode key); 
+	bool IsPressed(SDL_Keycode key); 
 
 	//Clear map of events
-	void clearEvents(); 
+	void ClearEvents(); 
 
 	// updates mouse movement
-	void mouseUpdate(float xPos, float yPos);
+	void MouseUpdate(float xPos, float yPos);
 
 
 private:
@@ -39,7 +40,6 @@ private:
 	Window window;
 
 	// camera used to control the camera view
-	
 	glm::vec3 cameraPosition;
 	glm::vec3 cameraTarget;
 	
@@ -58,6 +58,6 @@ private:
 	float moveSpeed;
 
 	// moves the camera during mouse movement
-	void moveCamera();	
+	void MoveCamera();	
 };
 

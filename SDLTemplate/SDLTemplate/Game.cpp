@@ -93,7 +93,7 @@ void Game::GameLoop()
 
 			case SDL_MOUSEMOTION:
 				// pass mouse movements
-				player.mouseUpdate(event.motion.xrel, event.motion.yrel);
+				player.MouseUpdate(event.motion.xrel, event.motion.yrel);
 				break;
 
 			case SDL_MOUSEBUTTONDOWN:
@@ -116,7 +116,7 @@ void Game::GameLoop()
 
 			case SDL_KEYDOWN:
 				// Update key map
-				player.manageKeyboardEvents(event);
+				player.ManageKeyboardEvents(event);
 
 				// Check individual keys by code
 				switch (event.key.keysym.sym)
@@ -146,13 +146,13 @@ void Game::GameLoop()
 
 			case SDL_KEYUP:
 				// Update key map
-				player.manageKeyboardEvents(event);
+				player.ManageKeyboardEvents(event);
 				break;
 			}
 		}
 
 		// move depending on pressed keys
-		player.handleKeyboard(deltaTime);
+		player.HandleKeyboard(deltaTime);
 
 		// update objects
 		objectManager->UpdateObjectList(objectManager->GetGameObjectList(), player, false, deltaTime);
@@ -208,7 +208,7 @@ void Game::GameQuit()
 {
 	delete skybox;
 	// clear key events
-	player.clearEvents();
+	player.ClearEvents();
 	// delete textures
 	glDeleteTextures(1, &textureID);
 	// delete Program

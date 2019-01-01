@@ -5,7 +5,7 @@ ParticleGenerator::ParticleGenerator(GLuint amountOfParticles, ObjectManager* ma
 	amount = amountOfParticles;
 	objectManager = manager;
 	lightShader = shader;
-	init();
+	Init();
 }
 
 ParticleGenerator::~ParticleGenerator()
@@ -18,8 +18,8 @@ void ParticleGenerator::Update(GLfloat deltaTime, GameObject & object, GLuint ne
 	// Add new particles
 	for (GLuint i = 0; i < newParticles; ++i)
 	{
-		int unusedParticle = firstUnusedParticle();
-		respawnParticle(objectManager->GetParticleObjectList()[unusedParticle], object);
+		int unusedParticle = FirstUnusedParticle();
+		RespawnParticle(objectManager->GetParticleObjectList()[unusedParticle], object);
 	}
 	// Update all particles
 	for (GLuint i = 0; i < this->amount; ++i)
@@ -37,7 +37,7 @@ void ParticleGenerator::Update(GLfloat deltaTime, GameObject & object, GLuint ne
 	}
 }
 
-void ParticleGenerator::init()
+void ParticleGenerator::Init()
 {
 	// Create the default amount of particle instances
 	for (GLuint i = 0; i < amount; ++i)
@@ -48,7 +48,7 @@ void ParticleGenerator::init()
 
 // Stores the index of the last particle
 GLuint lastUsedParticle = 0;
-GLuint ParticleGenerator::firstUnusedParticle()
+GLuint ParticleGenerator::FirstUnusedParticle()
 {
 	// Search from last used particle
 	for (GLuint i = lastUsedParticle; i < this->amount; ++i) {
@@ -70,7 +70,7 @@ GLuint ParticleGenerator::firstUnusedParticle()
 }
 
 // Respawn the particle and give it a new random direction
-void ParticleGenerator::respawnParticle(GameObject * particle, GameObject & object)
+void ParticleGenerator::RespawnParticle(GameObject * particle, GameObject & object)
 {
 	particle->SetPositionVec3(object.GetPosition());
 	particle->ResetLife();
