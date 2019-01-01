@@ -16,7 +16,7 @@ takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for 
 void ObjectManager::createObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, Shader * shader)
 {
 	MeshCollection * Meshes = new MeshCollection();
-	loadMeshesFromFile(fileLocation, Meshes);
+	LoadMeshesFromFile(fileLocation, Meshes);
 
 	textureID = loadTextureFromFile(textureLocation);
 
@@ -36,7 +36,7 @@ takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for 
 void ObjectManager::createLightObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader)
 {
 	MeshCollection * Meshes = new MeshCollection();
-	loadMeshesFromFile(fileLocation, Meshes);
+	LoadMeshesFromFile(fileLocation, Meshes);
 
 	textureID = loadTextureFromFile(textureLocation);
 
@@ -59,7 +59,7 @@ takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for 
 void ObjectManager::createParticleObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader)
 {
 	MeshCollection * Meshes = new MeshCollection();
-	loadMeshesFromFile(fileLocation, Meshes);
+	LoadMeshesFromFile(fileLocation, Meshes);
 
 	textureID = loadTextureFromFile(textureLocation);
 
@@ -79,7 +79,7 @@ void ObjectManager::createParticleObject(const std::string & fileLocation, const
 
 
 //Renders game objects from a given list 
-void ObjectManager::drawObjects(std::vector<GameObject*> list, mat4 view, mat4 projection, vec3 cameraPosition)
+void ObjectManager::drawObjects(std::vector<GameObject*> list, glm::mat4 view, glm::mat4 projection, glm::vec3 cameraPosition)
 {
 	for (GameObject * obj : list) {
 
@@ -115,16 +115,16 @@ void ObjectManager::drawObjects(std::vector<GameObject*> list, mat4 view, mat4 p
 void ObjectManager::loadAllObjects(Shader* objectShader, Shader* lightShader)
 {
 	// generate planets
-	createObject("Model/egypt.fbx", "Model/colour.png", 0.0f, 40.0f, -300.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 1.0f, 0.0f), -0.1f, objectShader);
-	createObject("Model/forest.fbx", "Model/colour.png", 100.0f, -40.0f, -150.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.4f, 1.0f, 0.0f), 0.1f, objectShader);
-	createObject("Model/ice.fbx", "Model/colour.png", -300.0f, -20.0f, -450.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 0.5f, 0.5f), 0.1f, objectShader);
-	createObject("Model/iceGray.fbx", "Model/colour.png", 100.0f, -140.0f, -250.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 0.0f, 1.0f), -0.1f, objectShader);
-	createObject("Model/orange.fbx", "Model/colour.png", 600.0f, 100.0f, -650.0f, vec3(0.1f, 0.1f, 0.1f), vec3(0.0f, 1.0f, 0.0f), 0.1f, objectShader);
-	createObject("Model/pine.fbx", "Model/colour.png", -500.0f, -200.0f, -450.0f, vec3(0.1f, 0.1f, 0.1f), vec3(1.0f, 1.0f, 0.0f), 0.1f, objectShader);
+	createObject("Model/egypt.fbx", "Model/colour.png", 0.0f, 40.0f, -300.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 1.0f, 0.0f), -0.1f, objectShader);
+	createObject("Model/forest.fbx", "Model/colour.png", 100.0f, -40.0f, -150.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.4f, 1.0f, 0.0f), 0.1f, objectShader);
+	createObject("Model/ice.fbx", "Model/colour.png", -300.0f, -20.0f, -450.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.5f, 0.5f), 0.1f, objectShader);
+	createObject("Model/iceGray.fbx", "Model/colour.png", 100.0f, -140.0f, -250.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.0f, 1.0f), -0.1f, objectShader);
+	createObject("Model/orange.fbx", "Model/colour.png", 600.0f, 100.0f, -650.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 1.0f, 0.0f), 0.1f, objectShader);
+	createObject("Model/pine.fbx", "Model/colour.png", -500.0f, -200.0f, -450.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1.0f, 1.0f, 0.0f), 0.1f, objectShader);
 
 
 	// create light object
-	createLightObject("Model/star.obj", "Model/light3.png", 10.0f, 10.0f, -20.0f, vec3(0.085f, 0.085f, 0.085f), vec3(1.0f, 1.0f, 0.0f), 1.5f, 0.0f, lightShader);
+	createLightObject("Model/star.obj", "Model/light3.png", 10.0f, 10.0f, -20.0f, glm::vec3(0.085f, 0.085f, 0.085f), glm::vec3(1.0f, 1.0f, 0.0f), 1.5f, 0.0f, lightShader);
 }
 
 void ObjectManager::updateObjectList(std::vector<GameObject*> list, PlayerController player, bool light, float deltaTime)
@@ -134,9 +134,9 @@ void ObjectManager::updateObjectList(std::vector<GameObject*> list, PlayerContro
 		if (light)
 		{
 			// trying to make the light stay with the camera
-			vec3 offset = vec3(0.2f, -0.2f, 0.0f);
-			vec3 pos = player.camera.GetCameraFront();
-			vec3 playerPos = player.camera.GetCameraPos();
+			glm::vec3 offset = glm::vec3(0.2f, -0.2f, 0.0f);
+			glm::vec3 pos = player.camera.GetCameraFront();
+			glm::vec3 playerPos = player.camera.GetCameraPos();
 			// add the offset to the normalised vector for where we are looking
 			pos = pos + offset;
 			// increase the vector
@@ -150,7 +150,7 @@ void ObjectManager::updateObjectList(std::vector<GameObject*> list, PlayerContro
 			}
 			else if (!obj->GetWithPlayer())
 			{
-				vec3 currentDirection = obj->GetThrownDirection();
+				glm::vec3 currentDirection = obj->GetThrownDirection();
 				currentDirection = currentDirection + obj->GetThrownNormal();
 				obj->SetThrownDirection(currentDirection);
 				lightObjectPos = currentDirection;

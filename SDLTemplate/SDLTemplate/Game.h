@@ -54,8 +54,8 @@ private:
 	Shader * skyboxShader;
 
 	// used for the perspective camera
-	mat4 proj;
-	mat4 view;
+	glm::mat4 proj;
+	glm::mat4 view;
 
 	GLuint programID;
 	GLuint textureID;

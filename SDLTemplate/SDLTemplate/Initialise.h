@@ -1,21 +1,23 @@
 #pragma once
-#include "stdafx.h"
-#include "Window.h"
+
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <glm\glm.hpp>
+
+#include "stdafx.h"
+#include "Window.h"
 
 class Initialise
 {
 public:
 
-	SDL_Window* initaliseSDLWindow();
-	SDL_Renderer* initaliseSDLRenderer();
-	int initaliseSDL();
-	SDL_GLContext initialiseContext(SDL_Window* mainWindow);
+	SDL_Window* InitaliseSDLWindow();
+	SDL_Renderer* InitaliseSDLRenderer();
+	SDL_GLContext InitialiseContext(SDL_Window* mainWindow);
+	int InitaliseSDL();
+	int InitaliseGlew(SDL_Window* mainWindow);
 	bool SetOpenGLAttributes();
-	int initaliseGlew(SDL_Window* mainWindow);
-
+	
 	Initialise();
 	~Initialise();
 
@@ -23,6 +25,6 @@ private:
 	Window window;
 	SDL_Window* mainWindow = nullptr;
 	SDL_Renderer* renderer = NULL;
-	SDL_GLContext gl_Context = nullptr;
+	SDL_GLContext glContext = nullptr;
 };
 

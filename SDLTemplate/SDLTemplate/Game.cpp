@@ -30,13 +30,13 @@ void Game::InitialiseGame()
 	float deltaTime = 0.0f;
 
 	// Initalise the SDL components
-	mainWindow = init.initaliseSDLWindow();
-	renderer = init.initaliseSDLRenderer();
+	mainWindow = init.InitaliseSDLWindow();
+	renderer = init.InitaliseSDLRenderer();
 
 	// Initalise OpenGL 
 	init.SetOpenGLAttributes();
-	glContext = init.initialiseContext(mainWindow);
-	init.initaliseGlew(mainWindow);
+	glContext = init.InitialiseContext(mainWindow);
+	init.InitaliseGlew(mainWindow);
 
 	// Initalise objectManager
 	objectManager = new ObjectManager();
@@ -180,13 +180,13 @@ void Game::GameLoop()
 		// note that we're translating the scene in the reverse direction of where we want to move
 		view = player.camera.GetViewMatrix();
 		// close near clip for the skybox
-		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.8f, 1500.0f);
+		proj = glm::perspective(glm::radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 0.8f, 1500.0f);
 
 		// draw skybox
 		skybox->renderSkybox(player.camera.GetViewMatrix(), proj);
 
 		// change the near clip for other objects
-		proj = perspective(radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 5.0f, 1500.0f);
+		proj = glm::perspective(glm::radians(45.0f), (float)window.screenWidth / (float)window.screenHeight, 5.0f, 1500.0f);
 
 		// draw objects
 		objectManager->drawObjects(objectManager->GetGameObjectList(), view, proj, cameraPosition);

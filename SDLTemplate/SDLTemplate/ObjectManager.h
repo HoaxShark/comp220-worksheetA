@@ -1,8 +1,9 @@
 #pragma once
 
+#include <vector>
+
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-#include <vector>
 
 #include "GameObject.h"
 #include "Mesh.h"
@@ -12,8 +13,6 @@
 #include "LightValues.h"
 #include "PlayerController.h"
 
-using namespace glm;
-
 class ObjectManager
 {
 public:
@@ -21,38 +20,30 @@ public:
 	~ObjectManager();
 
 	void createObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, Shader * shader);
-
 	void createLightObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader);
-
 	void createParticleObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader);
 
-	void drawObjects(std::vector<GameObject*> list, mat4 view, mat4 projection, vec3 cameraPosition);
-
+	void drawObjects(std::vector<GameObject*> list, glm::mat4 view, glm::mat4 projection, glm::vec3 cameraPosition);
 	void loadAllObjects(Shader* objectShader, Shader* lightShader);
-
 	void updateObjectList(std::vector<GameObject*> list, PlayerController player, bool light, float deltaTime);
 
 	std::vector<GameObject*> GetGameObjectList()
 	{
 		return GameObjectList;
 	}
-
 	std::vector<GameObject*> GetLightObjectList()
 	{
 		return LightObjectList;
 	}
-
 	std::vector<GameObject*> GetParticleObjectList()
 	{
 		return ParticleObjectList;
 	}
-
-	vec3 GetLightObjectPos()
+	glm::vec3 GetLightObjectPos()
 	{
 		return lightObjectPos;
 	}
-
-	vec3 GetCurrentLightPos()
+	glm::vec3 GetCurrentLightPos()
 	{
 		return currentLightPos;
 	}
@@ -65,7 +56,7 @@ private:
 	LightValues lightValues;
 
 	// lightObject position used to tell where the center of the light is
-	vec3 lightObjectPos;
-	vec3 currentLightPos;
+	glm::vec3 lightObjectPos;
+	glm::vec3 currentLightPos;
 };
 

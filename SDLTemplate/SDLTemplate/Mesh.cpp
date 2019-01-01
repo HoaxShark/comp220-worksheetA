@@ -12,10 +12,10 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
-	destroy();
+	Destroy();
 }
 
-void Mesh::copyBufferData(Vertex * pVerts, unsigned int numberOfVerts, unsigned int * pIndices, unsigned int numberOfIndices)
+void Mesh::CopyBufferData(Vertex * pVerts, unsigned int numberOfVerts, unsigned int * pIndices, unsigned int numberOfIndices)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferData(GL_ARRAY_BUFFER, numberOfVerts * sizeof(Vertex), pVerts, GL_STATIC_DRAW);
@@ -47,7 +47,7 @@ void Mesh::copyBufferData(Vertex * pVerts, unsigned int numberOfVerts, unsigned 
 	glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(15 * sizeof(float)));
 }
 
-void Mesh::init()
+void Mesh::Init()
 {
 	// set vertex array memory location
 	glGenVertexArrays(1, &m_VAO);
@@ -65,7 +65,7 @@ void Mesh::init()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 }
 
-void Mesh::destroy()
+void Mesh::Destroy()
 {
 	//Delete Buffer
 	glDeleteBuffers(1, &m_VBO);
@@ -74,7 +74,7 @@ void Mesh::destroy()
 	glDeleteVertexArrays(1, &m_VAO);
 }
 
-void Mesh::render()
+void Mesh::Render()
 {
 	// bind vertex arrays
 	glBindVertexArray(m_VAO);
@@ -92,25 +92,25 @@ MeshCollection::MeshCollection()
 
 MeshCollection::~MeshCollection()
 {
-	destroy();
+	Destroy();
 }
 
 // add new mesh to the collection
-void MeshCollection::addMesh(Mesh * pMesh)
+void MeshCollection::AddMesh(Mesh * pMesh)
 {
 	m_Meshes.push_back(pMesh);
 }
 
 // loop through all meshes in the collection and call render on them
-void MeshCollection::render()
+void MeshCollection::Render()
 {
 	for (Mesh *pMesh : m_Meshes)
 	{
-		pMesh->render();
+		pMesh->Render();
 	}
 }
 
-void MeshCollection::destroy()
+void MeshCollection::Destroy()
 {
 	// Delete the data in meshes - can't use the standard for loop as you can't modifiy anything instide the loop
 	auto iter = m_Meshes.begin();
@@ -121,7 +121,7 @@ void MeshCollection::destroy()
 		if ((*iter))
 		{
 			// destroy the mesh
-			(*iter)->destroy();
+			(*iter)->Destroy();
 			// delete the memory
 			delete (*iter);
 			(*iter) = nullptr;

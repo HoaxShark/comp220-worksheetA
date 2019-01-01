@@ -71,7 +71,7 @@ void GameObject::Render()
 {
 	if (meshes)
 	{
-		meshes->render();
+		meshes->Render();
 	}
 }
 

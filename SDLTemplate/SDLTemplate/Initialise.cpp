@@ -2,7 +2,7 @@
 
 Initialise::Initialise()
 {
-	initaliseSDL();
+	InitaliseSDL();
 }
 
 
@@ -11,7 +11,7 @@ Initialise::~Initialise()
 }
 
 
-int Initialise::initaliseSDL() 
+int Initialise::InitaliseSDL() 
 {
 	//initialise SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -22,7 +22,7 @@ int Initialise::initaliseSDL()
 	return 0;
 }
 
-SDL_Window * Initialise::initaliseSDLWindow()
+SDL_Window * Initialise::InitaliseSDLWindow()
 {
 	//Initalise the main window
 	mainWindow = SDL_CreateWindow(window.windowTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, window.screenWidth, window.screenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
@@ -36,7 +36,7 @@ SDL_Window * Initialise::initaliseSDLWindow()
 	return mainWindow;
 }
 
-SDL_Renderer * Initialise::initaliseSDLRenderer()
+SDL_Renderer * Initialise::InitaliseSDLRenderer()
 {
 	//Initalise renderer
 	renderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
@@ -50,10 +50,10 @@ SDL_Renderer * Initialise::initaliseSDLRenderer()
 	return renderer;
 }
 
-SDL_GLContext Initialise::initialiseContext(SDL_Window * mainWindow)
+SDL_GLContext Initialise::InitialiseContext(SDL_Window * mainWindow)
 {
-	SDL_GLContext gl_Context = SDL_GL_CreateContext(mainWindow);
-	if (gl_Context == nullptr)
+	SDL_GLContext glContext = SDL_GL_CreateContext(mainWindow);
+	if (glContext == nullptr)
 	{
 		std::cout << "Context initalisation failed." << std::endl;
 
@@ -62,7 +62,7 @@ SDL_GLContext Initialise::initialiseContext(SDL_Window * mainWindow)
 
 		return nullptr;
 	}
-	return gl_Context;
+	return glContext;
 }
 
 bool Initialise::SetOpenGLAttributes()
@@ -82,7 +82,7 @@ bool Initialise::SetOpenGLAttributes()
 	return true;
 }
 
-int Initialise::initaliseGlew(SDL_Window * mainWindow)
+int Initialise::InitaliseGlew(SDL_Window * mainWindow)
 {
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();

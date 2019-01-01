@@ -1,6 +1,6 @@
 #include "Model.h"
 
-bool loadModelFromFile(const std::string & filename, GLuint VBO, GLuint EBO, unsigned int & numberOfVerts, unsigned int & numberOfIndices)
+bool LoadModelFromFile(const std::string & filename, GLuint VBO, GLuint EBO, unsigned int & numberOfVerts, unsigned int & numberOfIndices)
 {
 	// create importer
 	Assimp::Importer importer;
@@ -89,7 +89,7 @@ bool loadModelFromFile(const std::string & filename, GLuint VBO, GLuint EBO, uns
 	return true;
 }
 
-bool loadMeshesFromFile(const std::string& filename, MeshCollection * pMeshCollection)
+bool LoadMeshesFromFile(const std::string& filename, MeshCollection * pMeshCollection)
 {
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -111,7 +111,7 @@ bool loadMeshesFromFile(const std::string& filename, MeshCollection * pMeshColle
 	{
 		aiMesh *currentMesh = scene->mMeshes[i];
 		Mesh *pMesh = new Mesh();
-		pMesh->init();
+		pMesh->Init();
 			
 			// loop all vertices in the current mesh
 			for (int v = 0; v < currentMesh->mNumVertices; v++)
@@ -163,9 +163,9 @@ bool loadMeshesFromFile(const std::string& filename, MeshCollection * pMeshColle
 			indices.push_back(currentModelFace.mIndices[2]);
 		}
 
-		pMesh->copyBufferData(vertices.data(), vertices.size(), indices.data(), indices.size());
+		pMesh->CopyBufferData(vertices.data(), vertices.size(), indices.data(), indices.size());
 
-		pMeshCollection->addMesh(pMesh);
+		pMeshCollection->AddMesh(pMesh);
 		vertices.clear();
 		indices.clear();
 	}
