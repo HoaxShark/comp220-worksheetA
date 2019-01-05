@@ -2,18 +2,13 @@
 
 /* TODO:
 	work off my feedback
-	joystick controls?
 	shadow casting from light?
 	
-	consider orbiting planets/ moons
-	check out factory patterns for gameobject
-	
-	check stdafx and targetver refactor them out?*/
+	consider orbiting planets/ moons*/
 
 Game::Game()
 {
 }
-
 
 Game::~Game()
 {
@@ -46,7 +41,6 @@ void Game::InitialiseGame()
 	// Initalise Skybox 
 	skybox = new Skybox();
 }
-
 
 void Game::GameLoop()
 {
@@ -176,9 +170,7 @@ void Game::GameLoop()
 
 		// Bind program
 		glUseProgram(programID);
-
-
-
+	   
 		// note that we're translating the scene in the reverse direction of where we want to move
 		view = player.camera.GetViewMatrix();
 		// close near clip for the skybox
@@ -208,7 +200,6 @@ void Game::GameLoop()
 // Clean up resources when the game is exited
 void Game::GameQuit()
 {
-	delete skybox;
 	// clear key events
 	player.ClearEvents();
 	// delete textures
@@ -219,7 +210,12 @@ void Game::GameQuit()
 	SDL_GL_DeleteContext(glContext);
 	// close window
 	SDL_DestroyWindow(mainWindow);
+	delete particleGenerator;
+	delete objectManager;
+	delete skybox;
+	delete texturedShader;
+	delete lightOrbShader;
+	delete skyboxShader;
 	SDL_Quit();
 }
-/* https://learnopengl.com/Advanced-OpenGL/Cubemaps */
 
