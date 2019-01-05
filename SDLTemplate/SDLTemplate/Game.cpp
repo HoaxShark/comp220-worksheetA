@@ -2,6 +2,7 @@
 
 /* TODO:
 	work off my feedback
+	move event handler into controller?
 	shadow casting from light?
 	move the init to specific classes?
 	
