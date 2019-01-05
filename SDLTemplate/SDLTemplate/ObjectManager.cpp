@@ -13,7 +13,8 @@ ObjectManager::~ObjectManager()
 
 /* Creates a new game object and stores it in the objectList
 takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
-void ObjectManager::CreateObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, Shader * shader)
+std::vector<GameObject*> currentList;
+void ObjectManager::CreateObject(std::string objectType, const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader)
 {
 	MeshCollection * Meshes = new MeshCollection();
 	LoadMeshesFromFile(fileLocation, Meshes);
@@ -21,62 +22,33 @@ void ObjectManager::CreateObject(const std::string & fileLocation, const std::st
 	textureID = LoadTextureFromFile(textureLocation);
 
 	GameObject * GO = new GameObject();
-	GO->SetPosition(posX, posY, posZ);
-	GO->SetMesh(Meshes);
-	GO->SetScale(scale);
-	GO->SetRotationAxis(rotationAxis);
-	GO->SetRotationSpeed(speed);
-	GO->SetShader(shader);
-	GO->SetdiffuseTexture(textureID);
-	gameObjectList.push_back(GO);
-}
-
-/* Creates a new game object and stores it in the objectList
-takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
-void ObjectManager::CreateLightObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader)
-{
-	MeshCollection * Meshes = new MeshCollection();
-	LoadMeshesFromFile(fileLocation, Meshes);
-
-	textureID = LoadTextureFromFile(textureLocation);
-
-	GameObject * GO = new GameObject();
+	if (objectType == "light" || "particle")
+	{
+		GO->SetIsParticle(true);
+		GO->SetWithPlayer(true);
+	}
 	GO->SetPosition(posX, posY, posZ);
 	GO->SetMesh(Meshes);
 	GO->SetScale(scale);
 	GO->SetRotationAxis(rotationAxis);
 	GO->SetRotationSpeed(speed);
 	GO->SetScaleFactor(scaleFactor);
-	GO->SetIsParticle(true);
-	GO->SetWithPlayer(true);
 	GO->SetShader(shader);
 	GO->SetdiffuseTexture(textureID);
-	lightObjectList.push_back(GO);
+	// check what list to add the object to
+	if (objectType == "game")
+	{
+		gameObjectList.push_back(GO);
+	}
+	else if (objectType == "light")
+	{
+		lightObjectList.push_back(GO);
+	}
+	else if (objectType == "particle")
+	{
+		particleObjectList.push_back(GO);
+	}
 }
-
-/* Creates a new game object and stores it in the objectList
-takes file and texture locations, x,y,z positions, vec3 for scale, and vec3 for the axis to rotate around, and a rotation speed, set speed to 0 for no rotation*/
-void ObjectManager::CreateParticleObject(const std::string & fileLocation, const std::string & textureLocation, float posX, float posY, float posZ, glm::vec3 scale, glm::vec3 rotationAxis, float speed, float scaleFactor, Shader * shader)
-{
-	MeshCollection * Meshes = new MeshCollection();
-	LoadMeshesFromFile(fileLocation, Meshes);
-
-	textureID = LoadTextureFromFile(textureLocation);
-
-	GameObject * GO = new GameObject();
-	GO->SetPosition(posX, posY, posZ);
-	GO->SetMesh(Meshes);
-	GO->SetScale(scale);
-	GO->SetRotationAxis(rotationAxis);
-	GO->SetRotationSpeed(speed);
-	GO->SetScaleFactor(scaleFactor);
-	GO->SetIsParticle(true);
-	GO->SetWithPlayer(true);
-	GO->SetShader(shader);
-	GO->SetdiffuseTexture(textureID);
-	particleObjectList.push_back(GO);
-}
-
 
 //Renders game objects from a given list 
 void ObjectManager::DrawObjects(std::vector<GameObject*> list, glm::mat4 view, glm::mat4 projection, glm::vec3 cameraPosition)
@@ -115,16 +87,16 @@ void ObjectManager::DrawObjects(std::vector<GameObject*> list, glm::mat4 view, g
 void ObjectManager::LoadAllObjects(Shader* objectShader, Shader* lightShader)
 {
 	// generate planets
-	CreateObject("Model/egypt.fbx", "Model/colour.png", 0.0f, 40.0f, -300.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 1.0f, 0.0f), -0.1f, objectShader);
-	CreateObject("Model/forest.fbx", "Model/colour.png", 100.0f, -40.0f, -150.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.4f, 1.0f, 0.0f), 0.1f, objectShader);
-	CreateObject("Model/ice.fbx", "Model/colour.png", -300.0f, -20.0f, -450.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.5f, 0.5f), 0.1f, objectShader);
-	CreateObject("Model/iceGray.fbx", "Model/colour.png", 100.0f, -140.0f, -250.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.0f, 1.0f), -0.1f, objectShader);
-	CreateObject("Model/orange.fbx", "Model/colour.png", 600.0f, 100.0f, -650.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 1.0f, 0.0f), 0.1f, objectShader);
-	CreateObject("Model/pine.fbx", "Model/colour.png", -500.0f, -200.0f, -450.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1.0f, 1.0f, 0.0f), 0.1f, objectShader);
+	CreateObject("game", "Model/egypt.fbx", "Model/colour.png", 0.0f, 40.0f, -300.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 1.0f, 0.0f), -0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/forest.fbx", "Model/colour.png", 100.0f, -40.0f, -150.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.4f, 1.0f, 0.0f), 0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/ice.fbx", "Model/colour.png", -300.0f, -20.0f, -450.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.5f, 0.5f), 0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/iceGray.fbx", "Model/colour.png", 100.0f, -140.0f, -250.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.0f, 1.0f), -0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/orange.fbx", "Model/colour.png", 600.0f, 100.0f, -650.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 1.0f, 0.0f), 0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/pine.fbx", "Model/colour.png", -500.0f, -200.0f, -450.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1.0f, 1.0f, 0.0f), 0.1f, 0.0f, objectShader);
 
 
 	// create light object
-	CreateLightObject("Model/star.obj", "Model/light3.png", 10.0f, 10.0f, -20.0f, glm::vec3(0.085f, 0.085f, 0.085f), glm::vec3(1.0f, 1.0f, 0.0f), 1.5f, 0.0f, lightShader);
+	CreateObject("light", "Model/star.obj", "Model/light3.png", 10.0f, 10.0f, -20.0f, glm::vec3(0.085f, 0.085f, 0.085f), glm::vec3(1.0f, 1.0f, 0.0f), 1.5f, 0.0f, lightShader);
 }
 
 void ObjectManager::UpdateObjectList(std::vector<GameObject*> list, PlayerController player, bool light, float deltaTime)
