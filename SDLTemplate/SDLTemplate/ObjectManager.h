@@ -25,23 +25,23 @@ public:
 	void LoadAllObjects(Shader* objectShader, Shader* lightShader);
 	void UpdateObjectList(std::vector<GameObject*> list, PlayerController player, bool light, float deltaTime);
 
-	std::vector<GameObject*> GetGameObjectList()
+	std::vector<GameObject*>& GetGameObjectList()
 	{
 		return gameObjectList;
 	}
-	std::vector<GameObject*> GetLightObjectList()
+	std::vector<GameObject*>& GetLightObjectList()
 	{
 		return lightObjectList;
 	}
-	std::vector<GameObject*> GetParticleObjectList()
+	std::vector<GameObject*>& GetParticleObjectList()
 	{
 		return particleObjectList;
 	}
-	glm::vec3 GetLightObjectPos()
+	glm::vec3& GetLightObjectPos()
 	{
 		return lightObjectPos;
 	}
-	glm::vec3 GetCurrentLightPos()
+	glm::vec3& GetCurrentLightPos()
 	{
 		return currentLightPos;
 	}

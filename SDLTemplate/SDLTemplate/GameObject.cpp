@@ -78,11 +78,11 @@ void GameObject::Render()
 // Creates a random normal for the game object
 void GameObject::RandomNormal()
 {
-	const int maximum_number = 1.0f;
-	const int minimum_number = -1.0f;
-	double x = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number; 
-	double y = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number;
-	double z = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number;
+	const int maximum_number = 1;
+	const int minimum_number = -1;
+	float x = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number; 
+	float y = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number;
+	float z = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number;
 	randomNormal.x = x;
 	randomNormal.y = y;
 	randomNormal.z = z;

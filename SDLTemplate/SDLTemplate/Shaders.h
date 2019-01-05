@@ -25,7 +25,9 @@ public:
 	}
 	
 	GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path);
+	// Use the this shader
 	void Use();
+	// Load designated shader
 	bool Load(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename);
 
 private:

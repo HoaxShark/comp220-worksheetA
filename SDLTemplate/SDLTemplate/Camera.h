@@ -12,27 +12,28 @@ public:
 	Camera();
 	~Camera();
 
-	glm::vec3 GetCameraPos()
+	glm::vec3& GetCameraPos()
 	{
 		return cameraPos;
 	}
-	glm::vec3 GetCameraUp()
+	glm::vec3& GetCameraUp()
 	{
 		return cameraUp;
 	}
-	glm::vec3 GetCameraDirection()
+	glm::vec3& GetCameraDirection()
 	{
 		return cameraDirection;
 	}
-	glm::vec3 GetCameraFront()
+	glm::vec3& GetCameraFront()
 	{
 		return cameraFront;
 	}
-	glm::mat4 GetViewMatrix()
+	glm::mat4& GetViewMatrix()
 	{
-		return glm::lookAt(this->cameraPos, this->cameraPos + this->cameraFront, this->cameraUp);
+		lookAt = glm::lookAt(this->cameraPos, this->cameraPos + this->cameraFront, this->cameraUp);
+		return lookAt;
 	}
-	float GetBaseCameraSpeed()
+	float& GetBaseCameraSpeed()
 	{
 		return baseCameraSpeed;
 	}
@@ -52,6 +53,7 @@ public:
 
 private:
 
+	glm::mat4 lookAt;
 	glm::vec3 cameraTarget;
 	glm::vec3 cameraDirection;
 	// up baseline for camera calculations

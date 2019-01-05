@@ -17,11 +17,11 @@ public:
 	Skybox();
 	~Skybox();
 
-	unsigned int GetCubemapTexture()
+	unsigned int& GetCubemapTexture()
 	{
 		return cubemapTexture;
 	}
-	GLuint GetSkyboxVAO()
+	GLuint& GetSkyboxVAO()
 	{
 		return skyboxVAO;
 	}

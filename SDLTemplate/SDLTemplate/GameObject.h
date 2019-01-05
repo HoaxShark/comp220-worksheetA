@@ -15,19 +15,19 @@ public:
 	GameObject();
 	~GameObject();
 
-	glm::vec3 GetThrownDirection()
+	glm::vec3& GetThrownDirection()
 	{
 		return thrownDirection;
 	}
-	glm::vec3 GetThrownNormal()
+	glm::vec3& GetThrownNormal()
 	{
 		return thrownNormal;
 	}
-	glm::vec3 GetRandomNormal()
+	glm::vec3& GetRandomNormal()
 	{
 		return randomNormal;
 	}
-	glm::vec3 GetScale()
+	glm::vec3& GetScale()
 	{
 		return scale;
 	}
@@ -43,15 +43,15 @@ public:
 	{
 		return shaderProgram;
 	}
-	GLuint GetDiffuseTexture()
+	GLuint& GetDiffuseTexture()
 	{
 		return diffuseTexture;
 	}
-	bool GetWithPlayer()
+	bool& GetWithPlayer()
 	{
 		return withPlayer;
 	}
-	float GetLife()
+	float& GetLife()
 	{
 		return life;
 	}
@@ -131,7 +131,7 @@ private:
 	bool isParticle = false;
 	const int lifeMax = 1000;
 	const int lifeMin = 800;
-	float life = 1000.0f;
+	float life = 1000;
 
 	// variables for throwing the light gameObject
 	bool withPlayer = false;

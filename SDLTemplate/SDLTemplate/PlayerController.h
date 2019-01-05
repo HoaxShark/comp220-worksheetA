@@ -47,8 +47,8 @@ private:
 	std::map<SDL_Keycode, Uint8> keyStates;
 
 	// mouse movement variables
-	float lastX = window.screenWidth / 2;
-	float lastY = window.screenHeight / 2;
+	float lastX = window.screenWidth / 2.0f;
+	float lastY = window.screenHeight / 2.0f;
 	float sensitivity = 0.05f;
 	float pitch = 0.0f;
 	float yaw = 270.0f;

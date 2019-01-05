@@ -76,7 +76,7 @@ unsigned int Skybox::LoadCubemap(std::vector<std::string> faces)
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
-	int width, height;
+	//int width, height;
 	for (unsigned int i = 0; i < faces.size(); i++)
 	{
 		SDL_Surface * surface = IMG_Load(faces[i].c_str());

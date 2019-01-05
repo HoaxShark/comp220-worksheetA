@@ -3,6 +3,7 @@
 /* TODO:
 	work off my feedback
 	shadow casting from light?
+	move the init to specific classes?
 	
 	consider orbiting planets/ moons*/
 
