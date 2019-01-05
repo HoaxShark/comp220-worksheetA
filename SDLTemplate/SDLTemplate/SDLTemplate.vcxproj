@@ -31,7 +31,6 @@
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="Skybox.cpp" />
-    <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -48,8 +47,6 @@
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="Skybox.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
@@ -57,7 +54,6 @@
   <ItemGroup>
     <None Include="blinnPhongFrag.glsl" />
     <None Include="blinnPhongVert.glsl" />
-    <None Include="cube.nff" />
     <None Include="fragParticle.glsl" />
     <None Include="fragSkybox.glsl" />
     <None Include="fragTextured.glsl" />

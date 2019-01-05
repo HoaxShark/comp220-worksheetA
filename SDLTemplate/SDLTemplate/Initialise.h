@@ -4,7 +4,6 @@
 #include <SDL_opengl.h>
 #include <glm\glm.hpp>
 
-#include "stdafx.h"
 #include "Window.h"
 
 class Initialise

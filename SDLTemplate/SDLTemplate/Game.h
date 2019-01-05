@@ -1,9 +1,12 @@
 #pragma once
 
-
 #include <time.h>
 #include <vector>
+#include <iostream>
 
+#include <SDKDDKVer.h>
+#include <stdio.h>
+#include <tchar.h>
 #include <SDL.h>
 #include <GL\glew.h>
 #include <SDL_opengl.h>
@@ -14,7 +17,6 @@
 
 #include "Window.h"
 #include "Initialise.h"
-#include "stdafx.h"
 #include "Model.h"
 #include "Vertex.h"
 #include "Texture.h"
