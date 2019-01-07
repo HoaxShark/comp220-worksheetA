@@ -1,0 +1,12 @@
+﻿  Game.cpp
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(70): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(86): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+  Main.cpp
+  ObjectManager.cpp
+d:\comp220-worksheeta\sdltemplate\sdltemplate\objectmanager.cpp(149): warning C4018: '<=': signed/unsigned mismatch
+d:\comp220-worksheeta\sdltemplate\sdltemplate\objectmanager.cpp(174): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\objectmanager.cpp(175): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\objectmanager.cpp(176): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  ParticleGenerator.cpp
+  Generating Code...
+  SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe

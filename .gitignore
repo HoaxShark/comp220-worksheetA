@@ -333,3 +333,5 @@ ASALocalRun/
 !Libraries/**
 
 Intermediate/
+/SDLTemplate/.vs
+/SDLTemplate/Debug
