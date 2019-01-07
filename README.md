@@ -1,3 +1,5 @@
+## Please run as x86
+
 ## Control Scheme
 Left Click - Throw Star  
 Right Click - Return Star  
