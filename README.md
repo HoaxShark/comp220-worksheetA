@@ -7,8 +7,8 @@ A - Strafe Left
 D - Strafe Right  
 Left Shift - Down  
 Space - Up  
-Q - Lower Movement Speed
-E - Increase Movement Speed
+Q - Lower Movement Speed  
+E - Increase Movement Speed  
 F11 - Fullscreen  
 
 ## Debugging Report
