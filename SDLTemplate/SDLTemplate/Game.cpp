@@ -1,10 +1,5 @@
 #include "Game.h"
 
-/* TODO:
-	move the init to specific classes?
-	
-	consider orbiting planets/ moons*/
-
 Game::Game()
 {
 }

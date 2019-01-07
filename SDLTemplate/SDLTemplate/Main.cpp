@@ -1,4 +1,5 @@
-// Main.cpp : Defines the entry point for the console application.
+// Defines the entry point for the console application.
+// Run as x86
 
 #include "Game.h"
 
