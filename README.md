@@ -1,13 +1,13 @@
 ## Control Scheme
-Left Click - Throw Star
-Right Click - Return Star
-W - Forward
-S - Backwards
-A - Strafe Left
-D - Strafe Right
-Left Shift - Down
-Space - Up
-F11 - Fullscreen
+Left Click - Throw Star  
+Right Click - Return Star  
+W - Forward  
+S - Backwards  
+A - Strafe Left  
+D - Strafe Right  
+Left Shift - Down  
+Space - Up  
+F11 - Fullscreen  
 
 ## Debugging Report
 
