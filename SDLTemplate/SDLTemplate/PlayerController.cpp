@@ -1,11 +1,8 @@
 #include "PlayerController.h"
 
-
-
 PlayerController::PlayerController()
 {
 }
-
 
 PlayerController::~PlayerController()
 {
@@ -46,6 +43,16 @@ void PlayerController::HandleKeyboard(float deltaTime)
 	if (IsPressed(SDLK_LSHIFT)) // move down
 	{
 		camera.IncreaseCameraPos(glm::vec3(0, -1, 0)*moveSpeed);
+	}
+
+	if (IsPressed(SDLK_q)) // slow down
+	{
+		camera.SetBaseCameraSpeed(camera.GetBaseCameraSpeed() - 0.01f);
+	}
+
+	if (IsPressed(SDLK_e)) // speed up
+	{
+		camera.SetBaseCameraSpeed(camera.GetBaseCameraSpeed() + 0.01f);
 	}
 }
 

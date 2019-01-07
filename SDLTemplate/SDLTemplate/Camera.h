@@ -38,6 +38,14 @@ public:
 		return baseCameraSpeed;
 	}
 
+	// Set camera movement speed, if newSpeed is below 0 don't changed
+	void SetBaseCameraSpeed(float newSpeed)
+	{
+		if (newSpeed >= 0.0f)
+		{
+			baseCameraSpeed = newSpeed;
+		}
+	}
 	void SetCameraPos(glm::vec3 newCameraPos)
 	{
 		cameraPos = newCameraPos;

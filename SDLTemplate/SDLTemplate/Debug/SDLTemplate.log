@@ -1,26 +1,11 @@
 ﻿  Camera.cpp
   Game.cpp
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(75): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(91): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
-  GameObject.cpp
-d:\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(67): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(83): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(84): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\comp220-worksheeta\sdltemplate\sdltemplate\gameobject.cpp(85): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  SDLManager.cpp
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(16): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(70): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+d:\comp220-worksheeta\sdltemplate\sdltemplate\game.cpp(86): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
   Main.cpp
-  Mesh.cpp
-  Model.cpp
-d:\comp220-worksheeta\sdltemplate\sdltemplate\model.cpp(110): warning C4018: '<': signed/unsigned mismatch
-d:\comp220-worksheeta\sdltemplate\sdltemplate\model.cpp(117): warning C4018: '<': signed/unsigned mismatch
-d:\comp220-worksheeta\sdltemplate\sdltemplate\model.cpp(158): warning C4018: '<': signed/unsigned mismatch
   ObjectManager.cpp
   ParticleGenerator.cpp
   PlayerController.cpp
-  Shaders.cpp
-  Skybox.cpp
-  Texture.cpp
-  Window.cpp
   Generating Code...
   SDLTemplate.vcxproj -> D:\comp220-worksheetA\SDLTemplate\Debug\SDLTemplate.exe
