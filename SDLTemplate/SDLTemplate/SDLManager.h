@@ -6,7 +6,7 @@
 
 #include "Window.h"
 
-class Initialise
+class SDLManager
 {
 public:
 
@@ -17,8 +17,8 @@ public:
 	int InitaliseGlew(SDL_Window* mainWindow);
 	bool SetOpenGLAttributes();
 	
-	Initialise();
-	~Initialise();
+	SDLManager();
+	~SDLManager();
 
 private:
 	Window window;

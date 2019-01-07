@@ -16,7 +16,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "Window.h"
-#include "Initialise.h"
+#include "SDLManager.h"
 #include "Model.h"
 #include "Vertex.h"
 #include "Texture.h"
@@ -45,7 +45,7 @@ private:
 	bool gameRunning = true;
 
 	Window window;
-	Initialise init;
+	SDLManager managerSDL;
 	PlayerController player;
 	Skybox * skybox;
 	ParticleGenerator * particleGenerator;

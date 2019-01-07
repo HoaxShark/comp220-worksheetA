@@ -1,9 +1,6 @@
 #include "Game.h"
 
 /* TODO:
-	work off my feedback
-	move event handler into controller?
-	shadow casting from light?
 	move the init to specific classes?
 	
 	consider orbiting planets/ moons*/
@@ -29,13 +26,13 @@ void Game::InitialiseGame()
 	float deltaTime = 0.0f;
 
 	// Initalise the SDL components
-	mainWindow = init.InitaliseSDLWindow();
-	renderer = init.InitaliseSDLRenderer();
+	mainWindow = managerSDL.InitaliseSDLWindow();
+	renderer = managerSDL.InitaliseSDLRenderer();
 
 	// Initalise OpenGL 
-	init.SetOpenGLAttributes();
-	glContext = init.InitialiseContext(mainWindow);
-	init.InitaliseGlew(mainWindow);
+	managerSDL.SetOpenGLAttributes();
+	glContext = managerSDL.InitialiseContext(mainWindow);
+	managerSDL.InitaliseGlew(mainWindow);
 
 	// Initalise objectManager
 	objectManager = new ObjectManager();

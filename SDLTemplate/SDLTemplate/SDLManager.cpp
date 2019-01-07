@@ -1,19 +1,19 @@
-#include "Initialise.h"
+#include "SDLManager.h"
 
-Initialise::Initialise()
+SDLManager::SDLManager()
 {
 	InitaliseSDL();
 }
 
 
-Initialise::~Initialise()
+SDLManager::~SDLManager()
 {
 }
 
 
-int Initialise::InitaliseSDL() 
+int SDLManager::InitaliseSDL() 
 {
-	//initialise SDL
+	//SDLManager SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		std::cout << "Cannot initalise SDL " << SDL_GetError() << std::endl;
@@ -22,7 +22,7 @@ int Initialise::InitaliseSDL()
 	return 0;
 }
 
-SDL_Window * Initialise::InitaliseSDLWindow()
+SDL_Window * SDLManager::InitaliseSDLWindow()
 {
 	//Initalise the main window
 	mainWindow = SDL_CreateWindow(window.windowTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, window.screenWidth, window.screenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
@@ -36,7 +36,7 @@ SDL_Window * Initialise::InitaliseSDLWindow()
 	return mainWindow;
 }
 
-SDL_Renderer * Initialise::InitaliseSDLRenderer()
+SDL_Renderer * SDLManager::InitaliseSDLRenderer()
 {
 	//Initalise renderer
 	renderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
@@ -50,7 +50,7 @@ SDL_Renderer * Initialise::InitaliseSDLRenderer()
 	return renderer;
 }
 
-SDL_GLContext Initialise::InitialiseContext(SDL_Window * mainWindow)
+SDL_GLContext SDLManager::InitialiseContext(SDL_Window * mainWindow)
 {
 	SDL_GLContext glContext = SDL_GL_CreateContext(mainWindow);
 	if (glContext == nullptr)
@@ -65,7 +65,7 @@ SDL_GLContext Initialise::InitialiseContext(SDL_Window * mainWindow)
 	return glContext;
 }
 
-bool Initialise::SetOpenGLAttributes()
+bool SDLManager::SetOpenGLAttributes()
 {
 	// Set our OpenGL version.
 	// SDL_GL_CONTEXT_CORE gives us only the newer version, deprecated functions are disabled
@@ -82,7 +82,7 @@ bool Initialise::SetOpenGLAttributes()
 	return true;
 }
 
-int Initialise::InitaliseGlew(SDL_Window * mainWindow)
+int SDLManager::InitaliseGlew(SDL_Window * mainWindow)
 {
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
