@@ -1,3 +1,14 @@
+## Control Scheme
+Left Click - Throw Star
+Right Click - Return Star
+W - Forward
+S - Backwards
+A - Strafe Left
+D - Strafe Right
+Left Shift - Down
+Space - Up
+F11 - Fullscreen
+
 ## Debugging Report
 
 Thoughout this development I have been using a software called RenderDoc to help debug issues with graphics.
