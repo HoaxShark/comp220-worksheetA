@@ -3,6 +3,7 @@
 #include <time.h>
 #include <vector>
 #include <iostream>
+#include <stdlib.h>
 
 #include <SDKDDKVer.h>
 #include <stdio.h>

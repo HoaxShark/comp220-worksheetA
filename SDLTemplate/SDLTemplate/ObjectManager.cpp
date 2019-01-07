@@ -1,7 +1,5 @@
 #include "ObjectManager.h"
 
-
-
 ObjectManager::ObjectManager()
 {
 }
@@ -93,10 +91,18 @@ void ObjectManager::LoadAllObjects(Shader* objectShader, Shader* lightShader)
 	CreateObject("game", "Model/iceGray.fbx", "Model/colour.png", 100.0f, -140.0f, -250.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.0f, 1.0f), -0.1f, 0.0f, objectShader);
 	CreateObject("game", "Model/orange.fbx", "Model/colour.png", 600.0f, 100.0f, -650.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 1.0f, 0.0f), 0.1f, 0.0f, objectShader);
 	CreateObject("game", "Model/pine.fbx", "Model/colour.png", -500.0f, -200.0f, -450.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1.0f, 1.0f, 0.0f), 0.1f, 0.0f, objectShader);
-
+	CreateObject("game", "Model/egypt.fbx", "Model/colour.png", 1000.0f, 400.0f, 300.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 1.0f, 0.0f), -0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/forest.fbx", "Model/colour.png", 10.0f, -400.0f, -1500.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.4f, 1.0f, 0.0f), 0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/ice.fbx", "Model/colour.png", 300.0f, -200.0f, 450.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.5f, 0.5f), 0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/iceGray.fbx", "Model/colour.png", -100.0f, -1040.0f, 250.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.0f, 1.0f), -0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/orange.fbx", "Model/colour.png", -600.0f, 1000.0f, 650.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 1.0f, 0.0f), 0.1f, 0.0f, objectShader);
+	CreateObject("game", "Model/pine.fbx", "Model/colour.png", 500.0f, -2000.0f, 450.0f, glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1.0f, 1.0f, 0.0f), 0.1f, 0.0f, objectShader);
 
 	// create light object
 	CreateObject("light", "Model/star.obj", "Model/light3.png", 10.0f, 10.0f, -20.0f, glm::vec3(0.085f, 0.085f, 0.085f), glm::vec3(1.0f, 1.0f, 0.0f), 1.5f, 0.0f, lightShader);
+
+	// load asteroids
+	LoadAsteroids(objectShader);
 }
 
 void ObjectManager::UpdateObjectList(std::vector<GameObject*> list, PlayerController player, bool light, float deltaTime)
@@ -134,4 +140,41 @@ void ObjectManager::UpdateObjectList(std::vector<GameObject*> list, PlayerContro
 		obj->Update(deltaTime);
 
 	}
+}
+
+void ObjectManager::LoadAsteroids(Shader * objectShader)
+{
+	glm::vec3 currentPosition = asteroidBeltStart;
+	unsigned int i = 0;
+	for (i; i <= numberOfAsteroids; i++)
+	{
+		RandomNormal();
+		if (randomNormal.x >= 0.0f)
+		{
+			randomNormal.x = -randomNormal.x;
+		}
+		if (randomNormal.y >= 0.0f)
+		{
+			randomNormal.y = -randomNormal.y;
+		}
+		if (randomNormal.z >= 0.0f)
+		{
+			randomNormal.z = -randomNormal.z;
+		}
+		currentPosition += randomNormal * 15.0f;
+		CreateObject("game", "Model/Astre/Asteroids.fbx", "Model/Astre/Asteroids_Grey.png", currentPosition.x, currentPosition.y, currentPosition.z, glm::vec3(0.01f, 0.01f, 0.01f), randomNormal, 0.1f, 0.0f, objectShader);
+	}
+}
+
+// Creates a random normal for the game object
+void ObjectManager::RandomNormal()
+{
+	const int maximum_number = 1;
+	const int minimum_number = -1;
+	float x = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number;
+	float y = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number;
+	float z = (rand() % (maximum_number + 1 - minimum_number)) + minimum_number;
+	randomNormal.x = x;
+	randomNormal.y = y;
+	randomNormal.z = z;
 }

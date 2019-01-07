@@ -24,6 +24,7 @@ public:
 	void DrawObjects(std::vector<GameObject*> list, glm::mat4 view, glm::mat4 projection, glm::vec3 cameraPosition);
 	void LoadAllObjects(Shader* objectShader, Shader* lightShader);
 	void UpdateObjectList(std::vector<GameObject*> list, PlayerController player, bool light, float deltaTime);
+	void LoadAsteroids(Shader* objectShader);
 
 	std::vector<GameObject*>& GetGameObjectList()
 	{
@@ -53,8 +54,16 @@ private:
 	std::vector<GameObject*> particleObjectList;
 	LightValues lightValues;
 
+	int numberOfAsteroids = 80;
+	glm::vec3 asteroidBeltStart = glm::vec3(400.0f, 400.0f, 300.0f);
+
 	// lightObject position used to tell where the center of the light is
 	glm::vec3 lightObjectPos;
 	glm::vec3 currentLightPos;
+
+	// a random normal for rotation and new position
+	glm::vec3 randomNormal;
+
+	void RandomNormal();
 };
 

@@ -13,7 +13,7 @@ void Game::InitialiseGame()
 	bool inDevelopMode = false;
 
 	// Initalise random seed
-	std::srand(time(NULL));
+	std::srand(1);
 
 	// Initialise times
 	float lastTime = 0.0f;
